@@ -1,13 +1,19 @@
 <template>
-  {{ hunt }}
+  <HuntDetailsSideBar v-bind:hunt="hunt"/>
 </template>
 
 <script>
+// import vue components
+import HuntDetailsSideBar from '../components/hunt-details/SideBar.vue'
+
 // import api services
 import HuntService from '../services/HuntService.js'
 
 export default {
-  components: {},
+  components: {
+    // vue components
+    HuntDetailsSideBar
+  },
   props: ['id'],
   data () {
     return {
