@@ -14,5 +14,8 @@ const apiClient = axios.create({
 export default {
   getHunts () {
     return apiClient.get('/hunts')
+  },
+  getHunt (id) {
+    return apiClient.get('/hunts/' + id)
   }
 }
