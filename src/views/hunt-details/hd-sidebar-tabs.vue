@@ -22,7 +22,7 @@
         <div class="px-4 py-5 flex-auto">
           <div class="tab-content tab-space">
             <div v-bind:class="{'hidden': openTab !== 1, 'block': openTab === 1}">
-              <LandownershipTable v-bind:hunt="hunt" />
+              <landowner-table v-bind:hunt="hunt" />
             </div>
             <div v-bind:class="{'hidden': openTab !== 2, 'block': openTab === 2}">
               <p>
@@ -54,12 +54,12 @@
 </template>
 
 <script>
-import LandownershipTable from '../LandownershipTable.vue'
+import LandownerTable from '@/components/landowner-table.vue'
 
 export default {
-  name: 'blueGray-tabs',
+  name: 'hd-sidebar-tabs',
   components: {
-    LandownershipTable
+    LandownerTable
   },
   props: ['hunt'],
   data () {

@@ -1,18 +1,18 @@
 <template>
-  <HuntDetailsSideBar v-bind:hunt="hunt"/>
+  <hd-sidebar v-bind:hunt="hunt"/>
 </template>
 
 <script>
 // import vue components
-import HuntDetailsSideBar from '../components/hunt-details/SideBar.vue'
+import HdSidebar from './hd-sidebar.vue'
 
 // import api services
-import HuntService from '../services/HuntService.js'
+import { getHunt } from '@/services/hunt-services.js'
 
 export default {
   components: {
     // vue components
-    HuntDetailsSideBar
+    HdSidebar
   },
   props: ['id'],
   data () {
@@ -22,7 +22,7 @@ export default {
   },
   created () {
     // fetch hunt (by id) and set local data
-    HuntService.getHunt(this.id).then((response) => {
+    getHunt(this.id).then((response) => {
       this.hunt = response.data
     })
   }

@@ -40,7 +40,7 @@
                   <div>
                     <button type="button" class="bg-transparent text-blue-900 p-2 rounded cursor-pointer focus:outline-none">Similar Hunts</button>
                   </div>
-                  <SideBarTabs v-bind:hunt="hunt" />
+                  <hd-sidebar-tabs v-bind:hunt="hunt" />
                   <!-- /End replace -->
                 </div>
               </div>
@@ -51,10 +51,11 @@
 </template>
 
 <script>
-import SideBarTabs from './SideBarTabs.vue'
+import HdSidebarTabs from './hd-sidebar-tabs.vue'
 export default {
+  name: 'hd-sidebar',
   components: {
-    SideBarTabs
+    HdSidebarTabs
   },
   props: ['hunt'],
   setup () {

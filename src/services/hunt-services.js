@@ -11,11 +11,15 @@ const apiClient = axios.create({
   }
 })
 
-export default {
-  getHunts () {
-    return apiClient.get('/hunts')
-  },
-  getHunt (id) {
-    return apiClient.get('/hunts/' + id)
-  }
+const getHunts = () => {
+  return apiClient.get('/hunts')
+}
+
+const getHunt = (id) => {
+  return apiClient.get(`/hunts/${id}`)
+}
+
+export {
+  getHunts,
+  getHunt
 }

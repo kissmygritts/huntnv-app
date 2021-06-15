@@ -5,7 +5,7 @@
 
 <script>
 // import api services
-import HuntService from '../services/HuntService.js'
+import { getHunts } from '@/services/hunt-services.js'
 
 export default {
   name: 'Home',
@@ -16,7 +16,7 @@ export default {
     }
   },
   created () {
-    HuntService.getHunts().then((response) => {
+    getHunts().then((response) => {
       this.hunts = response.data
     })
   }

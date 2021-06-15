@@ -8,7 +8,7 @@
 import Vue3ChartJs from '@j-t-mcc/vue3-chartjs'
 
 export default {
-  name: 'App',
+  name: 'LandownerBarChart',
   components: {
     Vue3ChartJs
   },
