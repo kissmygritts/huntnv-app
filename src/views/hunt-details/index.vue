@@ -1,10 +1,12 @@
 <template>
   <hd-header v-bind:hunt="hunt"/>
+  <landowner-table v-bind:hunt="hunt"/>
 </template>
 
 <script>
 // import vue components
-import HdHeader from './hd-header.vue'
+import HdHeader from '@/views/hunt-details/hd-header.vue'
+import LandownerTable from '@/components/landowner-table.vue'
 
 // import api services
 import { getHunt } from '@/services/hunt-services.js'
@@ -12,7 +14,8 @@ import { getHunt } from '@/services/hunt-services.js'
 export default {
   components: {
     // vue components
-    HdHeader
+    HdHeader,
+    LandownerTable
   },
   props: ['id'],
   data () {
