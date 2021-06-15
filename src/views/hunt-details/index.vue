@@ -1,10 +1,10 @@
 <template>
-  <hd-sidebar v-bind:hunt="hunt"/>
+  <hd-header v-bind:hunt="hunt"/>
 </template>
 
 <script>
 // import vue components
-import HdSidebar from './hd-sidebar.vue'
+import HdHeader from './hd-header.vue'
 
 // import api services
 import { getHunt } from '@/services/hunt-services.js'
@@ -12,7 +12,7 @@ import { getHunt } from '@/services/hunt-services.js'
 export default {
   components: {
     // vue components
-    HdSidebar
+    HdHeader
   },
   props: ['id'],
   data () {
