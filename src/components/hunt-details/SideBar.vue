@@ -37,18 +37,10 @@
                       </div>
                     </dl>
                   </div>
-                  <div class="p-4">
-                    <h3 class="font-medium text-gray-900">Landownership Data</h3>
-                    <dl v-for="owner in hunt.landownership" :key="owner.hunt_id" >
-                      <div class="py-3 flex justify-between text-sm font-medium mt-2 border-t border-gray-200">
-                        <dt class="text-gray-500">{{ owner.surface_mgmt_agency}}</dt>
-                        <dd class="text-gray-900">{{ formatAcres(owner.area) }} ({{ formatPrecentage(owner.coverage) }}% )</dd>
-                      </div>
-                    </dl>
-                  </div>
                   <div>
                     <button type="button" class="bg-transparent text-blue-900 p-2 rounded cursor-pointer focus:outline-none">Similar Hunts</button>
                   </div>
+                  <SideBarTabs v-bind:hunt="hunt" />
                   <!-- /End replace -->
                 </div>
               </div>
@@ -59,7 +51,11 @@
 </template>
 
 <script>
+import SideBarTabs from './SideBarTabs.vue'
 export default {
+  components: {
+    SideBarTabs
+  },
   props: ['hunt'],
   setup () {
     function formatAcres (areaAcres) {
