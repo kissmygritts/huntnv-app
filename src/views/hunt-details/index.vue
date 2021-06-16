@@ -1,12 +1,14 @@
 <template>
   <hd-header v-bind:hunt="hunt"/>
   <landowner-table v-bind:hunt="hunt"/>
+  <landowner-bar-graph v-bind:results="results" />
 </template>
 
 <script>
 // import vue components
 import HdHeader from '@/views/hunt-details/hd-header.vue'
 import LandownerTable from '@/components/landowner-table.vue'
+import LandownerBarGraph from '@/components/landowner-bar-graph.vue'
 
 // import api services
 import { getHunt } from '@/services/hunt-services.js'
@@ -15,13 +17,15 @@ export default {
   components: {
     // vue components
     HdHeader,
-    LandownerTable
+    LandownerTable,
+    LandownerBarGraph
   },
   props: ['id'],
   data () {
     return {
       hunt: null,
-      owners: []
+      owners: [],
+      results: {}
     }
   },
   async created () {
@@ -30,13 +34,17 @@ export default {
       this.hunt = response.data
     })
 
-    await this.hunt.landownership.forEach(d => {
+    await this.hunt.landownership.forEach(data => {
+      // linter wants api value to be in camel case
       // eslint-disable-next-line
-      const { surface_mgmt_agency, coverage } = d
-      // eslint-disable-next-line
-      this.owners.push({ surface_mgmt_agency })
+      const { surface_mgmt_agency, coverage } = data
+      this.owners.push({ agency: surface_mgmt_agency, coverage })
     })
-    console.log(this.owners)
+
+    this.results = this.owners.reduce((acc, post) => {
+      const { agency, coverage } = post
+      return { ...acc, [agency]: (coverage) }
+    }, {})
   }
 }
 </script>
