@@ -21,6 +21,10 @@
                   <CalendarIcon class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
                   {{ hunt.season_dates }}
                 </div>
+                <div class="mt-2 flex items-center text-sm text-gray-500">
+                  <ArrowsExpandIcon class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
+                  {{ formatAcres(hunt.landownership[0].hunt_area) }} ACRES
+                </div>
               </div>
               <div class="mt-5 flex items-center text-sm text-gray-500">
                 <p>Units: </p>
@@ -39,14 +43,25 @@
 </template>
 
 <script>
-import { CalendarIcon, IdentificationIcon } from '@heroicons/vue/outline'
+import { CalendarIcon, IdentificationIcon, ArrowsExpandIcon } from '@heroicons/vue/outline'
 
 export default {
   name: 'hd-sidebar',
   components: {
     CalendarIcon,
-    IdentificationIcon
+    IdentificationIcon,
+    ArrowsExpandIcon
   },
-  props: ['hunt']
+  props: ['hunt'],
+  setup () {
+    function formatAcres (area) {
+      const acres = area / 4047
+      return acres.toFixed(2)
+    }
+
+    return {
+      formatAcres
+    }
+  }
 }
 </script>
