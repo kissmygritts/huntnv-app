@@ -4,7 +4,7 @@
       <div class="sm:flex sm:items-center sm:justify-between">
         <div class="sm:flex sm:space-x-5">
           <div class="lg:flex lg:items-center lg:justify-between uppercase">
-            <div class="flex-1 min-w-0">
+            <div v-if="hunt" class="flex-1 min-w-0">
               <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl sm:truncate">
                 {{ hunt.display_name }}
               </h2>

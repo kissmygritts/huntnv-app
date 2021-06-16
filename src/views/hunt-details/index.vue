@@ -20,14 +20,23 @@ export default {
   props: ['id'],
   data () {
     return {
-      hunt: null
+      hunt: null,
+      owners: []
     }
   },
-  created () {
+  async created () {
     // fetch hunt (by id) and set local data
-    getHunt(this.id).then((response) => {
+    await getHunt(this.id).then((response) => {
       this.hunt = response.data
     })
+
+    await this.hunt.landownership.forEach(d => {
+      // eslint-disable-next-line
+      const { surface_mgmt_agency, coverage } = d
+      // eslint-disable-next-line
+      this.owners.push({ surface_mgmt_agency })
+    })
+    console.log(this.owners)
   }
 }
 </script>
