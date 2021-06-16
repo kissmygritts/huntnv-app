@@ -2,11 +2,15 @@
   <hd-header v-bind:hunt="hunt"/>
   <landowner-table v-bind:hunt="hunt"/>
   <landowner-bar-graph v-bind:results="results" />
+  <similar-hunts-table v-bind:hunt="hunt"/>
 </template>
 
 <script>
-// import vue components
+// import vue view components
 import HdHeader from '@/views/hunt-details/hd-header.vue'
+
+// import vue components
+import SimilarHuntsTable from '@/components/similar-hunts-table.vue'
 import LandownerTable from '@/components/landowner-table.vue'
 import LandownerBarGraph from '@/components/landowner-bar-graph.vue'
 
@@ -16,9 +20,10 @@ import { getHunt } from '@/services/hunt-services.js'
 export default {
   components: {
     // vue components
-    HdHeader,
     LandownerTable,
-    LandownerBarGraph
+    LandownerBarGraph,
+    SimilarHuntsTable,
+    HdHeader
   },
   props: ['id'],
   data () {
