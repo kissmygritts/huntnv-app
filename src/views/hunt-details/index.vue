@@ -1,8 +1,10 @@
 <template>
-  <hd-header v-bind:hunt="hunt"/>
-  <landowner-table v-bind:hunt="hunt"/>
-  <landowner-bar-graph v-bind:results="results" />
-  <similar-hunts-table v-bind:hunt="hunt"/>
+  <div class="w-full overflow-y-auto">
+    <hd-header v-bind:hunt="hunt"/>
+    <landowner-table v-bind:hunt="hunt"/>
+    <landowner-bar-graph v-bind:results="results" />
+    <similar-hunts-table v-bind:hunt="hunt"/>
+  </div>
 </template>
 
 <script>
