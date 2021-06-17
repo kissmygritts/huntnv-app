@@ -1,5 +1,5 @@
 <template>
-<div class="m-10 rounded-lg bg-white overflow-hidden shadow-lg">
+  <div class="m-10 rounded-lg bg-white overflow-hidden shadow-lg">
     <div class="bg-white p-6">
       <div class="lg:flex lg:items-center lg:justify-between uppercase">
         <div v-if="results" class="flex-1 min-w-0 p-3">

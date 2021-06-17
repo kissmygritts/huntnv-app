@@ -1,6 +1,7 @@
 <template>
   <div class="w-full overflow-y-auto">
     <hd-header v-bind:hunt="hunt"/>
+    <hd-map />
     <landowner-table v-bind:hunt="hunt"/>
     <landowner-bar-graph v-bind:results="results" />
     <similar-hunts-table v-bind:hunt="hunt"/>
@@ -15,6 +16,7 @@ import HdHeader from '@/views/hunt-details/hd-header.vue'
 import SimilarHuntsTable from '@/components/similar-hunts-table.vue'
 import LandownerTable from '@/components/landowner-table.vue'
 import LandownerBarGraph from '@/components/landowner-bar-graph.vue'
+import HdMap from '@/views/hunt-details/hd-map.vue'
 
 // import api services
 import { getHunt } from '@/services/hunt-services.js'
@@ -25,6 +27,7 @@ export default {
     LandownerTable,
     LandownerBarGraph,
     SimilarHuntsTable,
+    HdMap,
     HdHeader
   },
   props: ['id'],
