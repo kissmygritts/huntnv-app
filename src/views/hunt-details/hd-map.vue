@@ -1,19 +1,20 @@
 <template>
   <div class="h-2/5 m-10 p-10 rounded-lg bg-white shadow-lg">
-          <!-- map area -->
-          <section
-            id="map"
-            aria-labelledby="primary-heading"
-            class="h-full"
-          >
-            map
-          </section>
+    {{ hunts }}
+    <!-- map area -->
+    <section
+      id="map"
+      aria-labelledby="primary-heading"
+      class="h-full"
+    >
+      map
+    </section>
   </div>
 </template>
 
 <script>
 import maplibregl from 'maplibre-gl'
-import { getHunts } from '@/services/hunt-services.js'
+import { getHuntFeature } from '@/services/hunt-services.js'
 
 export default {
   data () {
@@ -26,7 +27,7 @@ export default {
   async created () {
     this.loading = true
 
-    const { data } = await getHunts()
+    const { data } = await getHuntFeature()
 
     this.hunts = data
 
