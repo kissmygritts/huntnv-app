@@ -46,21 +46,31 @@ export default {
             'fill-opacity': 0.8
           }
         })
-        // On click create popup at cursor location
-        map.on('click', 'huntLayer', function (e) {
-          new maplibregl.Popup()
-            .setLngLat(e.lngLat)
-            .setHTML(e.features[0].properties.unit_group)
-            .addTo(map)
+        // get coordinates from geojson multipolygon
+        const coordinates = this.geojson.features[0].geometry.coordinates[0][0]
+
+        const bounds = coordinates.reduce(function (bounds, coord) {
+          return bounds.extend(coord)
+        }, new maplibregl.LngLatBounds(coordinates))
+
+        map.fitBounds(bounds, {
+          padding: 20
         })
-        // Change the cursor to a pointer when the mouse is over the states layer.
-        map.on('mouseenter', 'huntLayer', function () {
-          map.getCanvas().style.cursor = 'pointer'
-        })
-        // Change it back to a pointer when it leaves.
-        map.on('mouseleave', 'huntLayer', function () {
-          map.getCanvas().style.cursor = ''
-        })
+      })
+      // On click create popup at cursor location
+      map.on('click', 'huntLayer', function (e) {
+        new maplibregl.Popup()
+          .setLngLat(e.lngLat)
+          .setHTML(e.features[0].properties.unit_group)
+          .addTo(map)
+      })
+      // Change the cursor to a pointer when the mouse is over the states layer.
+      map.on('mouseenter', 'huntLayer', function () {
+        map.getCanvas().style.cursor = 'pointer'
+      })
+      // Change it back to a pointer when it leaves.
+      map.on('mouseleave', 'huntLayer', function () {
+        map.getCanvas().style.cursor = ''
       })
     }
   }
