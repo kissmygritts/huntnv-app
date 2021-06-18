@@ -1,8 +1,11 @@
 <template>
-  <hd-header v-bind:hunt="hunt"/>
-  <landowner-table v-bind:hunt="hunt"/>
-  <landowner-bar-graph v-bind:results="results" />
-  <similar-hunts-table v-bind:hunt="hunt"/>
+  <div class="h-full w-full overflow-y-auto">
+    <hd-header v-bind:hunt="hunt"/>
+    <hd-map v-bind:geojson="geojson" class="h-3/6"/>
+    <landowner-table v-bind:hunt="hunt"/>
+    <landowner-bar-graph v-bind:results="results" />
+    <similar-hunts-table v-bind:hunt="hunt"/>
+  </div>
 </template>
 
 <script>
@@ -13,9 +16,10 @@ import HdHeader from '@/views/hunt-details/hd-header.vue'
 import SimilarHuntsTable from '@/components/similar-hunts-table.vue'
 import LandownerTable from '@/components/landowner-table.vue'
 import LandownerBarGraph from '@/components/landowner-bar-graph.vue'
+import HdMap from '@/views/hunt-details/hd-map.vue'
 
 // import api services
-import { getHunt } from '@/services/hunt-services.js'
+import { getHunt, getHuntFeature } from '@/services/hunt-services.js'
 
 export default {
   components: {
@@ -23,12 +27,14 @@ export default {
     LandownerTable,
     LandownerBarGraph,
     SimilarHuntsTable,
+    HdMap,
     HdHeader
   },
   props: ['id'],
   data () {
     return {
       hunt: null,
+      geojson: null,
       owners: [],
       results: {}
     }
@@ -37,6 +43,10 @@ export default {
     // fetch hunt (by id) and set local data
     await getHunt(this.id).then((response) => {
       this.hunt = response.data
+    })
+
+    await getHuntFeature(this.id).then((response) => {
+      this.geojson = response.data
     })
 
     await this.hunt.landownership.forEach(data => {
