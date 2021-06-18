@@ -1,14 +1,12 @@
 <template>
-  <div class="h-3/6 m-2 p-2 rounded-lg bg-white shadow-lg">
-    <!-- map area -->
-    <div
-      id="map"
-      aria-labelledby="primary-heading"
-      class="h-full"
-    >
-      map
-    </div>
-  </div>
+  <section
+    id="map"
+    aria-labelledby="primary-heading"
+    class="min-w-0 flex-1 h-3/6 flex flex-col overflow-hidden lg:order-last bg-olive-200"
+  >
+    <h1 id="primary-heading" class="sr-only">Map</h1>
+    map
+  </section>
 </template>
 
 <script>
