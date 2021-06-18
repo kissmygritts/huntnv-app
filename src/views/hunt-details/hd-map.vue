@@ -14,7 +14,7 @@ import maplibregl from 'maplibre-gl'
 
 export default {
   name: 'hd-map',
-  props: ['geojson'],
+  props: ['geojson', 'hunt_units'],
   mounted () {
     this.renderMap()
   },
@@ -30,12 +30,12 @@ export default {
       this.map = map
 
       map.on('load', () => {
-        // set the data source to the geojson passed in by props
+        // add hunt polygon to local data from props
         map.addSource('hunt', {
           type: 'geojson',
           data: this.geojson
         })
-        // add fill layer of the hunt polygon to the map
+        // add fill layer of the hunt polygon
         map.addLayer({
           id: 'huntLayer',
           type: 'fill',
@@ -46,15 +46,31 @@ export default {
             'fill-opacity': 0.5
           }
         })
-        // add outline of hunt polygon to the map
+        // add outline of hunt polygon
+        // map.addLayer({
+        //   id: 'outline',
+        //   type: 'line',
+        //   source: 'hunt',
+        //   layout: {},
+        //   paint: {
+        //     'line-color': '#000',
+        //     'line-width': 2
+        //   }
+        // })
+
+        // add the hunt unit polygons to local data from props
+        map.addSource('hunt_units', {
+          type: 'geojson',
+          data: this.hunt_units
+        })
+        // add outline of hunt unit polygons
         map.addLayer({
-          id: 'outline',
+          id: 'huntUnitsLayer',
           type: 'line',
-          source: 'hunt',
+          source: 'hunt_units',
           layout: {},
           paint: {
-            'line-color': '#000',
-            'line-width': 2
+            'line-color': '#fff'
           }
         })
         // get coordinates from geojson multipolygon

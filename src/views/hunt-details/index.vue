@@ -1,7 +1,7 @@
 <template>
   <div class="h-full w-full overflow-y-auto">
     <hd-header v-bind:hunt="hunt"/>
-    <hd-map v-bind:geojson="geojson" class="h-3/6"/>
+    <hd-map v-bind:geojson="geojson" v-bind:hunt_units="hunt_units" class="h-3/6"/>
     <landowner-table v-bind:hunt="hunt"/>
     <landowner-bar-graph v-bind:results="results" />
     <similar-hunts-table v-bind:hunt="hunt"/>
@@ -19,7 +19,7 @@ import LandownerTable from '@/components/landowner-table.vue'
 import LandownerBarGraph from '@/components/landowner-bar-graph.vue'
 
 // import api services
-import { getHunt, getHuntFeature } from '@/services/hunt-services.js'
+import { getHunt, getHuntFeature, getHuntUnitFeatures } from '@/services/hunt-services.js'
 
 export default {
   components: {
@@ -36,7 +36,8 @@ export default {
       hunt: null,
       geojson: null,
       owners: [],
-      results: {}
+      results: {},
+      hunt_units: null
     }
   },
   async created () {
@@ -47,6 +48,9 @@ export default {
     // fetch hunt geometry (by id) and set local data
     await getHuntFeature(this.id).then((response) => {
       this.geojson = response.data
+    })
+    await getHuntUnitFeatures().then((response) => {
+      this.hunt_units = response.data
     })
     // create onwers array from hunt landownership array
     await this.hunt.landownership.forEach(data => {
