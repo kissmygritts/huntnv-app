@@ -63,7 +63,7 @@ export default {
 
         map.addSource('units', {
           type: 'vector',
-          tiles: ['http://localhost:3000/features/hunt_units_open_full/{z}/{x}/{y}.pbf']
+          tiles: ['https://huntnv-api-mkvuv.ondigitalocean.app/features/hunt_units_open_full/{z}/{x}/{y}.pbf']
         })
 
         map.addLayer({
@@ -102,7 +102,7 @@ export default {
 
     async loadGeometry () {
       const geom = await axios.get(
-        'http://localhost:3000/features/hunts_with_geom/317.geobuf',
+        'https://huntnv-api-mkvuv.ondigitalocean.app/features/hunts_with_geom/317.geobuf',
         {
           responseType: 'arraybuffer'
         })
