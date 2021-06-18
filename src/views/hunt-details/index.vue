@@ -1,10 +1,22 @@
 <template>
   <div class="w-full overflow-y-auto">
-    <hd-header v-bind:hunt="hunt"/>
-    <hd-map v-bind:geojson="geojson" />
-    <landowner-table v-bind:hunt="hunt"/>
-    <landowner-bar-graph v-bind:results="results" />
-    <similar-hunts-table v-bind:hunt="hunt"/>
+    <div class="grid grid-cols-3 gap-1">
+      <div class="col-span-3">
+        <hd-header v-bind:hunt="hunt"/>
+      </div>
+      <div class="col-span-2 h-full">
+        <hd-map v-bind:geojson="geojson" class="h-full"/>
+      </div>
+      <div class="...">
+        <landowner-table v-bind:hunt="hunt"/>
+      </div>
+      <div class="col-span-3">
+        <landowner-bar-graph v-bind:results="results" />
+      </div>
+      <div class="col-span-3">
+        <similar-hunts-table v-bind:hunt="hunt"/>
+      </div>
+    </div>
   </div>
 </template>
 

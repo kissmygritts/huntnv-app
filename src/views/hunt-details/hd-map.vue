@@ -1,13 +1,13 @@
 <template>
-  <div class="h-3/5 m-10 p-10 rounded-lg bg-white shadow-lg">
+  <div class="h-3/6 m-2 p-2 rounded-lg bg-white shadow-lg">
     <!-- map area -->
-    <section
+    <div
       id="map"
       aria-labelledby="primary-heading"
       class="h-full"
     >
       map
-    </section>
+    </div>
   </div>
 </template>
 
