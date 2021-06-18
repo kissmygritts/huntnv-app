@@ -50,10 +50,8 @@ export default {
     })
 
     await this.hunt.landownership.forEach(data => {
-      // linter wants api value to be in camel case, add colon to change name
-      // eslint-disable-next-line
-      const { surface_mgmt_agency, coverage } = data
-      this.owners.push({ agency: surface_mgmt_agency, coverage })
+      const { surface_mgmt_agency: SurfaceMgmtAgency, coverage } = data
+      this.owners.push({ agency: SurfaceMgmtAgency, coverage })
     })
 
     this.results = this.owners.reduce((acc, post) => {
