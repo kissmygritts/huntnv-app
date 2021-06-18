@@ -12,7 +12,7 @@
 
 <script>
 export default {
-  name: 'LandownerTable',
+  name: 'landower-table',
   props: ['hunt'],
   setup () {
     function formatAcres (areaAcres) {

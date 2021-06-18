@@ -13,6 +13,7 @@
 <script>
 // see https://chartkick.com/vue
 export default {
+  name: 'landowner-bar-graph',
   props: ['results']
 }
 </script>

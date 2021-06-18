@@ -11,12 +11,12 @@
 <script>
 // import vue view components
 import HdHeader from '@/views/hunt-details/hd-header.vue'
+import HdMap from '@/views/hunt-details/hd-map.vue'
 
 // import vue components
 import SimilarHuntsTable from '@/components/similar-hunts-table.vue'
 import LandownerTable from '@/components/landowner-table.vue'
 import LandownerBarGraph from '@/components/landowner-bar-graph.vue'
-import HdMap from '@/views/hunt-details/hd-map.vue'
 
 // import api services
 import { getHunt, getHuntFeature } from '@/services/hunt-services.js'

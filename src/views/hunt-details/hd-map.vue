@@ -13,6 +13,7 @@
 import maplibregl from 'maplibre-gl'
 
 export default {
+  name: 'hd-map',
   props: ['geojson'],
   mounted () {
     this.renderMap()

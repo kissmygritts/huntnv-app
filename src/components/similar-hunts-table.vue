@@ -37,6 +37,7 @@
 
 <script>
 export default ({
+  name: 'similar-hunts-table',
   props: ['hunt']
 })
 </script>

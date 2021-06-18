@@ -50,7 +50,7 @@
 import { CalendarIcon, IdentificationIcon, ArrowsExpandIcon, TagIcon } from '@heroicons/vue/outline'
 
 export default {
-  name: 'hd-sidebar',
+  name: 'hd-header',
   components: {
     CalendarIcon,
     IdentificationIcon,
