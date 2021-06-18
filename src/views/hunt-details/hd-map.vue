@@ -30,20 +30,31 @@ export default {
       this.map = map
 
       map.on('load', () => {
-        // Set the data source to the geojson passed in by props
+        // set the data source to the geojson passed in by props
         map.addSource('hunt', {
           type: 'geojson',
           data: this.geojson
         })
-        // Add hunt geometry to map
+        // add fill layer of the hunt polygon to the map
         map.addLayer({
           id: 'huntLayer',
           type: 'fill',
           source: 'hunt',
           layout: {},
           paint: {
-            'fill-color': '#088',
-            'fill-opacity': 0.8
+            'fill-color': '#2e598a',
+            'fill-opacity': 0.5
+          }
+        })
+        // add outline of hunt polygon to the map
+        map.addLayer({
+          id: 'outline',
+          type: 'line',
+          source: 'hunt',
+          layout: {},
+          paint: {
+            'line-color': '#000',
+            'line-width': 2
           }
         })
         // get coordinates from geojson multipolygon
@@ -57,18 +68,18 @@ export default {
           padding: 20
         })
       })
-      // On click create popup at cursor location
+      // on click create popup at cursor location
       map.on('click', 'huntLayer', function (e) {
         new maplibregl.Popup()
           .setLngLat(e.lngLat)
           .setHTML(e.features[0].properties.unit_group)
           .addTo(map)
       })
-      // Change the cursor to a pointer when the mouse is over the states layer.
+      // change the cursor to a pointer when the mouse is over the states layer.
       map.on('mouseenter', 'huntLayer', function () {
         map.getCanvas().style.cursor = 'pointer'
       })
-      // Change it back to a pointer when it leaves.
+      // change it back to a pointer when it leaves.
       map.on('mouseleave', 'huntLayer', function () {
         map.getCanvas().style.cursor = ''
       })
