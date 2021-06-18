@@ -21,6 +21,9 @@
 </template>
 
 <script>
+import axios from 'axios'
+import geobuf from 'geobuf'
+import Pbf from 'pbf'
 import maplibregl from 'maplibre-gl'
 import { getHunts } from '@/services/hunt-services.js'
 
@@ -28,7 +31,8 @@ export default {
   data () {
     return {
       hunts: null,
-      loading: true
+      loading: true,
+      huntGeojson: null
     }
   },
 
@@ -50,11 +54,60 @@ export default {
       const map = new maplibregl.Map({
         container: 'map',
         style: 'https://api.maptiler.com/maps/topo/style.json?key=BJ5Us337tUIPtCCZeKV8',
-        center: [0, 0],
-        zoom: 1
+        center: [-116.6554, 39.3564],
+        zoom: 6.5
       })
 
-      this.map = map
+      map.on('load', async () => {
+        await this.loadGeometry()
+
+        map.addSource('units', {
+          type: 'vector',
+          tiles: ['http://localhost:3000/features/hunt_units_open_full/{z}/{x}/{y}.pbf']
+        })
+
+        map.addLayer({
+          id: 'units',
+          type: 'line',
+          source: 'units',
+          'source-layer': 'hunt_units_open_full',
+          layout: {
+            'line-cap': 'round',
+            'line-join': 'round'
+          },
+          paint: {
+            'line-opacity': 0.6,
+            'line-color': '#f29645',
+            'line-width': 2
+          }
+        })
+
+        map.addSource('huntgeoms', {
+          type: 'geojson',
+          data: this.huntGeojson
+        })
+
+        map.addLayer({
+          id: 'hunt-units-fill',
+          type: 'fill',
+          source: 'huntgeoms',
+          layout: {},
+          paint: {
+            'fill-color': '#2e598a',
+            'fill-opacity': 0.7
+          }
+        })
+      })
+    },
+
+    async loadGeometry () {
+      const geom = await axios.get(
+        'http://localhost:3000/features/hunts_with_geom/317.geobuf',
+        {
+          responseType: 'arraybuffer'
+        })
+      const geojson = geobuf.decode(new Pbf(geom.data))
+      this.huntGeojson = geojson
     }
   }
 }
