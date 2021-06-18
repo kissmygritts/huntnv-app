@@ -44,16 +44,16 @@ export default {
     await getHunt(this.id).then((response) => {
       this.hunt = response.data
     })
-
+    // fetch hunt geometry (by id) and set local data
     await getHuntFeature(this.id).then((response) => {
       this.geojson = response.data
     })
-
+    // create onwers array from hunt landownership array
     await this.hunt.landownership.forEach(data => {
       const { surface_mgmt_agency: SurfaceMgmtAgency, coverage } = data
       this.owners.push({ agency: SurfaceMgmtAgency, coverage })
     })
-
+    // reduce array into object key: surface_mgmt_agency value: coverage for bar chart
     this.results = this.owners.reduce((acc, post) => {
       const { agency, coverage } = post
       return { ...acc, [agency]: (coverage) }
