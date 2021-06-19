@@ -14,11 +14,18 @@ import maplibregl from 'maplibre-gl'
 
 export default {
   name: 'hd-map',
-  props: ['geojson', 'hunt_units'],
+  props: ['geojson', 'hunt_units', 'hunt'],
+  data () {
+    return {
+      huntUnits: []
+    }
+  },
   mounted () {
+    // renderMap() is called onMounted
     this.renderMap()
   },
   methods: {
+    // renders the map to the html section with id="map"
     renderMap () {
       const map = new maplibregl.Map({
         container: 'map',
@@ -26,9 +33,9 @@ export default {
         center: [-117, 39],
         zoom: 5
       })
-
+      // sets the map to local data
       this.map = map
-
+      // when the map loads these functions will run
       map.on('load', () => {
         // add hunt polygon to local data from props
         map.addSource('hunt', {
@@ -46,18 +53,6 @@ export default {
             'fill-opacity': 0.5
           }
         })
-        // add outline of hunt polygon
-        // map.addLayer({
-        //   id: 'outline',
-        //   type: 'line',
-        //   source: 'hunt',
-        //   layout: {},
-        //   paint: {
-        //     'line-color': '#000',
-        //     'line-width': 2
-        //   }
-        // })
-
         // add the hunt unit polygons to local data from props
         map.addSource('hunt_units', {
           type: 'geojson',
@@ -75,11 +70,11 @@ export default {
         })
         // get coordinates from geojson multipolygon
         const coordinates = this.geojson.features[0].geometry.coordinates[0][0]
-
+        // set bounds based on the coordinates from the multipolygon
         const bounds = coordinates.reduce(function (bounds, coord) {
           return bounds.extend(coord)
         }, new maplibregl.LngLatBounds(coordinates))
-
+        // set the map bounds based on the bounds from the miltipolygon
         map.fitBounds(bounds, {
           padding: 20
         })

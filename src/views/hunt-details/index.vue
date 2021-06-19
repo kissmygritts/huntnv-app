@@ -1,10 +1,10 @@
 <template>
-  <div class="h-full w-full overflow-y-auto">
-    <hd-header v-bind:hunt="hunt"/>
-    <hd-map v-bind:geojson="geojson" v-bind:hunt_units="hunt_units" class="h-3/6"/>
-    <landowner-table v-bind:hunt="hunt"/>
+  <div class="h-full w-full overflow-y-auto mt-10 mx-5">
+    <hd-header v-bind:hunt="hunt" class="mb-5" />
+    <hd-map v-bind:geojson="geojson" v-bind:hunt_units="hunt_units" v-bind:hunt="hunt" class="h-3/6 shadow-lg rounded-lg"/>
+    <!-- <landowner-table v-bind:hunt="hunt"/>
     <landowner-bar-graph v-bind:results="results" />
-    <similar-hunts-table v-bind:hunt="hunt"/>
+    <similar-hunts-table v-bind:hunt="hunt"/> -->
   </div>
 </template>
 
@@ -14,9 +14,9 @@ import HdHeader from '@/views/hunt-details/hd-header.vue'
 import HdMap from '@/views/hunt-details/hd-map.vue'
 
 // import vue components
-import SimilarHuntsTable from '@/components/similar-hunts-table.vue'
-import LandownerTable from '@/components/landowner-table.vue'
-import LandownerBarGraph from '@/components/landowner-bar-graph.vue'
+// import SimilarHuntsTable from '@/components/similar-hunts-table.vue'
+// import LandownerTable from '@/components/landowner-table.vue'
+// import LandownerBarGraph from '@/components/landowner-bar-graph.vue'
 
 // import api services
 import { getHunt, getHuntFeature, getHuntUnitFeatures } from '@/services/hunt-services.js'
@@ -24,9 +24,9 @@ import { getHunt, getHuntFeature, getHuntUnitFeatures } from '@/services/hunt-se
 export default {
   components: {
     // vue components
-    LandownerTable,
-    LandownerBarGraph,
-    SimilarHuntsTable,
+    // LandownerTable,
+    // LandownerBarGraph,
+    // SimilarHuntsTable,
     HdMap,
     HdHeader
   },
@@ -37,7 +37,8 @@ export default {
       geojson: null,
       owners: [],
       results: {},
-      hunt_units: null
+      hunt_units: null,
+      units: null
     }
   },
   async created () {
@@ -49,6 +50,7 @@ export default {
     await getHuntFeature(this.id).then((response) => {
       this.geojson = response.data
     })
+    // fetch hunt units
     await getHuntUnitFeatures().then((response) => {
       this.hunt_units = response.data
     })
@@ -62,6 +64,16 @@ export default {
       const { agency, coverage } = post
       return { ...acc, [agency]: (coverage) }
     }, {})
+
+    this.setHuntUnits()
+  },
+  methods: {
+    setHuntUnits () {
+      const units = this.hunt.units
+      this.units = JSON.stringify(units)
+      console.log(this.units)
+      return this.units
+    }
   }
 }
 </script>
