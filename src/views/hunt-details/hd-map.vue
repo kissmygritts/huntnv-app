@@ -65,7 +65,7 @@ export default {
           source: 'hunt_units',
           layout: {},
           paint: {
-            'line-color': '#fff'
+            'line-color': 'orange'
           }
         })
         // get coordinates from geojson multipolygon

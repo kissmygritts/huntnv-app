@@ -23,8 +23,10 @@ const getHuntFeature = (id) => {
   return apiClient.get(`/features/hunts_with_geom/${id}.geojson`)
 }
 
-const getHuntUnitFeatures = () => {
-  return apiClient.get('/features/hunt_units.geojson?hunt_units=066,062,064,067,068')
+const getHuntUnitFeatures = (units) => {
+  const data = apiClient.get(`/features/hunt_units.geojson?hunt_units=${units}`)
+  console.log(data)
+  return data
 }
 
 export {

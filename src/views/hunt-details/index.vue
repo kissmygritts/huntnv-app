@@ -46,13 +46,14 @@ export default {
     await getHunt(this.id).then((response) => {
       this.hunt = response.data
     })
+    await this.setHuntUnits()
+    // fetch hunt units
+    await getHuntUnitFeatures(this.units).then((response) => {
+      this.hunt_units = response.data
+    })
     // fetch hunt geometry (by id) and set local data
     await getHuntFeature(this.id).then((response) => {
       this.geojson = response.data
-    })
-    // fetch hunt units
-    await getHuntUnitFeatures().then((response) => {
-      this.hunt_units = response.data
     })
     // create onwers array from hunt landownership array
     await this.hunt.landownership.forEach(data => {
@@ -64,13 +65,12 @@ export default {
       const { agency, coverage } = post
       return { ...acc, [agency]: (coverage) }
     }, {})
-
-    this.setHuntUnits()
   },
   methods: {
     setHuntUnits () {
-      const units = this.hunt.units
-      this.units = JSON.stringify(units)
+      const initialUnits = this.hunt.units
+      this.units = JSON.stringify(initialUnits).replace(/['"]+/g, '')
+      console.log(typeof this.units)
       console.log(this.units)
       return this.units
     }
