@@ -50,7 +50,7 @@ export default {
           layout: {},
           paint: {
             'fill-color': '#2e598a',
-            'fill-opacity': 0.5
+            'fill-opacity': 0.2
           }
         })
         // add the hunt unit polygons to local data from props
@@ -58,9 +58,20 @@ export default {
           type: 'geojson',
           data: this.hunt_units
         })
+        // add fill of hunt unit polygons
+        map.addLayer({
+          id: 'huntUnitsLayer-fill',
+          type: 'fill',
+          source: 'hunt_units',
+          layout: {},
+          paint: {
+            'fill-color': '#fff',
+            'fill-opacity': 0
+          }
+        })
         // add outline of hunt unit polygons
         map.addLayer({
-          id: 'huntUnitsLayer',
+          id: 'huntUnitsLayer-line',
           type: 'line',
           source: 'hunt_units',
           layout: {},
@@ -80,18 +91,18 @@ export default {
         })
       })
       // on click create popup at cursor location
-      map.on('click', 'huntLayer', function (e) {
+      map.on('click', 'huntUnitsLayer-fill', function (e) {
         new maplibregl.Popup()
           .setLngLat(e.lngLat)
-          .setHTML(e.features[0].properties.unit_group)
+          .setHTML(e.features[0].properties.display_name)
           .addTo(map)
       })
       // change the cursor to a pointer when the mouse is over the states layer.
-      map.on('mouseenter', 'huntLayer', function () {
+      map.on('mouseenter', 'huntUnitsLayer-fill', function () {
         map.getCanvas().style.cursor = 'pointer'
       })
       // change it back to a pointer when it leaves.
-      map.on('mouseleave', 'huntLayer', function () {
+      map.on('mouseleave', 'huntUnitsLayer-fill', function () {
         map.getCanvas().style.cursor = ''
       })
     }
