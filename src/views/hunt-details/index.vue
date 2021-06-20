@@ -69,7 +69,7 @@ export default {
   methods: {
     setHuntUnits () {
       const initialUnits = this.hunt.units
-      this.units = JSON.stringify(initialUnits).replace(/['"]+/g, '')
+      this.units = initialUnits.toString()
       console.log(typeof this.units)
       console.log(this.units)
       return this.units
