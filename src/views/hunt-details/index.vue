@@ -47,13 +47,13 @@ export default {
       this.hunt = response.data
     })
     await this.setHuntUnits()
-    // fetch hunt units
-    await getHuntUnitFeatures(this.units).then((response) => {
-      this.hunt_units = response.data
-    })
     // fetch hunt geometry (by id) and set local data
     await getHuntFeature(this.id).then((response) => {
       this.geojson = response.data
+    })
+    // fetch hunt units
+    await getHuntUnitFeatures(this.units).then((response) => {
+      this.hunt_units = response.data
     })
     // create onwers array from hunt landownership array
     await this.hunt.landownership.forEach(data => {
