@@ -1,6 +1,5 @@
 <template>
   <div v-if="results" class="uppercase">
-    <h2 class="font-bold">Landownership Chart</h2>
     <pie-chart
       :data="results"
       :min="0"
