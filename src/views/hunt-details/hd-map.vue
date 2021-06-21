@@ -2,7 +2,7 @@
   <section
     id="map"
     aria-labelledby="primary-heading"
-    class="min-w-0 flex-1 h-3/6 flex flex-col overflow-hidden lg:order-last bg-olive-200"
+    class="min-w-0 h-3/6 flex flex-col overflow-hidden lg:order-last bg-olive-200"
   >
     <h1 id="primary-heading" class="sr-only">Map</h1>
     map
@@ -87,7 +87,7 @@ export default {
         }, new maplibregl.LngLatBounds(coordinates))
         // set the map bounds based on the bounds from the miltipolygon
         map.fitBounds(bounds, {
-          padding: 20
+          padding: 100
         })
       })
       // on click create popup at cursor location
