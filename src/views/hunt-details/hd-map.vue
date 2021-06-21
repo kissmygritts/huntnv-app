@@ -31,7 +31,7 @@ export default {
         container: 'map',
         style: 'https://api.maptiler.com/maps/topo/style.json?key=BJ5Us337tUIPtCCZeKV8',
         center: [-117, 39],
-        zoom: 5
+        zoom: 1
       })
       // sets the map to local data
       this.map = map
@@ -87,7 +87,7 @@ export default {
         }, new maplibregl.LngLatBounds(coordinates))
         // set the map bounds based on the bounds from the miltipolygon
         map.fitBounds(bounds, {
-          padding: 100
+          padding: 20
         })
       })
       // on click create popup at cursor location

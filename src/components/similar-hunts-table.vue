@@ -1,10 +1,10 @@
 <template>
 <div class="bg-white p-6 rounded-lg shadow-lg">
   <h3 class="font-bold text-xl text-black uppercase">Similar Hunts</h3>
-  <div class="p-2 my-5 flex bg-gray-500 rounded-lg shadow-lg">
-    <div class="">
-      <label class="text-white font-medium">
-        Species:
+  <div class="p-2 my-5 flex bg-gray-500 rounded-sm shadow-lg uppercase">
+    <div class="mx-5">
+      <label class="text-white font-medium mr-2">
+        Species
       </label>
       <select name="species"  v-model="species" @change="setSpecies" class="capitalize">
         <option v-for="i in this.speciesList" :key="i">
@@ -12,24 +12,23 @@
         </option>
       </select>
     </div>
-    <div class="pl-1">
-      <label class="text-white font-medium">
-        Draw Type:
+    <div class="mx-5">
+      <label class="text-white font-medium mr-2">
+        Draw Type
       </label>
       <select name="resident" v-model="drawType" @change="setDrawType">
         <option value="non-resident">Non-Resident</option>
         <option value="resident">Resident</option>
       </select>
     </div>
-    <div class="pl-1">
-      <label class="text-white font-medium">
-        Weapon:
+    <div class="mx-5">
+      <label class="text-white font-medium mr-2">
+        Weapon
       </label>
-      <select name="weapon" v-model="weapon" @change="setWeapon">
-        <option value="any legal weapon">Any Legal Weapon</option>
-        <option value="archery">Archery</option>
-        <option value="muzzleloader">Muzzleloader</option>
-        <option value="rifle">Rifle</option>
+      <select name="weapon" v-model="weapon" @change="setWeapon" class="capitalize">
+        <option v-for="i in this.weaponList" :key="i">
+          {{ i }}
+        </option>
       </select>
     </div>
   </div>
@@ -49,23 +48,29 @@
           <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
             Season Dates
           </th>
+          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Units
+          </th>
         </tr>
       </thead>
       <tbody v-if="hunt" class="bg-white divide-y divide-gray-200 capitalize">
-        <tr v-for="i in data" :key="i.hunt_id">
-          <td class="px-6 py-4 whitespace-nowrap text-xs sm:text-sm font-medium text-gray-900">
-            {{ i.display_name }}
-          </td>
-          <td class="px-6 py-4 whitespace-nowrap text-xs sm:text-sm font-medium text-gray-900">
-            {{ i.draw_type }}
-          </td>
-          <td class="px-6 py-4 whitespace-nowrap text-xs sm:text-sm font-medium text-gray-900">
-            {{ i.weapon }}
-          </td>
-          <td class="px-6 py-4 whitespace-nowrap text-xs sm:text-sm font-medium text-gray-900">
-            {{ i.season_dates }}
-          </td>
-        </tr>
+          <tr v-for="i in data" :key="i.hunt_id">
+            <td class="px-6 py-4 whitespace-nowrap text-xs sm:text-sm font-medium text-gray-900">
+              {{ i.display_name }}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-xs sm:text-sm font-medium text-gray-900">
+              {{ i.draw_type }}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-xs sm:text-sm font-medium text-gray-900">
+              {{ i.weapon }}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-xs sm:text-sm font-medium text-gray-900">
+              {{ i.season_dates }}
+            </td>
+            <td class="px-6 py-4 whitespace-nowrap text-xs sm:text-sm font-medium text-gray-900">
+              {{ i.unit_group }}
+            </td>
+          </tr>
       </tbody>
     </table>
   </div>
@@ -82,7 +87,8 @@ export default ({
       species: this.hunt.species,
       drawType: null,
       weapon: null,
-      speciesList: null
+      speciesList: null,
+      weaponList: null
     }
   },
   created () {
@@ -97,9 +103,10 @@ export default ({
     setSpeciesList () {
       console.log(this.hunt.similar_hunts)
       const similarHunts = this.hunt.similar_hunts
-      const unique = [...new Set(similarHunts.map(data => data.species))]
-      console.log(unique)
-      this.speciesList = unique
+      const uniqueSpecies = [...new Set(similarHunts.map(data => data.species))]
+      const uniqueWeapon = [...new Set(similarHunts.map(data => data.weapon))]
+      this.speciesList = uniqueSpecies
+      this.weaponList = uniqueWeapon
     },
     setSpecies () {
       const similarHunts = this.hunt.similar_hunts

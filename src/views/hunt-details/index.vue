@@ -1,9 +1,11 @@
 <template>
   <div v-if="hunt" class="h-full w-full overflow-y-auto">
     <hd-header v-bind:hunt="hunt" class="m-5" />
-    <hd-map v-bind:geojson="geojson" v-bind:hunt_units="hunt_units" v-bind:hunt="hunt" class="h-3/6 shadow-lg rounded-lg mb-5 mx-5"/>
-    <landowner-tabs v-bind:hunt="hunt" v-bind:results="results" class="mb-5 mx-5"/>
-    <similar-hunts-table v-bind:hunt="hunt" class="mb-5 mx-5"/>
+    <hd-map v-bind:geojson="geojson" v-bind:hunt_units="hunt_units" v-bind:hunt="hunt" class="h-4/6 shadow-lg rounded-lg mb-5 mx-5"/>
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-5 mx-5">
+      <landowner-tabs v-bind:hunt="hunt" v-bind:results="results" class="col-span-1"/>
+      <similar-hunts-table v-bind:hunt="hunt" class="col-span-1 lg:col-span-2"/>
+    </div>
   </div>
 </template>
 
