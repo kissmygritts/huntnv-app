@@ -35,6 +35,9 @@ export default {
       })
       // sets the map to local data
       this.map = map
+
+      map.addControl(new maplibregl.FullscreenControl())
+
       // when the map loads these functions will run
       map.on('load', () => {
         // add hunt polygon to local data from props
