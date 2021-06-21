@@ -1,7 +1,7 @@
 <template>
 <div class="bg-white p-6 rounded-lg shadow-lg">
   <h3 class="font-bold text-xl text-black uppercase">Similar Hunts</h3>
-  <div class="p-2 my-5 flex bg-gray-500 rounded-sm shadow-lg uppercase">
+  <div class="p-2 my-5 lg:flex bg-gray-500 rounded-sm shadow-lg uppercase">
     <div class="mx-5">
       <label class="text-white font-medium mr-2">
         Species
