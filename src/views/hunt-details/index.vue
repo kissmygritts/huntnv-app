@@ -3,8 +3,7 @@
     <hd-header v-bind:hunt="hunt" class="m-5" />
     <hd-map v-bind:geojson="geojson" v-bind:hunt_units="hunt_units" v-bind:hunt="hunt" class="h-3/6 shadow-lg rounded-lg mb-5 mx-5"/>
     <landowner-tabs v-bind:hunt="hunt" v-bind:results="results" class="mb-5 mx-5"/>
-    <!-- <landowner-bar-graph v-bind:results="results" />
-    <similar-hunts-table v-bind:hunt="hunt"/> -->
+    <similar-hunts-table v-bind:hunt="hunt"/>
   </div>
 </template>
 
@@ -14,9 +13,8 @@ import HdHeader from '@/views/hunt-details/hd-header.vue'
 import HdMap from '@/views/hunt-details/hd-map.vue'
 
 // import vue components
-// import SimilarHuntsTable from '@/components/similar-hunts-table.vue'
 import LandownerTabs from '@/components/landownership/landowner-tabs.vue'
-// import LandownerBarGraph from '@/components/landowner-bar-graph.vue'
+import SimilarHuntsTable from '@/components/similar-hunts-table.vue'
 
 // import api services
 import { getHunt, getHuntFeature, getHuntUnitFeatures } from '@/services/hunt-services.js'
@@ -25,8 +23,7 @@ export default {
   components: {
     // vue components
     LandownerTabs,
-    // LandownerBarGraph,
-    // SimilarHuntsTable,
+    SimilarHuntsTable,
     HdMap,
     HdHeader
   },
