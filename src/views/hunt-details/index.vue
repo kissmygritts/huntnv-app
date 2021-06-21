@@ -1,6 +1,6 @@
 <template>
   <div class="h-full w-full overflow-y-auto">
-    <hd-header v-bind:hunt="hunt" class="mb-5 mx-5" />
+    <hd-header v-bind:hunt="hunt" class="m-5" />
     <hd-map v-bind:geojson="geojson" v-bind:hunt_units="hunt_units" v-bind:hunt="hunt" class="h-3/6 shadow-lg rounded-lg mb-5 mx-5"/>
     <landowner-tabs v-bind:hunt="hunt" v-bind:results="results" class="mb-5 "/>
     <!-- <landowner-bar-graph v-bind:results="results" />
