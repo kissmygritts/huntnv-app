@@ -7,27 +7,24 @@
             <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-mark.svg?color=white" alt="Workflow" />
           </div>
           <nav aria-label="Sidebar" class="py-6 px-2 flex flex-col items-center space-y-3">
-            <a
+            <router-link
               v-for="item in navigation"
               :key="item.name"
-              :href="item.href"
+              :to="item.href"
               class="group w-full p-3 rounded-lg flex flex-col items-center text-xs text-oxford-100 hover:bg-oxford-600"
+              :class="[ item.href === '#' ? 'cursor-not-allowed' : '' ]"
             >
               <component :is="item.icon" class="h-6 w-6" aria-hidden="true" />
               <p class="mt-1">{{ item.name }}</p>
-              <!-- <span class="sr-only">{{ item.name }}</span> -->
-            </a>
+            </router-link>
           </nav>
         </div>
-        <div class="flex-shrink-0 flex pb-5">
-          <a href="#" class="flex-shrink-0 w-full">
-            <img class="block mx-auto h-10 w-10 rounded-full" :src="user.imageUrl" alt="" />
+        <div class="flex-shrink-0 flex pb-5" title="ndow.org">
+          <a href="http://ndow.org" class="flex-shrink-0 w-full" target="_blank" rel="noreferrer noopener">
+            <img class="block mx-auto h-20 w-20" src="@/assets/images/ndow-logo.png" alt="to ndow.org website" />
             <div class="sr-only">
               <p>
-                {{ user.name }}
-              </p>
-              <p>
-                Account settings
+                To ndow.org website
               </p>
             </div>
           </a>

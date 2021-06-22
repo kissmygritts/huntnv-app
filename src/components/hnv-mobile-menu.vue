@@ -24,25 +24,28 @@
             </div>
             <nav aria-label="Sidebar" class="mt-5">
               <div class="px-2 space-y-1">
-                <a v-for="item in navigation" :key="item.name" :href="item.href" class="group p-2 rounded-md flex items-center text-base font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900">
+                <router-link
+                  v-for="item in navigation"
+                  :key="item.name"
+                  :to="item.href"
+                  class="group p-2 rounded-md flex items-center text-base font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                  :class="[ item.href === '#' ? 'cursor-not-allowed' : '' ]"
+                >
                   <component :is="item.icon" class="mr-4 h-6 w-6 text-gray-400 group-hover:text-gray-500" aria-hidden="true" />
                   {{ item.name }}
-                </a>
+                </router-link>
               </div>
             </nav>
           </div>
           <div class="flex-shrink-0 flex border-t border-gray-200 p-4">
-            <a href="#" class="flex-shrink-0 group block">
+            <a href="http://www.ndow.org" class="flex-shrink-0 group block" alt="to ndow.org website" target="_blank" rel="noreferrer noopener">
               <div class="flex items-center">
                 <div>
-                  <img class="inline-block h-10 w-10 rounded-full" :src="user.imageUrl" alt="" />
+                  <img class="inline-block h-20 w-20" src="@/assets/images/ndow-logo.png" alt="" />
                 </div>
                 <div class="ml-3">
                   <p class="text-base font-medium text-gray-700 group-hover:text-gray-900">
-                    {{ user.name }}
-                  </p>
-                  <p class="text-sm font-medium text-gray-500 group-hover:text-gray-700">
-                    Account Settings
+                    NDOW.org
                   </p>
                 </div>
               </div>
