@@ -36,38 +36,38 @@
     <table class="min-w-full divide-y divide-gray-200">
       <thead class="bg-gray-50">
         <tr>
-          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+          <th scope="col" class="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
             Hunt
           </th>
-          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+          <th scope="col" class="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
             Draw Type
           </th>
-          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+          <th scope="col" class="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
             Weapon
           </th>
-          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+          <th scope="col" class="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
             Season Dates
           </th>
-          <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+          <th scope="col" class="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
             Units
           </th>
         </tr>
       </thead>
       <tbody v-if="hunt" class="bg-white divide-y divide-gray-200 capitalize">
           <tr v-for="i in data" :key="i.hunt_id">
-            <td class="px-6 py-4 whitespace-nowrap text-xs sm:text-sm font-medium text-gray-900">
+            <td class="px-2 py-4 whitespace-nowrap text-xs sm:text-sm font-medium text-gray-900">
               {{ i.display_name }}
             </td>
-            <td class="px-6 py-4 whitespace-nowrap text-xs sm:text-sm font-medium text-gray-900">
+            <td class="px-2 py-4 whitespace-nowrap text-xs sm:text-sm font-medium text-gray-900">
               {{ i.draw_type }}
             </td>
-            <td class="px-6 py-4 whitespace-nowrap text-xs sm:text-sm font-medium text-gray-900">
+            <td class="px-2 py-4 whitespace-nowrap text-xs sm:text-sm font-medium text-gray-900">
               {{ i.weapon }}
             </td>
-            <td class="px-6 py-4 whitespace-nowrap text-xs sm:text-sm font-medium text-gray-900">
+            <td class="px-2 py-4 whitespace-nowrap text-xs sm:text-sm font-medium text-gray-900">
               {{ i.season_dates }}
             </td>
-            <td class="px-6 py-4 whitespace-nowrap text-xs sm:text-sm font-medium text-gray-900">
+            <td class="px-2 py-4 whitespace-nowrap text-xs sm:text-sm font-medium text-gray-900">
               {{ i.unit_group }}
             </td>
           </tr>
