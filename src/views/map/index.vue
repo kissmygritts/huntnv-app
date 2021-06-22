@@ -14,7 +14,27 @@
     <aside class="hidden lg:block lg:flex-shrink-0 lg:order-first">
       <div class="h-full relative flex flex-col w-96 border-r border-gray-200 bg-gray-200 overflow-y-scroll overflow-x-hidden">
         <p v-if="loading">LOADING...</p>
-        <pre v-else><code>{{ hunts }}</code></pre>
+        <div v-else>
+          <label>
+              Species
+          </label>
+          <select v-model="displayName" @change="filterSpecies">
+             <option v-for="i in this.displayNameList" :key="i">
+              {{ i }}
+            </option>
+          </select>
+          <div v-if="show" class="">
+            <label>
+                Draw Type
+            </label>
+            <select v-model="drawType" @change="filterDrawType">
+              <option v-for="i in this.drawTypeList" :key="i">
+                {{ i }}
+              </option>
+            </select>
+          </div>
+          {{ this.hunts}}
+        </div>
       </div>
     </aside>
   </div>
@@ -32,16 +52,20 @@ export default {
     return {
       hunts: null,
       loading: true,
-      huntGeojson: null
+      huntGeojson: null,
+      show: false,
+      displayName: null,
+      displayNameList: null,
+      drawType: null,
+      drawTypeList: null
     }
   },
 
   async created () {
     this.loading = true
-
     const { data } = await getHunts()
     this.hunts = data
-
+    this.setLists()
     this.loading = false
   },
 
@@ -50,6 +74,23 @@ export default {
   },
 
   methods: {
+    setLists () {
+      const hunts = this.hunts
+
+      const uniqueDisplayName = [...new Set(hunts.map(data => data.display_name))]
+      this.displayNameList = uniqueDisplayName
+    },
+    filterSpecies () {
+      const name = this.hunts.filter(data => (data.display_name === this.displayName))
+      this.hunts = name
+      const uniqueDrawType = [...new Set(this.hunts.map(data => data.draw_type))]
+      this.drawTypeList = uniqueDrawType
+      this.show = true
+    },
+    filterDrawType () {
+      const drawType = this.hunts.filter(data => (data.draw_type === this.drawType))
+      this.hunts = drawType
+    },
     renderMap () {
       const map = new maplibregl.Map({
         container: 'map',
