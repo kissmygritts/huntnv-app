@@ -54,7 +54,12 @@
 
             <button type="button" class="bg-white p-2 mt-2" @click="resetHuntFilters">Reset Filters</button>
           </div>
-          <pre><code>{{ this.activeHunts }}</code></pre>
+
+          <!-- <pre><code>{{ activeHunts[0] }}</code></pre> -->
+
+          <div class="w-full p-2">
+            <mv-hunt-list :hunts="activeHunts" />
+          </div>
         </div>
       </div>
     </aside>
@@ -67,6 +72,7 @@ import geobuf from 'geobuf'
 import Pbf from 'pbf'
 import maplibregl from 'maplibre-gl'
 import { getHunts } from '@/services/hunt-services.js'
+import mvHuntList from './mv-hunt-list.vue'
 
 const filterArray = (arr, filters) => {
   const filterKeys = Object.keys(filters)
@@ -101,7 +107,9 @@ const residencyOptions = ['', 'resident', 'non-resident']
 const weaponOptions = ['', 'archery', 'muzzleloader', 'any legal weapon']
 
 export default {
-  name: 'map-page',
+  name: 'map-view',
+
+  components: { mvHuntList },
 
   data () {
     return {
