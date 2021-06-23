@@ -1,10 +1,10 @@
 <template>
 <div class="bg-white p-6 rounded-lg shadow-lg">
   <h3 class="font-bold text-xl text-black uppercase">Similar Hunts</h3>
-  <div class="p-2 my-5 lg:flex bg-gray-500 rounded-sm shadow-lg uppercase">
-    <div class="mx-5">
-      <label class="text-white font-medium mr-2">
-        Species
+  <div class="my-2 p-2 lg:flex bg-gray-50 rounded-sm uppercase">
+    <div class="text-xs font-medium text-gray-500 uppercase">
+      <label class="mr-2">
+        Filter Species
       </label>
       <select name="species"  v-model="species" @change="setSpecies" class="capitalize">
         <option v-for="i in this.speciesList" :key="i">
@@ -12,18 +12,18 @@
         </option>
       </select>
     </div>
-    <div class="mx-5">
-      <label class="text-white font-medium mr-2">
-        Draw Type
+    <div class="ml-2 text-xs font-medium text-gray-500 uppercase">
+      <label class="mr-2">
+        Filter Draw Type
       </label>
       <select name="resident" v-model="drawType" @change="setDrawType">
         <option value="non-resident">Non-Resident</option>
         <option value="resident">Resident</option>
       </select>
     </div>
-    <div class="mx-5">
-      <label class="text-white font-medium mr-2">
-        Weapon
+    <div class="ml-2 text-xs font-medium text-gray-500 uppercase">
+      <label class="mr-2">
+        Filter Weapon
       </label>
       <select name="weapon" v-model="weapon" @change="setWeapon" class="capitalize">
         <option v-for="i in this.weaponList" :key="i">
@@ -32,7 +32,7 @@
       </select>
     </div>
   </div>
-  <div class="bg-white rounded-lg shadow-lg">
+  <div class="rounded-sm">
     <table class="min-w-full divide-y divide-gray-200">
       <thead class="bg-gray-50">
         <tr>
