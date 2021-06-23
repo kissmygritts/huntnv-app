@@ -4,7 +4,15 @@
     <section
       id="map"
       aria-labelledby="primary-heading"
-      class="min-w-0 flex-1 h-full flex flex-col overflow-hidden lg:order-last bg-olive-200"
+      class="
+        min-w-0
+        flex-1
+        h-full
+        flex flex-col
+        overflow-hidden
+        lg:order-last
+        bg-olive-200
+      "
     >
       <h1 id="primary-heading" class="sr-only">Map</h1>
       map
@@ -12,28 +20,41 @@
 
     <!-- hunt cards and filters (hidden on smaller screens) -->
     <aside class="hidden lg:block lg:flex-shrink-0 lg:order-first">
-      <div class="h-full relative flex flex-col w-96 border-r border-gray-200 bg-gray-200 overflow-y-scroll overflow-x-hidden">
+      <div
+        class="
+          h-full
+          relative
+          flex flex-col
+          w-96
+          border-r border-gray-200
+          bg-gray-200
+          overflow-y-scroll overflow-x-hidden
+        "
+      >
         <p v-if="loading">LOADING...</p>
         <div v-else>
-          <label>
-              Species
-          </label>
-          <select v-model="displayName" @change="filterSpecies">
-             <option v-for="i in this.displayNameList" :key="i">
-              {{ i }}
-            </option>
-          </select>
-          <div v-if="show" class="">
-            <label>
-                Draw Type
-            </label>
-            <select v-model="drawType" @change="filterDrawType">
-              <option v-for="i in this.drawTypeList" :key="i">
-                {{ i }}
+          <div class="w-full p-4">
+            <select class="w-full" name="speces" id="species" v-model="speciesId" @change="setHuntFilters">
+              <option v-for="species in speciesOptions" :key="species.id" :value="species.id">
+                {{ species.displayName }}
               </option>
             </select>
+
+            <select class="w-full mt-2" name="residency" id="residency" v-model="residency" @change="setHuntFilters">
+              <option v-for="residency in residencyOptions" :key="residency" :value="residency">
+                {{ residency }}
+              </option>
+            </select>
+
+            <select class="w-full mt-2" name="weapon" id="weapon" v-model="weapon" @change="setHuntFilters">
+              <option v-for="weapon in weaponOptions" :key="weapon" :value="weapon">
+                {{ weapon }}
+              </option>
+            </select>
+
+            <button type="button" class="bg-white p-2 mt-2" @click="resetHuntFilters">Reset Filters</button>
           </div>
-          {{ this.hunts}}
+          <pre><code>{{ this.activeHunts }}</code></pre>
         </div>
       </div>
     </aside>
@@ -47,17 +68,78 @@ import Pbf from 'pbf'
 import maplibregl from 'maplibre-gl'
 import { getHunts } from '@/services/hunt-services.js'
 
+const filterArray = (arr, filters) => {
+  const filterKeys = Object.keys(filters)
+
+  return arr.filter(item => {
+    return filterKeys.every(key => {
+      if (!filters[key].toString().length) return true
+      return filters[key] === item[key]
+    })
+  })
+}
+
+const speciesOptions = [
+  { id: 0, displayName: '' },
+  { id: 1, displayName: 'antelope - horns longer than ears' },
+  { id: 2, displayName: 'antelope - horns shorter than ears' },
+  { id: 3, displayName: 'california bighorn sheep - any ram' },
+  { id: 4, displayName: 'elk - antlered' },
+  { id: 5, displayName: 'elk - antlerless' },
+  { id: 6, displayName: 'elk - depredation antlered' },
+  { id: 7, displayName: 'elk - depredation antlerless' },
+  { id: 8, displayName: 'elk - spike' },
+  { id: 9, displayName: 'mountain goat - any goat' },
+  { id: 10, displayName: 'mule deer - antlered' },
+  { id: 11, displayName: 'mule deer - antlered or antlerless' },
+  { id: 12, displayName: 'mule deer - antlerless' },
+  { id: 13, displayName: 'nelson (desert) bighorn sheep - any ewe' },
+  { id: 14, displayName: 'nelson (desert) bighorn sheep - any ram' },
+  { id: 15, displayName: 'rocky mountain bighorn sheep - any ram' }
+]
+const residencyOptions = ['', 'resident', 'non-resident']
+const weaponOptions = ['', 'archery', 'muzzleloader', 'any legal weapon']
+
 export default {
+  name: 'map-page',
+
   data () {
     return {
       hunts: null,
       loading: true,
       huntGeojson: null,
-      show: false,
-      displayName: null,
-      displayNameList: null,
-      drawType: null,
-      drawTypeList: null
+      speciesOptions,
+      speciesId: 0,
+      residencyOptions,
+      residency: '',
+      weaponOptions,
+      weapon: '',
+      map: null
+    }
+  },
+
+  computed: {
+    activeFilters () {
+      const filters = {}
+
+      if (this.speciesId) Object.assign(filters, { species_id: this.speciesId })
+      if (this.residency) Object.assign(filters, { draw_type: this.residency })
+      if (this.weapon) Object.assign(filters, { weapon: this.weapon })
+
+      return filters
+    },
+
+    activeHunts () {
+      if (!Object.keys(this.activeFilters).length) return this.hunts
+      return filterArray(this.hunts, this.activeFilters)
+    },
+
+    activeHuntIds () {
+      return this.activeHunts.map(item => item.id)
+    },
+
+    huntMvtFilter () {
+      return ['in', '$id', ...this.activeHuntIds]
     }
   },
 
@@ -65,7 +147,6 @@ export default {
     this.loading = true
     const { data } = await getHunts()
     this.hunts = data
-    this.setLists()
     this.loading = false
   },
 
@@ -74,33 +155,17 @@ export default {
   },
 
   methods: {
-    setLists () {
-      const hunts = this.hunts
-
-      const uniqueDisplayName = [...new Set(hunts.map(data => data.display_name))]
-      this.displayNameList = uniqueDisplayName
-    },
-    filterSpecies () {
-      const name = this.hunts.filter(data => (data.display_name === this.displayName))
-      this.hunts = name
-      const uniqueDrawType = [...new Set(this.hunts.map(data => data.draw_type))]
-      this.drawTypeList = uniqueDrawType
-      this.show = true
-    },
-    filterDrawType () {
-      const drawType = this.hunts.filter(data => (data.draw_type === this.drawType))
-      this.hunts = drawType
-    },
     renderMap () {
       const map = new maplibregl.Map({
         container: 'map',
-        style: 'https://api.maptiler.com/maps/topo/style.json?key=BJ5Us337tUIPtCCZeKV8',
+        style:
+          'https://api.maptiler.com/maps/topo/style.json?key=BJ5Us337tUIPtCCZeKV8',
         center: [-116.6554, 39.3564],
         zoom: 6.5
       })
 
-      map.on('load', async () => {
-        await this.loadGeometry()
+      map.on('load', () => {
+        // await this.loadGeometry()
 
         map.addSource('units', {
           type: 'vector',
@@ -124,21 +189,44 @@ export default {
         })
 
         map.addSource('huntgeoms', {
-          type: 'geojson',
-          data: this.huntGeojson
+          type: 'vector',
+          tiles: ['http://localhost:3000/features/hunts_with_geom/{z}/{x}/{y}.pbf']
         })
 
         map.addLayer({
-          id: 'hunt-units-fill',
+          id: 'hunts-fill',
           type: 'fill',
           source: 'huntgeoms',
+          'source-layer': 'hunts_with_geom',
           layout: {},
           paint: {
             'fill-color': '#2e598a',
-            'fill-opacity': 0.7
-          }
+            'fill-opacity': 0.4,
+            'fill-outline-color': 'rgba(255, 255, 255, 1)'
+          },
+          filter: [
+            '==', '$id', 655
+          ]
         })
       })
+
+      map.on('click', (e) => {
+        const features = map.queryRenderedFeatures(e.point)
+        console.log({ features })
+      })
+
+      this.map = map
+    },
+
+    setHuntFilters () {
+      this.map.setFilter('hunts-fill', this.huntMvtFilter)
+    },
+
+    resetHuntFilters () {
+      this.map.setFilter('hunts-fill', null)
+      this.speciesId = 0
+      this.residency = ''
+      this.weapon = ''
     },
 
     async loadGeometry () {
@@ -146,7 +234,8 @@ export default {
         'https://huntnv-api-mkvuv.ondigitalocean.app/features/hunts_with_geom/317.geobuf',
         {
           responseType: 'arraybuffer'
-        })
+        }
+      )
       const geojson = geobuf.decode(new Pbf(geom.data))
       this.huntGeojson = geojson
     }
