@@ -38,7 +38,7 @@
       <thead class="bg-gray-50">
         <tr>
           <th scope="col" class="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            Hunt
+            Species
           </th>
           <th scope="col" class="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
             Draw Type
@@ -57,7 +57,7 @@
       <tbody v-if="hunt" class="bg-white divide-y divide-gray-200 capitalize">
           <tr v-for="i in data" :key="i.hunt_id">
             <td class="px-2 py-4 whitespace-nowrap text-xs sm:text-sm font-medium text-gray-900">
-              {{ i.display_name }}
+              {{ i.species }}
             </td>
             <td class="px-2 py-4 whitespace-nowrap text-xs sm:text-sm font-medium text-gray-900">
               {{ i.draw_type }}
