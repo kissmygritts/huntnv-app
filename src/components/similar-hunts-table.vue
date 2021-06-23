@@ -3,16 +3,6 @@
   <h3 class="font-bold text-xl text-black uppercase">Similar Hunts</h3>
   <similar-hunts-tabs :hunt="hunt" @filter="setSpecies" />
   <!-- <div class="my-2 p-2 lg:flex bg-gray-50 rounded-sm uppercase">
-    <div class="text-xs font-medium text-gray-500 uppercase">
-      <label class="mr-2">
-        Filter Species
-      </label>
-      <select name="species"  v-model="species" @change="setSpecies" class="capitalize">
-        <option v-for="i in this.speciesList" :key="i">
-          {{ i }}
-        </option>
-      </select>
-    </div>
     <div class="ml-2 text-xs font-medium text-gray-500 uppercase">
       <label class="mr-2">
         Filter Draw Type
@@ -112,10 +102,14 @@ export default ({
       this.speciesList = uniqueSpecies
       this.weaponList = uniqueWeapon
     },
+    // sets the species displayed in table, take a parameter filterSpecies passed by @filter listerner
     setSpecies (filterSpecies) {
+      // sets the species from the @click function in the simalar-hunts-tabs component
       this.species = filterSpecies
       console.log(this.species)
+      // set similar hunts to constant
       const similarHunts = this.hunt.similar_hunts
+      // filter similar hunts by species that match the filterSpecies
       this.data = similarHunts.filter(similarHunts => (similarHunts.species === this.species))
     },
     setDrawType () {

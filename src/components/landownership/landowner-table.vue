@@ -1,11 +1,27 @@
 <template>
   <div v-if="hunt" class="uppercase">
-      <dl v-for="owner in hunt.landownership" :key="owner.hunt_id">
-        <div class="py-3 flex justify-between text-xs font-medium mt-2 border-t border-gray-200">
-          <dt class="text-gray-500">{{ owner.surface_mgmt_agency}}</dt>
-          <dd class="text-gray-900">{{ formatAcres(owner.area) }} ({{ formatPrecentage(owner.coverage) }}% )</dd>
-        </div>
-      </dl>
+    <table class="min-w-full divide-y divide-gray-200">
+      <thead class="bg-gray-50">
+        <tr>
+          <th scope="col" class="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Landowner
+          </th>
+          <th scope="col" class="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            Acres (% Hunt Area)
+          </th>
+        </tr>
+      </thead>
+      <tbody v-if="hunt" class="bg-white divide-y divide-gray-200 capitalize">
+          <tr v-for="owner in hunt.landownership" :key="owner.hunt_id">
+            <td class="px-2 py-4 whitespace-nowrap text-xs font-medium text-gray-900">
+              {{ owner.surface_mgmt_agency}}
+            </td>
+            <td class="px-2 py-4 whitespace-nowrap text-xs font-medium text-gray-900">
+              {{ formatAcres(owner.area) }} ({{ formatPrecentage(owner.coverage) }}%)
+            </td>
+          </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 

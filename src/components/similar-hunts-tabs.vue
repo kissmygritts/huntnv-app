@@ -9,9 +9,9 @@
     <div class="hidden sm:block">
       <div class="border-b border-gray-200 uppercase">
         <div class="-mb-px flex space-x-8 uppercase" aria-label="Tabs">
-          <button @click="$emit('filter', result.species)" v-for="result in results" :key="result.species" :class="[result.current ? 'border-indigo-500 text-indigo-600 capitalize' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-200 capitalize', 'whitespace-nowrap flex py-4 px-1 border-b-2 font-medium text-sm capitalize']" :aria-current="result.current ? 'page' : undefined">
+          <button @click="$emit('filter', result.species)" v-for="result in results" :key="result.species" :class="['border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-200 capitalize', 'whitespace-nowrap flex py-4 px-1 border-b-2 font-medium text-sm capitalize']" :aria-current="result.current ? 'page' : undefined">
             {{ result.species }}
-            <span v-if="result.count" :class="[result.current ? 'bg-indigo-100 text-indigo-600' : 'bg-gray-100 text-gray-900', 'hidden ml-3 py-0.5 px-2.5 rounded-full text-xs font-medium md:inline-block']">{{ result.count }}</span>
+            <span v-if="result.count" :class="['bg-gray-100 text-gray-900', 'hidden ml-3 py-0.5 px-2.5 rounded-full text-xs font-medium md:inline-block']">{{ result.count }}</span>
           </button>
         </div>
       </div>
