@@ -2,8 +2,8 @@
   <div class="bg-white p-6 rounded-lg shadow-lg">
     <div class="flex flex-wrap">
       <h3 class="font-bold text-xl text-black uppercase">Landownership Data</h3>
-      <div class="w-full py-3">
-        <ul class="flex mb-0 list-none flex-wrap pt-3 pb-4 flex-row">
+      <div class="w-full">
+        <ul class="flex mb-0 list-none flex-wrap py-2 flex-row">
             <li class="-mb-px mr-2 last:mr-0 flex-auto text-center">
               <a class="text-xs font-bold uppercase px-5 py-3 rounded block leading-normal" v-on:click="toggleTabs(1)" v-bind:class="{'text-gray-500 bg-gray-200': openTab !== 1, 'text-white bg-gray-500': openTab === 1}">
                   Table
