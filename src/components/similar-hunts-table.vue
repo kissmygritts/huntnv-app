@@ -1,7 +1,8 @@
 <template>
 <div class="bg-white p-6 rounded-lg shadow-lg">
   <h3 class="font-bold text-xl text-black uppercase">Similar Hunts</h3>
-  <div class="my-2 p-2 lg:flex bg-gray-50 rounded-sm uppercase">
+  <similar-hunts-tabs :hunt="hunt"/>
+  <!-- <div class="my-2 p-2 lg:flex bg-gray-50 rounded-sm uppercase">
     <div class="text-xs font-medium text-gray-500 uppercase">
       <label class="mr-2">
         Filter Species
@@ -31,7 +32,7 @@
         </option>
       </select>
     </div>
-  </div>
+  </div> -->
   <div class="rounded-sm">
     <table class="min-w-full divide-y divide-gray-200">
       <thead class="bg-gray-50">
@@ -78,9 +79,13 @@
 </template>
 
 <script>
+import SimilarHuntsTabs from '@/components/similar-hunts-tabs.vue'
 export default ({
   name: 'similar-hunts-table',
   props: ['hunt'],
+  components: {
+    SimilarHuntsTabs
+  },
   data () {
     return {
       data: null,
@@ -101,7 +106,6 @@ export default ({
       this.data = similarHunts.filter(similarHunts => (similarHunts.species === this.hunt.species))
     },
     setSpeciesList () {
-      console.log(this.hunt.similar_hunts)
       const similarHunts = this.hunt.similar_hunts
       const uniqueSpecies = [...new Set(similarHunts.map(data => data.species))]
       const uniqueWeapon = [...new Set(similarHunts.map(data => data.weapon))]
