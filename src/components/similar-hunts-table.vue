@@ -1,7 +1,7 @@
 <template>
 <div class="bg-white p-6 rounded-lg shadow-lg">
   <h3 class="font-bold text-xl text-black uppercase">Similar Hunts</h3>
-  <similar-hunts-tabs :hunt="hunt"/>
+  <similar-hunts-tabs :hunt="hunt" @filter="setSpecies" />
   <!-- <div class="my-2 p-2 lg:flex bg-gray-50 rounded-sm uppercase">
     <div class="text-xs font-medium text-gray-500 uppercase">
       <label class="mr-2">
@@ -89,7 +89,7 @@ export default ({
   data () {
     return {
       data: null,
-      species: this.hunt.species,
+      species: null,
       drawType: null,
       weapon: null,
       speciesList: null,
@@ -112,7 +112,9 @@ export default ({
       this.speciesList = uniqueSpecies
       this.weaponList = uniqueWeapon
     },
-    setSpecies () {
+    setSpecies (filterSpecies) {
+      this.species = filterSpecies
+      console.log(this.species)
       const similarHunts = this.hunt.similar_hunts
       this.data = similarHunts.filter(similarHunts => (similarHunts.species === this.species))
     },
