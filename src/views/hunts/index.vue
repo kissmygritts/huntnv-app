@@ -1,11 +1,26 @@
 <template>
-  <h1>Hunts</h1>
+  <div class="">
+    <h1>Hunts</h1>
+    {{ hunts }}
+  </div>
 </template>
 
 <script>
+import { getHunts } from '@/services/hunt-services.js'
+
 export default {
   name: 'Hunts',
-  setup () {
+  data () {
+    return {
+      loading: false,
+      hunts: null
+    }
+  },
+  async created () {
+    this.loading = true
+    const { data } = await getHunts()
+    this.hunts = data
+    this.loading = false
   }
 }
 </script>
