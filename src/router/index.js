@@ -4,12 +4,18 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/home/index.vue'
 import HuntDetails from '../views/hunt-details/index.vue'
 import MapPage from '@/views/map/index.vue'
+import HuntsPage from '@/views/hunts/index.vue'
 
 const routes = [
   {
     path: '/',
     name: 'Home',
     component: Home
+  },
+  {
+    path: '/hunts',
+    name: 'Hunts',
+    component: HuntsPage
   },
   {
     path: '/hunts/:id',
