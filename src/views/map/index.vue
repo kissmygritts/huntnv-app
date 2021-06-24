@@ -34,6 +34,8 @@
         <p v-if="loading">LOADING...</p>
         <div v-else>
           <div class="w-full p-4">
+            <hnv-select-species />
+
             <select class="w-full" name="speces" id="species" v-model="speciesId" @change="setHuntFilters">
               <option v-for="species in speciesOptions" :key="species.id" :value="species.id">
                 {{ species.displayName }}
@@ -73,6 +75,7 @@ import Pbf from 'pbf'
 import maplibregl from 'maplibre-gl'
 import { getHunts } from '@/services/hunt-services.js'
 import mvHuntList from './mv-hunt-list.vue'
+import hnvSelectSpecies from '@/components/form-inputs/hnv-select-species.vue'
 
 const filterArray = (arr, filters) => {
   const filterKeys = Object.keys(filters)
@@ -109,7 +112,7 @@ const weaponOptions = ['', 'archery', 'muzzleloader', 'any legal weapon']
 export default {
   name: 'map-view',
 
-  components: { mvHuntList },
+  components: { mvHuntList, hnvSelectSpecies },
 
   data () {
     return {
