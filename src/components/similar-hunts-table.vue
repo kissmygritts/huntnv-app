@@ -1,29 +1,20 @@
 <template>
 <div class="bg-white p-6 rounded-lg shadow-lg">
   <h3 class="font-bold text-xl text-black uppercase">Similar Hunts</h3>
-  <div class="p-2 my-5 lg:flex bg-gray-500 rounded-sm shadow-lg uppercase">
-    <div class="mx-5">
-      <label class="text-white font-medium mr-2">
-        Species
-      </label>
-      <select name="species"  v-model="species" @change="setSpecies" class="capitalize">
-        <option v-for="i in this.speciesList" :key="i">
-          {{ i }}
-        </option>
-      </select>
-    </div>
-    <div class="mx-5">
-      <label class="text-white font-medium mr-2">
-        Draw Type
+  <similar-hunts-tabs :hunt="hunt" @filter="setSpecies" />
+  <!-- <div class="my-2 p-2 lg:flex bg-gray-50 rounded-sm uppercase">
+    <div class="ml-2 text-xs font-medium text-gray-500 uppercase">
+      <label class="mr-2">
+        Filter Draw Type
       </label>
       <select name="resident" v-model="drawType" @change="setDrawType">
         <option value="non-resident">Non-Resident</option>
         <option value="resident">Resident</option>
       </select>
     </div>
-    <div class="mx-5">
-      <label class="text-white font-medium mr-2">
-        Weapon
+    <div class="ml-2 text-xs font-medium text-gray-500 uppercase">
+      <label class="mr-2">
+        Filter Weapon
       </label>
       <select name="weapon" v-model="weapon" @change="setWeapon" class="capitalize">
         <option v-for="i in this.weaponList" :key="i">
@@ -31,13 +22,13 @@
         </option>
       </select>
     </div>
-  </div>
-  <div class="bg-white rounded-lg shadow-lg">
+  </div> -->
+  <div class="rounded-sm">
     <table class="min-w-full divide-y divide-gray-200">
       <thead class="bg-gray-50">
         <tr>
           <th scope="col" class="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            Hunt
+            Species
           </th>
           <th scope="col" class="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
             Draw Type
@@ -56,7 +47,7 @@
       <tbody v-if="hunt" class="bg-white divide-y divide-gray-200 capitalize">
           <tr v-for="i in data" :key="i.hunt_id">
             <td class="px-2 py-4 whitespace-nowrap text-xs sm:text-sm font-medium text-gray-900">
-              {{ i.display_name }}
+              {{ i.species }}
             </td>
             <td class="px-2 py-4 whitespace-nowrap text-xs sm:text-sm font-medium text-gray-900">
               {{ i.draw_type }}
@@ -78,13 +69,17 @@
 </template>
 
 <script>
+import SimilarHuntsTabs from '@/components/similar-hunts-tabs.vue'
 export default ({
   name: 'similar-hunts-table',
   props: ['hunt'],
+  components: {
+    SimilarHuntsTabs
+  },
   data () {
     return {
       data: null,
-      species: this.hunt.species,
+      species: null,
       drawType: null,
       weapon: null,
       speciesList: null,
@@ -101,15 +96,20 @@ export default ({
       this.data = similarHunts.filter(similarHunts => (similarHunts.species === this.hunt.species))
     },
     setSpeciesList () {
-      console.log(this.hunt.similar_hunts)
       const similarHunts = this.hunt.similar_hunts
       const uniqueSpecies = [...new Set(similarHunts.map(data => data.species))]
       const uniqueWeapon = [...new Set(similarHunts.map(data => data.weapon))]
       this.speciesList = uniqueSpecies
       this.weaponList = uniqueWeapon
     },
-    setSpecies () {
+    // sets the species displayed in table, take a parameter filterSpecies passed by @filter listerner
+    setSpecies (filterSpecies) {
+      // sets the species from the @click function in the simalar-hunts-tabs component
+      this.species = filterSpecies
+      console.log(this.species)
+      // set similar hunts to constant
       const similarHunts = this.hunt.similar_hunts
+      // filter similar hunts by species that match the filterSpecies
       this.data = similarHunts.filter(similarHunts => (similarHunts.species === this.species))
     },
     setDrawType () {
