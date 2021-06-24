@@ -34,13 +34,7 @@
         <p v-if="loading">LOADING...</p>
         <div v-else>
           <div class="w-full p-4">
-            <hnv-select-species />
-
-            <select class="w-full" name="speces" id="species" v-model="speciesId" @change="setHuntFilters">
-              <option v-for="species in speciesOptions" :key="species.id" :value="species.id">
-                {{ species.displayName }}
-              </option>
-            </select>
+            <hnv-select-species v-model="species" @update:model-value="setHuntFilters" />
 
             <select class="w-full mt-2" name="residency" id="residency" v-model="residency" @change="setHuntFilters">
               <option v-for="residency in residencyOptions" :key="residency" :value="residency">
@@ -88,24 +82,6 @@ const filterArray = (arr, filters) => {
   })
 }
 
-const speciesOptions = [
-  { id: 0, displayName: '' },
-  { id: 1, displayName: 'antelope - horns longer than ears' },
-  { id: 2, displayName: 'antelope - horns shorter than ears' },
-  { id: 3, displayName: 'california bighorn sheep - any ram' },
-  { id: 4, displayName: 'elk - antlered' },
-  { id: 5, displayName: 'elk - antlerless' },
-  { id: 6, displayName: 'elk - depredation antlered' },
-  { id: 7, displayName: 'elk - depredation antlerless' },
-  { id: 8, displayName: 'elk - spike' },
-  { id: 9, displayName: 'mountain goat - any goat' },
-  { id: 10, displayName: 'mule deer - antlered' },
-  { id: 11, displayName: 'mule deer - antlered or antlerless' },
-  { id: 12, displayName: 'mule deer - antlerless' },
-  { id: 13, displayName: 'nelson (desert) bighorn sheep - any ewe' },
-  { id: 14, displayName: 'nelson (desert) bighorn sheep - any ram' },
-  { id: 15, displayName: 'rocky mountain bighorn sheep - any ram' }
-]
 const residencyOptions = ['', 'resident', 'non-resident']
 const weaponOptions = ['', 'archery', 'muzzleloader', 'any legal weapon']
 
@@ -119,8 +95,7 @@ export default {
       hunts: null,
       loading: true,
       huntGeojson: null,
-      speciesOptions,
-      speciesId: 0,
+      species: {},
       residencyOptions,
       residency: '',
       weaponOptions,
@@ -133,7 +108,7 @@ export default {
     activeFilters () {
       const filters = {}
 
-      if (this.speciesId) Object.assign(filters, { species_id: this.speciesId })
+      if (this.species?.id) Object.assign(filters, { species_id: this.species.id })
       if (this.residency) Object.assign(filters, { draw_type: this.residency })
       if (this.weapon) Object.assign(filters, { weapon: this.weapon })
 
@@ -150,6 +125,9 @@ export default {
     },
 
     huntMvtFilter () {
+      if (!Object.keys(this.activeFilters).length) {
+        return ['==', '$id', 0]
+      }
       return ['in', '$id', ...this.activeHuntIds]
     }
   },
@@ -193,7 +171,7 @@ export default {
             'line-join': 'round'
           },
           paint: {
-            'line-opacity': 0.6,
+            'line-opacity': 1,
             'line-color': '#f29645',
             'line-width': 2
           }
@@ -201,7 +179,7 @@ export default {
 
         map.addSource('huntgeoms', {
           type: 'vector',
-          tiles: ['http://localhost:3000/features/hunts_with_geom/{z}/{x}/{y}.pbf']
+          tiles: ['https://huntnv-api-mkvuv.ondigitalocean.app/features/hunts_with_geom/{z}/{x}/{y}.pbf']
         })
 
         map.addLayer({
@@ -209,15 +187,15 @@ export default {
           type: 'fill',
           source: 'huntgeoms',
           'source-layer': 'hunts_with_geom',
-          layout: {},
+          layout: {
+            visibility: 'visible'
+          },
           paint: {
             'fill-color': '#2e598a',
             'fill-opacity': 0.4,
             'fill-outline-color': 'rgba(255, 255, 255, 1)'
           },
-          filter: [
-            '==', '$id', 655
-          ]
+          filter: ['==', '$id', 0]
         })
       })
 
@@ -234,8 +212,7 @@ export default {
     },
 
     resetHuntFilters () {
-      this.map.setFilter('hunts-fill', null)
-      this.speciesId = 0
+      this.species = {}
       this.residency = ''
       this.weapon = ''
     },
