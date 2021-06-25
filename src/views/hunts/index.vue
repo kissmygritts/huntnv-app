@@ -1,7 +1,7 @@
 <template>
   <div class="bg-gray-200 w-full overflow-y-auto">
-    <div class="p-10">
-      <h1 class="font-bold text-2xl">Hunts</h1>
+    <div v-if="hunts" class="p-10">
+      <h1 class="font-bold text-3xl">Hunts ({{ huntsCount }})</h1>
       <div>
         <p v-if="loading">LOADING...</p>
         <div v-for="hunt in hunts" :key="hunt.id" :hunt="hunt">
@@ -10,7 +10,7 @@
               <h2 class="font-bold capitalize">
                 {{ hunt.display_name }}
               </h2>
-              <div class=" font-light capitalize">
+              <div class="font-light capitalize">
                 <span>{{ hunt.draw_type }}</span>
                 <span class="mx-1">&ndash;</span>
                 <span>{{ hunt.weapon }}</span>
@@ -18,6 +18,7 @@
               <div class="flex font-thin">
                 <div class="pr-5 capitalize">Season Dates: {{ hunt.season_dates }}</div>
                 <div class="pr-5 capitalize">Hunt Units: {{ hunt.unit_group }}</div>
+                <div class="pr-5 capitalize">Quota: {{ hunt.quota }}</div>
                 <div>Public Land: 50%</div>
               </div>
             </div>
@@ -39,10 +40,16 @@ export default {
       hunts: null
     }
   },
+  computed: {
+    huntsCount () {
+      const count = this.hunts.length
+      return count
+    }
+  },
   async created () {
     this.loading = true
     const { data } = await getHunts()
-    this.hunts = data.filter(data => (data.species === 'elk' && data.weapon === 'muzzleloader'))
+    this.hunts = data.filter(data => (data.species === 'mule deer'))
     this.loading = false
   }
 }
