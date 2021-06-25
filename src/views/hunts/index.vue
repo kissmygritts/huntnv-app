@@ -1,11 +1,11 @@
 <template>
   <div class="bg-gray-200 w-full overflow-y-auto items-center">
+    <p v-if="loading">LOADING...</p>
     <div v-if="hunts" class="p-5">
       <div class="flex">
         <h1 class="font-bold text-3xl">Hunts ({{ huntsCount }})</h1>
       </div>
       <div class="">
-        <p v-if="loading">LOADING...</p>
         <div v-for="hunt in hunts" :key="hunt.id" :hunt="hunt">
           <router-link :to="{ name: 'HuntDetails', params: { id: hunt.id }}">
             <div class= "my-5 p-5 bg-gray-50 hover:bg-gray-300 text-black rounded-md shadow-md transition duration-500 ease-in-out transform hover:-translate-y-1">
@@ -40,9 +40,13 @@
                   <CalendarIcon class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
                   <span class="capitalize">Season Dates: {{ hunt.season_dates }}</span>
                 </div>
-                 <div class="flex items-center pr-5 py-1 text-sm text-gray-500">
+                <div class="flex items-center pr-5 py-1 text-sm text-gray-500">
                   <TagIcon class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
                   <span class="capitalize">Quota: {{ hunt.quota }}</span>
+                </div>
+                <div class="flex items-center pr-5 py-1 text-sm text-gray-500">
+                  <PresentationChartLineIcon class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
+                  <span class="capitalize">Draw Odds: 25%</span>
                 </div>
                 <div class="flex items-center pr-5 py-1 text-sm text-gray-500">
                   <ViewGridIcon class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
@@ -62,7 +66,7 @@
 </template>
 
 <script>
-import { CalendarIcon, ViewGridIcon, TagIcon, ChartPieIcon } from '@heroicons/vue/outline'
+import { CalendarIcon, ViewGridIcon, TagIcon, ChartPieIcon, PresentationChartLineIcon } from '@heroicons/vue/outline'
 
 import { getHunts } from '@/services/hunt-services.js'
 
@@ -72,7 +76,8 @@ export default {
     CalendarIcon,
     ViewGridIcon,
     TagIcon,
-    ChartPieIcon
+    ChartPieIcon,
+    PresentationChartLineIcon
   },
   data () {
     return {
