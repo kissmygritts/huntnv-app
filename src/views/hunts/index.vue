@@ -5,10 +5,16 @@
       <div class="flex">
         <h1 class="font-bold text-3xl">Hunts ({{ huntsCount }})</h1>
       </div>
+      <similar-hunts-tabs v-if="hunts" :data="hunts" @filter="setSpecies" class="my-3" />
       <div class="">
         <div v-for="hunt in hunts" :key="hunt.id" :hunt="hunt">
           <router-link :to="{ name: 'HuntDetails', params: { id: hunt.id }}">
             <div class= "my-5 p-5 bg-gray-50 hover:bg-gray-300 text-black rounded-md shadow-md transition duration-500 ease-in-out transform hover:-translate-y-1">
+              <div class="flex text-xs text-gray-500">
+                <span class="">
+                  Western Region
+                </span>
+              </div>
               <h2 class="text-xl font-bold capitalize">
                 {{ hunt.display_name }}
               </h2>
@@ -19,34 +25,38 @@
               </div>
               <span
                 :class="[ speciesColors[hunt.species] ]"
-                class="flex-shrink-0 inline-block px-2 py-0.5 text-xs font-medium rounded-full"
+                class="flex-shrink-0 inline-block my-2 mr-2 px-2 py-0.5 text-xs font-medium rounded-full"
               >
                 {{ hunt.species }}
               </span>
               <span
                 :class="[ classColors[hunt.class] ]"
-                class="flex-shrink-0 inline-block mx-2 px-2 py-0.5 text-xs font-medium rounded-full"
+                class="flex-shrink-0 inline-block my-2 mx-2 px-2 py-0.5 text-xs font-medium rounded-full"
               >
                 {{ hunt.class }}
               </span>
               <span
                 :class="[ weaponColors[hunt.weapon] ]"
-                class="flex-shrink-0 inline-block mx-2 px-2 py-0.5 text-xs font-medium rounded-full"
+                class="flex-shrink-0 inline-block my-2 mx-2 px-2 py-0.5 text-xs font-medium rounded-full"
               >
                 {{ hunt.weapon }}
               </span>
-              <div class="pt-2 lg:flex font-light">
+              <div class="lg:flex font-light">
                 <div class="flex items-center pr-5 py-1 text-sm text-gray-500">
                   <CalendarIcon class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
                   <span class="capitalize">Season Dates: {{ hunt.season_dates }}</span>
+                </div>
+                <div class="flex items-center pr-5 py-1 text-sm text-gray-500">
+                  <ClockIcon class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
+                  <span class="capitalize">Days: 31</span>
                 </div>
                 <div class="flex items-center pr-5 py-1 text-sm text-gray-500">
                   <TagIcon class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
                   <span class="capitalize">Quota: {{ hunt.quota }}</span>
                 </div>
                 <div class="flex items-center pr-5 py-1 text-sm text-gray-500">
-                  <PresentationChartLineIcon class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
-                  <span class="capitalize">Draw Odds: 25%</span>
+                  <ChartBarIcon class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
+                  <span class="capitalize">Draw Odds: {{ hunt.quota }}%</span>
                 </div>
                 <div class="flex items-center pr-5 py-1 text-sm text-gray-500">
                   <ViewGridIcon class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
@@ -66,30 +76,37 @@
 </template>
 
 <script>
-import { CalendarIcon, ViewGridIcon, TagIcon, ChartPieIcon, PresentationChartLineIcon } from '@heroicons/vue/outline'
+import SimilarHuntsTabs from '@/components/similar-hunts-tabs.vue'
+
+import { CalendarIcon, ViewGridIcon, TagIcon, ChartPieIcon, ChartBarIcon, ClockIcon } from '@heroicons/vue/outline'
 
 import { getHunts } from '@/services/hunt-services.js'
 
 export default {
   name: 'Hunts',
   components: {
+    SimilarHuntsTabs,
     CalendarIcon,
     ViewGridIcon,
     TagIcon,
     ChartPieIcon,
-    PresentationChartLineIcon
+    ChartBarIcon,
+    ClockIcon
   },
   data () {
     return {
       loading: false,
       hunts: null,
+      species: null,
+      filtered: null,
       speciesColors: {
         elk: 'bg-green-300 text-green-800',
         antelope: 'bg-yellow-300 text-yellow-800',
         'mule deer': 'bg-indigo-300 text-indigo-800',
         'nelson (desert) bighorn sheep': 'bg-blue-300 text-blue-800',
-        'california bighorn sheep': 'bg-pink-300 text-pink-800',
-        'rocky mountain bighorn sheep': 'bg-purple-300 text-purple-800'
+        'california bighorn sheep': 'bg-saffron-300 text-saffron-800',
+        'rocky mountain bighorn sheep': 'bg-purple-300 text-purple-800',
+        'mountain goat': 'bg-olive-300 text-olive-800'
       },
       classColors: {
         antlered: 'bg-oxford-200 text-oxford-800',
@@ -100,7 +117,8 @@ export default {
         'horns longer than ears': 'bg-purple-200 text-purple-800',
         'horns shorter than ears': 'bg-pink-200 text-pink-800',
         'any ram': 'bg-oxford-200 text-oxford-800',
-        'any ewe': 'bg-yellow-200 text-yellow-800'
+        'any ewe': 'bg-yellow-200 text-yellow-800',
+        'any goat': 'bg-yellow-300 text-yellow-800'
       },
       weaponColors: {
         'any legal weapon': 'bg-green-100 text-green-800',
@@ -114,6 +132,14 @@ export default {
     huntsCount () {
       const count = this.hunts.length
       return count
+    }
+  },
+  methods: {
+    setSpecies (filterSpecies) {
+      this.species = filterSpecies
+      console.log(this.species)
+      const similarHunts = this.hunts
+      this.hunts = similarHunts.filter(similarHunts => (similarHunts.species === this.species))
     }
   },
   async created () {
