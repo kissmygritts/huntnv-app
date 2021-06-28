@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full p-2 bg-gray-50 text-gray-800">
+  <div class="w-full p-2 bg-gray-50 text-gray-800 cursor-pointer hover:bg-olive-100">
     <h2 class="capitalize">{{ hunt.display_name }}</h2>
     <div class="flex text-gray-700 font-light capitalize">
       <span>{{ hunt.draw_type }}</span>

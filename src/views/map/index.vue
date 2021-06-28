@@ -54,7 +54,7 @@
           <!-- <pre><code>{{ activeHunts[0] }}</code></pre> -->
 
           <div class="w-full p-2">
-            <mv-hunt-list :hunts="activeHunts" />
+            <mv-hunt-list :hunts="activeHunts" @hunt-card:hover="handleHunCardHover" />
           </div>
         </div>
       </div>
@@ -188,7 +188,7 @@ export default {
           },
           paint: {
             'fill-color': '#2e598a',
-            'fill-opacity': 0.4
+            'fill-opacity': 0.25
           },
           filter: ['==', '$id', 0]
         })
@@ -204,6 +204,38 @@ export default {
           paint: {
             'line-opacity': 1,
             'line-color': '#1f355b',
+            'line-width': 1
+          },
+          filter: ['==', '$id', 0]
+        })
+
+        // hovered geometries
+        map.addLayer({
+          id: 'hovered-hunt-fill',
+          type: 'fill',
+          source: 'huntgeoms',
+          'source-layer': 'hunt_geometries',
+          layout: {
+            visibility: 'visible'
+          },
+          paint: {
+            'fill-color': '#2de2e6',
+            'fill-opacity': 0.75
+          },
+          filter: ['==', '$id', 0]
+        })
+        map.addLayer({
+          id: 'hovered-hunt-outline',
+          type: 'line',
+          source: 'huntgeoms',
+          'source-layer': 'hunt_geometries',
+          layout: {
+            'line-cap': 'round',
+            'line-join': 'round'
+          },
+          paint: {
+            'line-opacity': 1,
+            'line-color': '#2de2e6',
             'line-width': 2
           },
           filter: ['==', '$id', 0]
@@ -227,6 +259,17 @@ export default {
       this.species = {}
       this.residency = ''
       this.weapon = ''
+    },
+
+    handleHunCardHover ({ hunt, hover }) {
+      if (hover) {
+        const huntGeomId = hunt.hunt_geometry_id
+        this.map.setFilter('hovered-hunt-fill', ['==', '$id', huntGeomId])
+        this.map.setFilter('hovered-hunt-outline', ['==', '$id', huntGeomId])
+      } else {
+        this.map.setFilter('hovered-hunt-fill', ['==', '$id', 0])
+        this.map.setFilter('hovered-hunt-outline', ['==', '$id', 0])
+      }
     }
   }
 }
