@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full divide-y-2 divide-gray-200 rounded-md overflow-hidden shadow-md">
+  <div class="w-full divide-y-2 divide-gray-200 rounded-md shadow-md overflow-hidden">
     <mv-hunt-card
       v-for="hunt in hunts"
       :key="hunt.id"

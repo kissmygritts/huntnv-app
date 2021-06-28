@@ -33,7 +33,7 @@
       >
         <p v-if="loading">LOADING...</p>
         <div v-else>
-          <div class="w-full p-4 space-y-2">
+          <div class="w-full px-2 py-4 space-y-2">
             <hnv-select-species v-model="species" @update:model-value="setHuntFilters" />
             <hnv-select-weapon v-model="weapon" @update:model-value="setHuntFilters" />
             <hnv-select-residency v-model="residency" @update:model-value="setHuntFilters" />

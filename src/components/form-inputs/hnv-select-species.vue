@@ -7,8 +7,6 @@
     <div class="mt-1 relative">
       <ListboxButton class="relative w-full bg-white border border-gray-300 rounded-md shadow-sm pl-3 pr-10 py-2 text-left cursor-default focus:outline-none focus:ring-1 focus:ring-olive-500 focus:border-olive-500 sm:text-sm">
         <span :class="[selected.id ? 'capitalize' : 'text-gray-500', 'block truncate']">{{ selected.id ? selected.displayName : 'Select a Species...' }}</span>
-        <!-- <span v-if="selected.id" class="block truncate">Select a Species</span>
-        <span v-else class="block truncate">{{ selected.displayName }}</span> -->
         <span class="absolute inset-y-0 right-0 flex items-center pr-2 pointer-events-none">
           <SelectorIcon class="h-5 w-5 text-gray-400" aria-hidden="true" />
         </span>
@@ -49,7 +47,7 @@ const speciesOptions = [
   { id: 8, displayName: 'elk - spike' },
   { id: 9, displayName: 'mountain goat - any goat' },
   { id: 10, displayName: 'mule deer - antlered' },
-  { id: 11, displayName: 'mule deer - antlered or antlerless' },
+  { id: 11, displayName: 'mule deer - junior' },
   { id: 12, displayName: 'mule deer - antlerless' },
   { id: 13, displayName: 'nelson (desert) bighorn sheep - any ewe' },
   { id: 14, displayName: 'nelson (desert) bighorn sheep - any ram' },
@@ -82,11 +80,6 @@ export default {
     watch(selected, () => {
       emit('update:modelValue', selected)
     })
-
-    // const selected = computed({
-    //   get: () => props.modelValue,
-    //   set: (modelValue) => emit('update:modelValue', modelValue)
-    // })
 
     return {
       speciesOptions,
