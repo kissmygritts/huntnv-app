@@ -147,8 +147,8 @@ export default {
         container: 'map',
         style:
           'https://api.maptiler.com/maps/topo/style.json?key=BJ5Us337tUIPtCCZeKV8',
-        center: [-116.6554, 39.3564],
-        zoom: 6.5
+        center: [-116.6554, 39.1564],
+        zoom: 6
       })
 
       map.on('load', () => {
