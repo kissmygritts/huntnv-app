@@ -33,27 +33,25 @@
       >
         <p v-if="loading">LOADING...</p>
         <div v-else>
-          <div class="w-full p-4">
+          <div class="w-full p-4 space-y-2">
             <hnv-select-species v-model="species" @update:model-value="setHuntFilters" />
+            <hnv-select-weapon v-model="weapon" @update:model-value="setHuntFilters" />
+            <hnv-select-residency v-model="residency" @update:model-value="setHuntFilters" />
 
-            <select class="w-full mt-2" name="residency" id="residency" v-model="residency" @change="setHuntFilters">
-              <option v-for="residency in residencyOptions" :key="residency" :value="residency">
-                {{ residency }}
-              </option>
-            </select>
-
-            <select class="w-full mt-2" name="weapon" id="weapon" v-model="weapon" @change="setHuntFilters">
-              <option v-for="weapon in weaponOptions" :key="weapon" :value="weapon">
-                {{ weapon }}
-              </option>
-            </select>
-
-            <button type="button" class="bg-white p-2 mt-2" @click="resetHuntFilters">Reset Filters</button>
+            <button
+              type="button"
+              class="ml-1 text-sm text-saffron-700 cursor-pointer hover:underline"
+              @click="resetHuntFilters">
+                Reset Filters
+              </button>
           </div>
 
-          <!-- <pre><code>{{ activeHunts[0] }}</code></pre> -->
-
           <div class="w-full p-2">
+            <div>
+              <h2 class="ml-1 text-2xl text-gray-800">
+                {{ activeHunts.length }} Hunts
+              </h2>
+            </div>
             <mv-hunt-list :hunts="activeHunts" @hunt-card:hover="handleHunCardHover" />
           </div>
         </div>
@@ -67,6 +65,10 @@ import maplibregl from 'maplibre-gl'
 import { getHunts } from '@/services/hunt-services.js'
 import mvHuntList from './mv-hunt-list.vue'
 import hnvSelectSpecies from '@/components/form-inputs/hnv-select-species.vue'
+import hnvSelectWeapon from '@/components/form-inputs/hnv-select-weapon.vue'
+import hnvSelectResidency from '@/components/form-inputs/hnv-select-residency.vue'
+
+const TILE_URL = process.env.VUE_APP_API_URL
 
 const filterArray = (arr, filters) => {
   const filterKeys = Object.keys(filters)
@@ -79,14 +81,10 @@ const filterArray = (arr, filters) => {
   })
 }
 
-const TILE_URL = process.env.VUE_APP_API_URL
-const residencyOptions = ['', 'resident', 'non-resident']
-const weaponOptions = ['', 'archery', 'muzzleloader', 'any legal weapon']
-
 export default {
   name: 'map-view',
 
-  components: { mvHuntList, hnvSelectSpecies },
+  components: { mvHuntList, hnvSelectSpecies, hnvSelectWeapon, hnvSelectResidency },
 
   data () {
     return {
@@ -94,9 +92,7 @@ export default {
       loading: true,
       huntGeojson: null,
       species: {},
-      residencyOptions,
       residency: '',
-      weaponOptions,
       weapon: '',
       map: null
     }
