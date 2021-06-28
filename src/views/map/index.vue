@@ -63,9 +63,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-import geobuf from 'geobuf'
-import Pbf from 'pbf'
 import maplibregl from 'maplibre-gl'
 import { getHunts } from '@/services/hunt-services.js'
 import mvHuntList from './mv-hunt-list.vue'
@@ -82,6 +79,7 @@ const filterArray = (arr, filters) => {
   })
 }
 
+const TILE_URL = process.env.VUE_APP_API_URL
 const residencyOptions = ['', 'resident', 'non-resident']
 const weaponOptions = ['', 'archery', 'muzzleloader', 'any legal weapon']
 
@@ -120,15 +118,15 @@ export default {
       return filterArray(this.hunts, this.activeFilters)
     },
 
-    activeHuntIds () {
-      return this.activeHunts.map(item => item.id)
+    activeHuntGeomIds () {
+      return [...new Set(this.activeHunts.map(item => item.hunt_geometry_id))]
     },
 
     huntMvtFilter () {
       if (!Object.keys(this.activeFilters).length) {
         return ['==', '$id', 0]
       }
-      return ['in', '$id', ...this.activeHuntIds]
+      return ['in', '$id', ...this.activeHuntGeomIds]
     }
   },
 
@@ -154,13 +152,11 @@ export default {
       })
 
       map.on('load', () => {
-        // await this.loadGeometry()
-
+        // hunt units
         map.addSource('units', {
           type: 'vector',
-          tiles: ['https://huntnv-api-mkvuv.ondigitalocean.app/features/hunt_units_open_full/{z}/{x}/{y}.pbf']
+          tiles: [`${TILE_URL}/features/hunt_units_open_full/{z}/{x}/{y}.pbf`]
         })
-
         map.addLayer({
           id: 'units',
           type: 'line',
@@ -177,23 +173,38 @@ export default {
           }
         })
 
+        // hunt geometries
         map.addSource('huntgeoms', {
           type: 'vector',
-          tiles: ['https://huntnv-api-mkvuv.ondigitalocean.app/features/hunts_with_geom/{z}/{x}/{y}.pbf']
+          tiles: [`${TILE_URL}/features/hunt_geometries/{z}/{x}/{y}.pbf`]
         })
-
         map.addLayer({
           id: 'hunts-fill',
           type: 'fill',
           source: 'huntgeoms',
-          'source-layer': 'hunts_with_geom',
+          'source-layer': 'hunt_geometries',
           layout: {
             visibility: 'visible'
           },
           paint: {
             'fill-color': '#2e598a',
-            'fill-opacity': 0.4,
-            'fill-outline-color': 'rgba(255, 255, 255, 1)'
+            'fill-opacity': 0.4
+          },
+          filter: ['==', '$id', 0]
+        })
+        map.addLayer({
+          id: 'hunts-outline',
+          type: 'line',
+          source: 'huntgeoms',
+          'source-layer': 'hunt_geometries',
+          layout: {
+            'line-cap': 'round',
+            'line-join': 'round'
+          },
+          paint: {
+            'line-opacity': 1,
+            'line-color': '#1f355b',
+            'line-width': 2
           },
           filter: ['==', '$id', 0]
         })
@@ -209,23 +220,13 @@ export default {
 
     setHuntFilters () {
       this.map.setFilter('hunts-fill', this.huntMvtFilter)
+      this.map.setFilter('hunts-outline', this.huntMvtFilter)
     },
 
     resetHuntFilters () {
       this.species = {}
       this.residency = ''
       this.weapon = ''
-    },
-
-    async loadGeometry () {
-      const geom = await axios.get(
-        'https://huntnv-api-mkvuv.ondigitalocean.app/features/hunts_with_geom/317.geobuf',
-        {
-          responseType: 'arraybuffer'
-        }
-      )
-      const geojson = geobuf.decode(new Pbf(geom.data))
-      this.huntGeojson = geojson
     }
   }
 }
