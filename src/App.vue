@@ -40,7 +40,7 @@ const user = {
 const navigation = [
   { name: 'Home', href: '/', icon: HomeIcon },
   { name: 'Map', href: '/map', icon: GlobeIcon },
-  { name: 'Hunts', href: '#', icon: BookmarkAltIcon },
+  { name: 'Hunts', href: '/hunts', icon: BookmarkAltIcon },
   { name: 'Odds', href: '#', icon: ChartBarIcon },
   { name: 'Harvest', href: '#', icon: PresentationChartLineIcon }
 ]
