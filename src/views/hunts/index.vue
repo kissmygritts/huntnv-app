@@ -14,22 +14,6 @@
           aria-hidden="true"
         />
       </div>
-      <similar-hunts-tabs
-        v-if="hunts" :data="hunts"
-        @filter="setSpecies"
-        class="mt-3"
-      />
-      <weapon-radio-group />
-      <!-- <div class="mt-2">
-        <div class="flex items-center text-xs text-gray-500">
-          <p>Draw Type: </p>
-          <span v-for="weapon in this.drawType" :key="weapon" class="relative z-0 inline-flex shadow-sm rounded-md">
-            <button @click="setDrawType" type="button" class="relative inline-flex items-center mx-1 px-2 py-1 rounded border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500 capitalize">
-              {{ weapon }}
-            </button>
-          </span>
-        </div>
-      </div> -->
       <div>
         <div
           v-for="hunt in hunts"
@@ -77,24 +61,24 @@
                     Season Dates: {{ hunt.season_dates }}
                   </span>
                 </div>
-                <div class="flex items-center pr-5 py-1 text-sm text-gray-500">
+                <!-- <div class="flex items-center pr-5 py-1 text-sm text-gray-500">
                   <ClockIcon class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
                   <span class="capitalize">
                     Days: 31
                   </span>
-                </div>
+                </div> -->
                 <div class="flex items-center pr-5 py-1 text-sm text-gray-500">
                   <TagIcon class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
                   <span class="capitalize">
                     Quota: {{ hunt.quota }}
                   </span>
                 </div>
-                <div class="flex items-center pr-5 py-1 text-sm text-gray-500">
+                <!-- <div class="flex items-center pr-5 py-1 text-sm text-gray-500">
                   <ChartBarIcon class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
                   <span class="capitalize">
                     Draw Odds: {{ hunt.quota }}%
                   </span>
-                </div>
+                </div> -->
                 <div class="flex items-center pr-5 py-1 text-sm text-gray-500">
                   <ViewGridIcon class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
                   <span class="capitalize">
@@ -117,25 +101,20 @@
 </template>
 
 <script>
-import SimilarHuntsTabs from '@/components/similar-hunts-tabs.vue'
-
-import { CalendarIcon, TagIcon, ChartPieIcon, ChartBarIcon, ClockIcon, ViewGridIcon, FilterIcon } from '@heroicons/vue/outline'
+import { CalendarIcon, TagIcon, ChartPieIcon, ViewGridIcon, FilterIcon } from '@heroicons/vue/outline'
 
 import { getHunts } from '@/services/hunt-services.js'
-import WeaponRadioGroup from './weapon-radio-group.vue'
 
 export default {
   name: 'Hunts',
   components: {
-    SimilarHuntsTabs,
     CalendarIcon,
     ViewGridIcon,
     TagIcon,
     ChartPieIcon,
-    ChartBarIcon,
-    ClockIcon,
-    FilterIcon,
-    WeaponRadioGroup
+    // ChartBarIcon,
+    // ClockIcon,
+    FilterIcon
   },
   data () {
     return {
@@ -177,18 +156,6 @@ export default {
     huntsCount () {
       const count = this.hunts.length
       return count
-    }
-  },
-  methods: {
-    setSpecies (filterSpecies) {
-      this.species = filterSpecies
-      console.log(this.species)
-      const similarHunts = this.hunts
-      this.hunts = similarHunts.filter(similarHunts => (similarHunts.species === this.species))
-    },
-    setDrawType () {
-      const similarHunts = this.hunts
-      this.hunts = similarHunts.filter(similarHunts => (similarHunts.draw_type === 'resident junior'))
     }
   },
   async created () {
