@@ -14,7 +14,7 @@
       "
     >
       <h1 id="primary-heading" class="sr-only">Map</h1>
-      <div class="absolute z-50 top-0 right-0 w-96 h-1/2 bg-white opacity-75 overflow-auto">
+      <div v-if="isDev" class="absolute z-50 top-0 right-0 w-96 h-1/2 bg-white opacity-75 overflow-auto">
         <pre><code>{{ mapDetails }}</code></pre>
       </div>
     </section>
@@ -53,7 +53,7 @@
                 {{ activeHunts.length }} Hunts
               </h2>
             </div>
-            <mv-hunt-list :hunts="activeHunts" @hunt-card:hover="handleHunCardHover" />
+            <mv-hunt-list class="mt-1" :hunts="activeHunts" @hunt-card:hover="handleHunCardHover" />
           </div>
         </div>
       </div>
@@ -131,6 +131,10 @@ export default {
         return ['==', '$id', 0]
       }
       return ['in', '$id', ...this.activeHuntGeomIds]
+    },
+
+    isDev () {
+      return process.env.NODE_ENV === 'development'
     }
   },
 
@@ -156,6 +160,196 @@ export default {
       })
 
       map.on('load', () => {
+        // public landownership
+        map.addSource('landownership', {
+          type: 'vector',
+          tiles: [`${TILE_URL}/features/public_landownership/{z}/{x}/{y}.pbf`],
+          minzoom: 8,
+          maxzoom: 14
+        })
+
+        // usfs
+        map.addLayer({
+          id: 'landownership-usfs-fill',
+          type: 'fill',
+          source: 'landownership',
+          'source-layer': 'public_landownership',
+          paint: {
+            'fill-opacity': 0.25,
+            'fill-color': '#60C99E'
+          },
+          filter: ['==', 'surface_mgmt_agency', 'US Forest Service']
+        })
+        map.addLayer({
+          id: 'landownership-usfs-outline',
+          type: 'line',
+          source: 'landownership',
+          'source-layer': 'public_landownership',
+          layout: {
+            'line-cap': 'round',
+            'line-join': 'round'
+          },
+          paint: {
+            'line-opacity': 1,
+            'line-color': '#60C99E',
+            'line-width': 1
+          },
+          filter: ['==', 'surface_mgmt_agency', 'US Forest Service']
+        })
+
+        // blm
+        map.addLayer({
+          id: 'landownership-blm-fill',
+          type: 'fill',
+          source: 'landownership',
+          'source-layer': 'public_landownership',
+          paint: {
+            'fill-opacity': 0.25,
+            'fill-color': '#FED17E'
+          },
+          filter: ['==', 'surface_mgmt_agency', 'Bureau of Land Mangement']
+        })
+        map.addLayer({
+          id: 'landownership-blm-outline',
+          type: 'line',
+          source: 'landownership',
+          'source-layer': 'public_landownership',
+          layout: {
+            'line-cap': 'round',
+            'line-join': 'round'
+          },
+          paint: {
+            'line-opacity': 1,
+            'line-color': '#FED17E',
+            'line-width': 1
+          },
+          filter: ['==', 'surface_mgmt_agency', 'Bureau of Land Mangement']
+        })
+
+        // usfws
+        map.addLayer({
+          id: 'landownership-usfws-fill',
+          type: 'fill',
+          source: 'landownership',
+          'source-layer': 'public_landownership',
+          paint: {
+            'fill-opacity': 0.25,
+            'fill-color': '#AE9BCE'
+          },
+          filter: ['==', 'surface_mgmt_agency', 'US Fish and Wildlife Service']
+        })
+        map.addLayer({
+          id: 'landownership-usfws-outline',
+          type: 'line',
+          source: 'landownership',
+          'source-layer': 'public_landownership',
+          layout: {
+            'line-cap': 'round',
+            'line-join': 'round'
+          },
+          paint: {
+            'line-opacity': 1,
+            'line-color': '#AE9BCE',
+            'line-width': 1
+          },
+          filter: ['==', 'surface_mgmt_agency', 'US Fish and Wildlife Service']
+        })
+
+        // bia
+        map.addLayer({
+          id: 'landownership-bia-fill',
+          type: 'fill',
+          source: 'landownership',
+          'source-layer': 'public_landownership',
+          paint: {
+            'fill-opacity': 0.25,
+            'fill-color': '#FEA955'
+          },
+          filter: ['==', 'surface_mgmt_agency', 'Bureau of Indian Affairs']
+        })
+        map.addLayer({
+          id: 'landownership-bia-outline',
+          type: 'line',
+          source: 'landownership',
+          'source-layer': 'public_landownership',
+          layout: {
+            'line-cap': 'round',
+            'line-join': 'round'
+          },
+          paint: {
+            'line-opacity': 1,
+            'line-color': '#EDC4A5',
+            'line-width': 1
+          },
+          filter: ['==', 'surface_mgmt_agency', 'Bureau of Indian Affairs']
+        })
+
+        // other federal
+        map.addLayer({
+          id: 'landownership-other-fill',
+          type: 'fill',
+          source: 'landownership',
+          'source-layer': 'public_landownership',
+          paint: {
+            'fill-opacity': 0.25,
+            'fill-color': '#EDC4A5'
+          },
+          filter: ['==', 'surface_mgmt_agency', 'Federal (other)']
+        })
+        map.addLayer({
+          id: 'landownership-other-outline',
+          type: 'line',
+          source: 'landownership',
+          'source-layer': 'public_landownership',
+          layout: {
+            'line-cap': 'round',
+            'line-join': 'round'
+          },
+          paint: {
+            'line-opacity': 1,
+            'line-color': '#FEA955',
+            'line-width': 1
+          },
+          filter: ['==', 'surface_mgmt_agency', 'Federal (other)']
+        })
+
+        // state & local
+        map.addLayer({
+          id: 'landownership-local-fill',
+          type: 'fill',
+          source: 'landownership',
+          'source-layer': 'public_landownership',
+          paint: {
+            'fill-opacity': 0.25,
+            'fill-color': '#96CDDF'
+          },
+          filter: [
+            'any',
+            ['==', 'surface_mgmt_agency', 'Local'],
+            ['==', 'surface_mgmt_agency', 'State']
+          ]
+        })
+        map.addLayer({
+          id: 'landownership-local-outline',
+          type: 'line',
+          source: 'landownership',
+          'source-layer': 'public_landownership',
+          layout: {
+            'line-cap': 'round',
+            'line-join': 'round'
+          },
+          paint: {
+            'line-opacity': 1,
+            'line-color': '#96CDDF',
+            'line-width': 1
+          },
+          filter: [
+            'any',
+            ['==', 'surface_mgmt_agency', 'Local'],
+            ['==', 'surface_mgmt_agency', 'State']
+          ]
+        })
+
         // hunt units
         map.addSource('units', {
           type: 'vector',
@@ -175,25 +369,6 @@ export default {
             'line-color': '#f29645',
             'line-width': 2
           }
-        })
-
-        // public landownership
-        map.addSource('landownership', {
-          type: 'vector',
-          tiles: [`${TILE_URL}/features/public_landownership/{z}/{x}/{y}.pbf`],
-          minzoom: 9,
-          maxzoom: 14
-        })
-        map.addLayer({
-          id: 'landownership-usfs-fill',
-          type: 'fill',
-          source: 'landownership',
-          'source-layer': 'public_landownership',
-          paint: {
-            'fill-opacity': 0.75,
-            'fill-color': '#D7F0E1'
-          },
-          filter: ['==', 'surface_mgmt_agency', 'US Forest Service']
         })
 
         // hunt geometries
@@ -265,28 +440,31 @@ export default {
         })
       })
 
-      map.on('click', (e) => {
-        const features = map.queryRenderedFeatures(e.point)
-        this.mapDetails.features = features.map(feature => {
-          const { geometry, _geometry, _vectorTileFeature, ...rest } = feature
-          return rest
+      // map details, dev only
+      if (this.isDev) {
+        map.on('click', (e) => {
+          const features = map.queryRenderedFeatures(e.point)
+          this.mapDetails.features = features.map(feature => {
+            const { geometry, _geometry, _vectorTileFeature, ...rest } = feature
+            return rest
+          })
         })
-      })
 
-      map.on('zoom', () => {
-        this.mapDetails.zoom = this.map.getZoom()
-        this.mapDetails.center = this.map.getCenter()
-        this.mapDetails.bounds = this.map.getBounds()
-      })
+        map.on('zoom', () => {
+          this.mapDetails.zoom = this.map.getZoom()
+          this.mapDetails.center = this.map.getCenter()
+          this.mapDetails.bounds = this.map.getBounds()
+        })
 
-      map.on('drag', () => {
-        this.mapDetails.center = this.map.getCenter()
-        this.mapDetails.bounds = this.map.getBounds()
-      })
+        map.on('drag', () => {
+          this.mapDetails.center = this.map.getCenter()
+          this.mapDetails.bounds = this.map.getBounds()
+        })
 
-      map.on('mousemove', (e) => {
-        this.mapDetails.mousePosition = e.lngLat.wrap()
-      })
+        map.on('mousemove', (e) => {
+          this.mapDetails.mousePosition = e.lngLat.wrap()
+        })
+      }
 
       this.map = map
     },
