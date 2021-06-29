@@ -1,54 +1,28 @@
 <template>
-  <div class='bg-white w-full overflow-y-scroll'>
-    <div class="flex space-x-2">
-      <div class="w-12 h-12 bg-oxford-50">50</div>
-      <div class="w-12 h-12 bg-oxford-100">100</div>
-      <div class="w-12 h-12 bg-oxford-200">200</div>
-      <div class="w-12 h-12 bg-oxford-300">300</div>
-      <div class="w-12 h-12 bg-oxford-400">400</div>
-      <div class="w-12 h-12 bg-oxford-500">500</div>
-      <div class="w-12 h-12 bg-oxford-600">600</div>
-      <div class="w-12 h-12 bg-oxford-700">700</div>
-      <div class="w-12 h-12 bg-oxford-800">800</div>
-      <div class="w-12 h-12 bg-oxford-900">900</div>
-    </div>
-    <div class="flex space-x-2 mt-2">
-      <div class="w-12 h-12 bg-olive-50">50</div>
-      <div class="w-12 h-12 bg-olive-100">100</div>
-      <div class="w-12 h-12 bg-olive-200">200</div>
-      <div class="w-12 h-12 bg-olive-300">300</div>
-      <div class="w-12 h-12 bg-olive-400">400</div>
-      <div class="w-12 h-12 bg-olive-500">500</div>
-      <div class="w-12 h-12 bg-olive-600">600</div>
-      <div class="w-12 h-12 bg-olive-700">700</div>
-      <div class="w-12 h-12 bg-olive-800">800</div>
-      <div class="w-12 h-12 bg-olive-900">900</div>
-    </div>
-    <div class="flex space-x-2 mt-2">
-      <div class="w-12 h-12 bg-saffron-50">50</div>
-      <div class="w-12 h-12 bg-saffron-100">100</div>
-      <div class="w-12 h-12 bg-saffron-200">200</div>
-      <div class="w-12 h-12 bg-saffron-300">300</div>
-      <div class="w-12 h-12 bg-saffron-400">400</div>
-      <div class="w-12 h-12 bg-saffron-500">500</div>
-      <div class="w-12 h-12 bg-saffron-600">600</div>
-      <div class="w-12 h-12 bg-saffron-700">700</div>
-      <div class="w-12 h-12 bg-saffron-800">800</div>
-      <div class="w-12 h-12 bg-saffron-900">900</div>
-    </div>
-    <div class="flex space-x-2 mt-2">
-      <div class="w-12 h-12 bg-blue-50">50</div>
-      <div class="w-12 h-12 bg-blue-100">100</div>
-      <div class="w-12 h-12 bg-blue-200">200</div>
-      <div class="w-12 h-12 bg-blue-300">300</div>
-      <div class="w-12 h-12 bg-blue-400">400</div>
-      <div class="w-12 h-12 bg-blue-500">500</div>
-      <div class="w-12 h-12 bg-blue-600">600</div>
-      <div class="w-12 h-12 bg-blue-700">700</div>
-      <div class="w-12 h-12 bg-blue-800">800</div>
-      <div class="w-12 h-12 bg-blue-900">900</div>
-    </div>
-    <pre><code>{{ hunts }}</code></pre>
+  <div class='flex-1 relative flex items-center justify-center overflow-hidden bg-gray-800'>
+    <header class="relative z-30 w-full mx-4 lg:mx-0 lg:w-2/3 xl:w-1/2">
+      <h3 class="text-shadow mb-2 font-mono text-3xl font-light tracking-widest text-gray-300">HuntNV</h3>
+      <h2 class="text-shadow text-8xl font-extrabold tracking-wider text-olive-400">Get Online</h2>
+      <h2 class="text-shadow text-8xl font-extrabold tracking-wider text-olive-400">Get Outside</h2>
+      <p class="text-shadow mt-3 text-2xl font-light text-gray-200">Find your next hunting opportunity with our new HuntNV hunt planner.</p>
+      <div class="mt-8">
+        <router-link
+          to="/map"
+          class="inline-block px-4 py-2 rounded-md text-2xl text-gray-100 bg-olive-500 shadow-lg hover:bg-olive-600"
+        >
+          Explore The Map
+        </router-link>
+      </div>
+    </header>
+
+    <!-- image -->
+    <img
+      src="@/assets/images/hero.jpeg"
+      alt="hunter looking at the mountains"
+      class="absolute object-cover min-h-full z-10 opacity-50"
+    >
+    <div class="absolute h-full w-full object-cover bg-gray-600 vignette"></div>
+    <div class="absolute h-full w-full object-cover opacity-90 bg-oxford-600 mix-blend-overlay"></div>
   </div>
 </template>
 
@@ -71,3 +45,13 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.text-shadow {
+  text-shadow: 2px 1px 10px rgba(100, 116, 139, 0.75);
+}
+
+.vignette {
+  box-shadow: inset 0 0 300px black;
+}
+</style>
