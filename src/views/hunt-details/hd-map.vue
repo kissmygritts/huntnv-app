@@ -33,7 +33,7 @@ export default {
         container: 'map',
         style: 'https://api.maptiler.com/maps/topo/style.json?key=BJ5Us337tUIPtCCZeKV8',
         center: [-117, 39],
-        zoom: 1
+        zoom: 5
       })
       // sets the map to local data
       this.map = map

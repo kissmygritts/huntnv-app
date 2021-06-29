@@ -24,9 +24,7 @@ const getHuntFeature = (id) => {
 }
 
 const getHuntUnitFeatures = (units) => {
-  const data = apiClient.get(`/features/hunt_units.geojson?hunt_units=${units}`)
-  console.log(data)
-  return data
+  return apiClient.get(`/features/hunt_units.geojson?hunt_units=${units}`)
 }
 
 export {

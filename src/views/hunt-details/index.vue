@@ -1,19 +1,19 @@
 <template>
   <div
     v-if="hunt"
-    class="h-full w-full overflow-y-auto"
+    class="h-full w-full overflow-y-auto p-8"
   >
     <hd-header
       v-bind:hunt="hunt"
-      class="m-5 shadow-md rounded-md"
+      class="shadow-md rounded-md"
     />
     <hd-map
       v-bind:geojson="geojson"
       v-bind:hunt_units="hunt_units"
       v-bind:hunt="hunt"
-      class="h-4/6 m-5 shadow-md rounded-md"
+      class="h-4/6 shadow-md rounded-md mt-8"
     />
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 m-5">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-8">
       <landowner-tabs
         v-bind:hunt="hunt"
         v-bind:results="results"

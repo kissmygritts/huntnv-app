@@ -23,7 +23,7 @@
       </select>
     </div>
   </div> -->
-  <div class="rounded-sm">
+  <div class="rounded-md">
     <table class="min-w-full divide-y divide-gray-200">
       <thead class="bg-gray-100">
         <tr>
@@ -47,7 +47,7 @@
       <tbody v-if="hunt" class="bg-white divide-y divide-gray-200 capitalize">
           <tr v-for="i in data" :key="i.hunt_id">
             <td class="px-2 py-4 whitespace-nowrap text-xs sm:text-sm font-medium text-gray-900">
-              {{ i.species }}
+              {{ i.display_name }}
             </td>
             <td class="px-2 py-4 whitespace-nowrap text-xs sm:text-sm font-medium text-gray-900">
               {{ i.draw_type }}
