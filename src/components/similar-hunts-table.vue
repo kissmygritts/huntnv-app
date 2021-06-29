@@ -1,7 +1,7 @@
 <template>
 <div class="bg-white p-6 rounded-lg shadow-lg">
   <h3 class="font-bold text-xl text-black uppercase">Similar Hunts</h3>
-  <similar-hunts-tabs :hunt="hunt" @filter="setSpecies" />
+  <similar-hunts-tabs :data="hunt" @filter="setSpecies" />
   <!-- <div class="my-2 p-2 lg:flex bg-gray-50 rounded-sm uppercase">
     <div class="ml-2 text-xs font-medium text-gray-500 uppercase">
       <label class="mr-2">
