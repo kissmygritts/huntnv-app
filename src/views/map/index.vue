@@ -1,5 +1,5 @@
 <template>
-  <div class="flex-1 flex xl:overflow-hidden">
+  <div class="flex-1 flex xl:overflow-hidden bg-gray-200">
     <!-- map area -->
     <section
       id="map"
@@ -11,11 +11,12 @@
         flex flex-col
         overflow-hidden
         lg:order-last
-        bg-olive-200
       "
     >
       <h1 id="primary-heading" class="sr-only">Map</h1>
-      map
+      <div class="absolute z-50 top-0 right-0 w-96 h-1/2 bg-white opacity-75 overflow-auto">
+        <pre><code>{{ mapDetails }}</code></pre>
+      </div>
     </section>
 
     <!-- hunt cards and filters (hidden on smaller screens) -->
@@ -94,7 +95,14 @@ export default {
       species: {},
       residency: '',
       weapon: '',
-      map: null
+      map: null,
+      mapDetails: {
+        zoom: null,
+        center: null,
+        bounds: null,
+        mousePosition: null,
+        features: null
+      }
     }
   },
 
@@ -169,6 +177,25 @@ export default {
           }
         })
 
+        // public landownership
+        map.addSource('landownership', {
+          type: 'vector',
+          tiles: [`${TILE_URL}/features/public_landownership/{z}/{x}/{y}.pbf`],
+          minzoom: 9,
+          maxzoom: 14
+        })
+        map.addLayer({
+          id: 'landownership-usfs-fill',
+          type: 'fill',
+          source: 'landownership',
+          'source-layer': 'public_landownership',
+          paint: {
+            'fill-opacity': 0.75,
+            'fill-color': '#D7F0E1'
+          },
+          filter: ['==', 'surface_mgmt_agency', 'US Forest Service']
+        })
+
         // hunt geometries
         map.addSource('huntgeoms', {
           type: 'vector',
@@ -240,7 +267,25 @@ export default {
 
       map.on('click', (e) => {
         const features = map.queryRenderedFeatures(e.point)
-        console.log({ features })
+        this.mapDetails.features = features.map(feature => {
+          const { geometry, _geometry, _vectorTileFeature, ...rest } = feature
+          return rest
+        })
+      })
+
+      map.on('zoom', () => {
+        this.mapDetails.zoom = this.map.getZoom()
+        this.mapDetails.center = this.map.getCenter()
+        this.mapDetails.bounds = this.map.getBounds()
+      })
+
+      map.on('drag', () => {
+        this.mapDetails.center = this.map.getCenter()
+        this.mapDetails.bounds = this.map.getBounds()
+      })
+
+      map.on('mousemove', (e) => {
+        this.mapDetails.mousePosition = e.lngLat.wrap()
       })
 
       this.map = map
