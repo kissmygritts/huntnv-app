@@ -7,7 +7,6 @@
       xtitle="Precentage of owernship"
     />
   </div>
-  {{ results }}
 </template>
 
 <script>
