@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-white p-6 rounded-lg shadow-lg">
+  <div class="bg-gray-50 p-6">
     <div class="flex flex-wrap">
       <h3 class="font-bold text-xl text-black uppercase">Landownership Data</h3>
       <div class="w-full">

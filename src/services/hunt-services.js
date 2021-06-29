@@ -20,7 +20,7 @@ const getHunt = (id) => {
 }
 
 const getHuntFeature = (id) => {
-  return apiClient.get(`/features/hunts_with_geom/${id}.geojson`)
+  return apiClient.get(`/features/hunt_geometries/${id}.geojson`)
 }
 
 const getHuntUnitFeatures = (units) => {

@@ -4,7 +4,9 @@
     aria-labelledby="primary-heading"
     class="min-w-0 h-3/6 flex flex-col overflow-hidden lg:order-last bg-olive-200"
   >
-    <h1 id="primary-heading" class="sr-only">Map</h1>
+    <h1
+      id="primary-heading"
+      class="sr-only">Map</h1>
     map
   </section>
 </template>
@@ -14,7 +16,7 @@ import maplibregl from 'maplibre-gl'
 
 export default {
   name: 'hd-map',
-  props: ['geojson', 'hunt_units', 'hunt'],
+  props: ['geojson', 'hunt_units'],
   data () {
     return {
       huntUnits: []

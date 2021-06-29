@@ -1,6 +1,6 @@
 <template>
-  <div class="rounded-lg bg-white overflow-hidden shadow-lg">
-    <div class="bg-white p-6">
+  <div class="bg-gray-50 overflow-hidden">
+    <div class="p-6">
       <div class="sm:flex sm:items-center sm:justify-between">
         <div class="sm:flex sm:space-x-5">
           <div class="lg:flex lg:items-center lg:justify-between uppercase">
