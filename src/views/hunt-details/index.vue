@@ -1,10 +1,28 @@
 <template>
-  <div v-if="hunt" class="h-full w-full overflow-y-auto">
-    <hd-header v-bind:hunt="hunt" class="m-5" />
-    <hd-map v-bind:geojson="geojson" v-bind:hunt_units="hunt_units" v-bind:hunt="hunt" class="h-4/6 shadow-lg rounded-lg mb-5 mx-5"/>
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-5 mx-5">
-      <landowner-tabs v-bind:hunt="hunt" v-bind:results="results" class="col-span-1"/>
-      <similar-hunts-table v-bind:hunt="hunt" class="col-span-1 lg:col-span-2"/>
+  <div
+    v-if="hunt"
+    class="h-full w-full overflow-y-auto p-8"
+  >
+    <hd-header
+      v-bind:hunt="hunt"
+      class="shadow-md rounded-md"
+    />
+    <hd-map
+      v-bind:geojson="geojson"
+      v-bind:hunt_units="hunt_units"
+      v-bind:hunt="hunt"
+      class="h-4/6 shadow-md rounded-md mt-8"
+    />
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-8">
+      <landowner-tabs
+        v-bind:hunt="hunt"
+        v-bind:results="results"
+        class="col-span-1 shadow-md rounded-md"
+      />
+      <similar-hunts-table
+        v-bind:hunt="hunt"
+        class="col-span-1 lg:col-span-2 shadow-md rounded-md"
+      />
     </div>
   </div>
 </template>
@@ -41,13 +59,13 @@ export default {
     }
   },
   async created () {
-    // fetch hunt (by id) and set local data
+    // fetch hunt (by id)
     await getHunt(this.id).then((response) => {
       this.hunt = response.data
     })
     await this.setHuntUnits()
-    // fetch hunt geometry (by id) and set local data
-    await getHuntFeature(this.id).then((response) => {
+    // fetch hunt geometry (by id)
+    await getHuntFeature(this.hunt.hunt_geometry_id).then((response) => {
       this.geojson = response.data
     })
     // fetch hunt units

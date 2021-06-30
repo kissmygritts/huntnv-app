@@ -1,6 +1,6 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
 <template>
-  <div class="h-screen flex bg-gray-50 overflow-hidden">
+  <div class="h-screen flex bg-gray-200 overflow-hidden">
     <hnv-mobile-menu
       as="template"
       :navigation="navigation"

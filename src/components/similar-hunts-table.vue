@@ -1,5 +1,5 @@
 <template>
-<div class="bg-white p-6 rounded-lg shadow-lg">
+<div class="bg-gray-50 p-6">
   <h3 class="font-bold text-xl text-black uppercase">Similar Hunts</h3>
   <similar-hunts-tabs :data="hunt" @filter="setSpecies" />
   <!-- <div class="my-2 p-2 lg:flex bg-gray-50 rounded-sm uppercase">
@@ -23,9 +23,9 @@
       </select>
     </div>
   </div> -->
-  <div class="rounded-sm">
+  <div class="rounded-md">
     <table class="min-w-full divide-y divide-gray-200">
-      <thead class="bg-gray-50">
+      <thead class="bg-gray-100">
         <tr>
           <th scope="col" class="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
             Species
@@ -47,7 +47,7 @@
       <tbody v-if="hunt" class="bg-white divide-y divide-gray-200 capitalize">
           <tr v-for="i in data" :key="i.hunt_id">
             <td class="px-2 py-4 whitespace-nowrap text-xs sm:text-sm font-medium text-gray-900">
-              {{ i.species }}
+              {{ i.display_name }}
             </td>
             <td class="px-2 py-4 whitespace-nowrap text-xs sm:text-sm font-medium text-gray-900">
               {{ i.draw_type }}

@@ -1,6 +1,6 @@
 <template>
   <div v-if="results" class="uppercase">
-    <pie-chart
+    <bar-chart
       :data="results"
       :min="0"
       :max="1"
@@ -13,6 +13,14 @@
 // see https://chartkick.com/vue
 export default {
   name: 'landowner-bar-graph',
-  props: ['results']
+  props: ['results'],
+  methods: {
+    run () {
+      console.log(this.results)
+    }
+  },
+  mounted () {
+    this.run()
+  }
 }
 </script>
