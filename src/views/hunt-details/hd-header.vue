@@ -23,7 +23,7 @@
                 </div>
                 <div class="mt-2 flex items-center text-sm text-gray-500">
                   <ArrowsExpandIcon class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
-                  {{ formatAcres(hunt.landownership[0].hunt_area) }} ACRES
+                  {{ areaAsAcres }} ACRES
                 </div>
                 <div class="mt-2 flex items-center text-sm text-gray-500">
                   <TagIcon class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
@@ -32,9 +32,9 @@
               </div>
               <div class="mt-5 flex items-center text-sm text-gray-500">
                 <p>Units: </p>
-                  <span v-for="units in hunt.units" :key="units.hunt_id" class="relative z-0 inline-flex shadow-sm rounded-md">
+                  <span v-for="unit in huntUnits" :key="unit" class="relative z-0 inline-flex shadow-sm rounded-md">
                     <button type="button" class="relative inline-flex items-center mx-2 px-4 py-2 rounded border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500">
-                      {{ units }}
+                      {{ unit }}
                     </button>
                   </span>
               </div>
@@ -57,15 +57,21 @@ export default {
     ArrowsExpandIcon,
     TagIcon
   },
-  props: ['hunt'],
-  setup () {
-    function formatAcres (area) {
-      const acres = area / 4047
-      return acres.toFixed(2)
+  props: {
+    hunt: {
+      type: Object,
+      required: true
     }
-
-    return {
-      formatAcres
+  },
+  computed: {
+    areaAsAcres () {
+      const acres = this.hunt.landownership[0].hunt_area / 4047
+      return acres.toFixed(2)
+    },
+    huntUnits () {
+      const huntUnits = this.hunt.units
+      huntUnits.sort((a, b) => a - b)
+      return huntUnits
     }
   }
 }
