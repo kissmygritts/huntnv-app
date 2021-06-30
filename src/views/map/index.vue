@@ -4,19 +4,15 @@
     <section
       id="map"
       aria-labelledby="primary-heading"
-      class="
-        min-w-0
-        flex-1
-        h-full
-        flex flex-col
-        overflow-hidden
-        lg:order-last
-      "
+      class="min-w-0 flex-1 flex flex-col overflow-hidden lg:order-last"
     >
       <h1 id="primary-heading" class="sr-only">Map</h1>
       <div v-if="isDev" class="absolute z-50 top-0 right-0 w-96 h-1/2 bg-white opacity-75 overflow-auto">
         <pre><code>{{ mapDetails }}</code></pre>
       </div>
+
+      <!-- map menu button -->
+      <!-- <map-menu-button /> -->
     </section>
 
     <!-- hunt cards and filters (hidden on smaller screens) -->
@@ -68,6 +64,7 @@ import mvHuntList from './mv-hunt-list.vue'
 import hnvSelectSpecies from '@/components/form-inputs/hnv-select-species.vue'
 import hnvSelectWeapon from '@/components/form-inputs/hnv-select-weapon.vue'
 import hnvSelectResidency from '@/components/form-inputs/hnv-select-residency.vue'
+// import MapMenuButton from '@/components/map-ui/map-menu-button.vue'
 
 const TILE_URL = process.env.VUE_APP_API_URL
 
@@ -85,7 +82,13 @@ const filterArray = (arr, filters) => {
 export default {
   name: 'map-view',
 
-  components: { mvHuntList, hnvSelectSpecies, hnvSelectWeapon, hnvSelectResidency },
+  components: {
+    mvHuntList,
+    hnvSelectSpecies,
+    hnvSelectWeapon,
+    hnvSelectResidency
+    // MapMenuButton
+  },
 
   data () {
     return {
@@ -442,6 +445,12 @@ export default {
 
       // map details, dev only
       if (this.isDev) {
+        map.on('load', () => {
+          this.mapDetails.zoom = this.map.getZoom()
+          this.mapDetails.center = this.map.getCenter()
+          this.mapDetails.bounds = this.map.getBounds()
+        })
+
         map.on('click', (e) => {
           const features = map.queryRenderedFeatures(e.point)
           this.mapDetails.features = features.map(feature => {
