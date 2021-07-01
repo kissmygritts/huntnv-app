@@ -5,12 +5,12 @@
       <div class="w-full">
         <ul class="flex mb-0 list-none flex-wrap py-2 flex-row">
             <li class="-mb-px mr-2 last:mr-0 flex-auto text-center">
-              <a class="text-xs font-bold uppercase px-5 py-3 rounded block leading-normal" v-on:click="toggleTabs(1)" v-bind:class="{'text-gray-500 bg-gray-200': openTab !== 1, 'text-white bg-gray-500': openTab === 1}">
+              <a class="text-xs font-bold uppercase px-5 py-3 rounded block leading-normal" v-on:click="toggleTabs(1)" :class="{'text-gray-500 bg-gray-200': openTab !== 1, 'text-white bg-gray-500': openTab === 1}">
                   Table
               </a>
             </li>
             <li class="-mb-px mr-2 last:mr-0 flex-auto text-center">
-              <a class="text-xs font-bold uppercase px-5 py-3 rounded block leading-normal" v-on:click="toggleTabs(2)" v-bind:class="{'text-gray-500 bg-gray-200': openTab !== 2, 'text-white bg-gray-500': openTab === 2}">
+              <a class="text-xs font-bold uppercase px-5 py-3 rounded block leading-normal" v-on:click="toggleTabs(2)" :class="{'text-gray-500 bg-gray-200': openTab !== 2, 'text-white bg-gray-500': openTab === 2}">
                   Chart
               </a>
             </li>
@@ -18,11 +18,11 @@
         <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 rounded">
           <div class="flex-auto">
             <div class="tab-content tab-space">
-                <div v-bind:class="{'hidden': openTab !== 1, 'block': openTab === 1}">
-                  <landowner-table v-bind:hunt="hunt" />
+                <div :class="{'hidden': openTab !== 1, 'block': openTab === 1}">
+                  <landowner-table :landownership="plo" />
                 </div>
-                <div v-bind:class="{'hidden': openTab !== 2, 'block': openTab === 2}">
-                  <landowner-bar-graph v-bind:results="results"/>
+                <div :class="{'hidden': openTab !== 2, 'block': openTab === 2}">
+                  <landowner-bar-graph :results="plo"/>
                 </div>
             </div>
           </div>
@@ -39,7 +39,11 @@ import LandownerBarGraph from '@/components/landownership/landowner-bar-graph.vu
 
 export default {
   name: 'landower-tabs',
-  props: ['hunt', 'results'],
+  props: {
+    landownership: {
+      type: Array
+    }
+  },
   components: {
     LandownerTable,
     LandownerBarGraph
@@ -47,6 +51,23 @@ export default {
   data () {
     return {
       openTab: 1
+    }
+  },
+  computed: {
+    plo () {
+      const plo = this.landownership.map(item => {
+        const area = (item.area / 2590000).toFixed(0)
+        const coverage = (item.coverage * 100).toFixed(2)
+
+        return {
+          surface_mgmt_agency: item.surface_mgmt_agency,
+          area,
+          coverage
+        }
+      })
+
+      plo.sort((a, b) => b.coverage - a.coverage)
+      return plo
     }
   },
   methods: {

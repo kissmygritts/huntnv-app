@@ -23,7 +23,7 @@
                 </div>
                 <div class="mt-2 flex items-center text-sm text-gray-500">
                   <ArrowsExpandIcon class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
-                  {{ areaAsAcres }} ACRES
+                  {{ areaAsAcres }} Miles<sup>2</sup>
                 </div>
                 <div class="mt-2 flex items-center text-sm text-gray-500">
                   <TagIcon class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
@@ -65,8 +65,8 @@ export default {
   },
   computed: {
     areaAsAcres () {
-      const acres = this.hunt.landownership[0].hunt_area / 4047
-      return acres.toFixed(2)
+      const acres = this.hunt.landownership[0].hunt_area / 2590000
+      return acres.toFixed(0)
     },
     huntUnits () {
       const huntUnits = this.hunt.units

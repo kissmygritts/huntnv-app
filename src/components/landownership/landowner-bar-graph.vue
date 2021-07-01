@@ -1,9 +1,9 @@
 <template>
   <div v-if="results" class="uppercase">
     <bar-chart
-      :data="results"
+      :data="graphData"
       :min="0"
-      :max="1"
+      :max="100"
       xtitle="Precentage of owernship"
     />
   </div>
@@ -13,14 +13,19 @@
 // see https://chartkick.com/vue
 export default {
   name: 'landowner-bar-graph',
-  props: ['results'],
-  methods: {
-    run () {
-      console.log(this.results)
+  props: {
+    results: {
+      type: Array,
+      required: true
     }
   },
-  mounted () {
-    this.run()
+  computed: {
+    graphData () {
+      return this.results.reduce((prev, curr) => {
+        const { surface_mgmt_agency: agency, coverage } = curr
+        return [...prev, [agency, Number(coverage)]]
+      }, [])
+    }
   }
 }
 </script>

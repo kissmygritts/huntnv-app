@@ -1,5 +1,5 @@
 <template>
-  <div v-if="hunt" class="uppercase">
+  <div v-if="landownership" class="uppercase">
     <table class="min-w-full divide-y divide-gray-200">
       <thead class="bg-gray-100">
         <tr>
@@ -7,17 +7,17 @@
             Landowner
           </th>
           <th scope="col" class="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-            Acres (% Hunt Area)
+            Miles<sup>2</sup> (%)
           </th>
         </tr>
       </thead>
-      <tbody v-if="hunt" class="bg-white divide-y divide-gray-200 capitalize">
-          <tr v-for="owner in hunt.landownership" :key="owner.hunt_id">
+      <tbody v-if="landownership" class="bg-white divide-y divide-gray-200 capitalize">
+          <tr v-for="owner in landownership" :key="owner.surface_mgmt_agency">
             <td class="px-2 py-4 whitespace-nowrap text-xs font-medium text-gray-900">
               {{ owner.surface_mgmt_agency}}
             </td>
             <td class="px-2 py-4 whitespace-nowrap text-xs font-medium text-gray-900">
-              {{ formatAcres(owner.area) }} ({{ formatPrecentage(owner.coverage) }}%)
+              {{ owner.area }} ({{ owner.coverage }}%)
             </td>
           </tr>
       </tbody>
@@ -27,23 +27,13 @@
 
 <script>
 export default {
-  name: 'landower-table',
-  props: ['hunt'],
-  setup () {
-    function formatAcres (areaAcres) {
-      const acres = areaAcres / 4047
-      return acres.toFixed(2)
+  name: 'landowner-table',
+  props: {
+    landownership: {
+      type: Array,
+      required: true
     }
 
-    function formatPrecentage (areaPrecent) {
-      const precent = areaPrecent * 100
-      return precent.toFixed(2)
-    }
-
-    return {
-      formatAcres,
-      formatPrecentage
-    }
   }
 }
 </script>
