@@ -18,7 +18,7 @@
 
       <main class="flex-1 flex overflow-hidden">
         <!-- <div class="flex-1 flex xl:overflow-hidden"> -->
-          <router-view />
+          <router-view :key="$route.fullPath" />
         <!-- </div> -->
       </main>
     </div>

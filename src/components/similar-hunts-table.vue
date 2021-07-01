@@ -1,6 +1,6 @@
 <template>
-<div class="bg-gray-50 p-6">
-  <h3 class="font-bold text-xl text-black uppercase">Similar Hunts</h3>
+<div class="bg-gray-50 p-4">
+  <h3 class="font-medium text-xl tracking-wider text-gray-800 uppercase">Similar Hunts</h3>
   <similar-hunts-tabs :data="hunt" @filter="setSpecies" />
   <!-- <div class="my-2 p-2 lg:flex bg-gray-50 rounded-sm uppercase">
     <div class="ml-2 text-xs font-medium text-gray-500 uppercase">
@@ -42,25 +42,39 @@
           <th scope="col" class="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
             Units
           </th>
+          <th scope="col" class="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+            link
+          </th>
         </tr>
       </thead>
       <tbody v-if="hunt" class="bg-white divide-y divide-gray-200 capitalize">
           <tr v-for="i in data" :key="i.hunt_id">
-            <td class="px-2 py-4 whitespace-nowrap text-xs sm:text-sm font-medium text-gray-900">
+            <td class="px-2 py-4 whitespace-nowrap text-xs sm:text-sm text-gray-800">
               {{ i.display_name }}
             </td>
-            <td class="px-2 py-4 whitespace-nowrap text-xs sm:text-sm font-medium text-gray-900">
+            <td class="px-2 py-4 whitespace-nowrap text-xs sm:text-sm text-gray-800">
               {{ i.draw_type }}
             </td>
-            <td class="px-2 py-4 whitespace-nowrap text-xs sm:text-sm font-medium text-gray-900">
+            <td class="px-2 py-4 whitespace-nowrap text-xs sm:text-sm text-gray-800">
               {{ i.weapon }}
             </td>
-            <td class="px-2 py-4 whitespace-nowrap text-xs sm:text-sm font-medium text-gray-900">
+            <td class="px-2 py-4 whitespace-nowrap text-xs sm:text-sm text-gray-800">
               {{ i.season_dates }}
             </td>
-            <td class="px-2 py-4 whitespace-nowrap text-xs sm:text-sm font-medium text-gray-900">
+            <td class="px-2 py-4 whitespace-nowrap text-xs sm:text-sm text-gray-800">
               {{ i.unit_group }}
             </td>
+            <router-link
+              tag="td"
+              :to="{ name: 'HuntDetails', params: { id: i.hunt_id } }"
+              class="inline-block px-2 py-4 whitespace-nowrap text-olive-700 hover:text-olive-400"
+            >
+              <!-- <router-link :to="{ name: 'HuntDetails', params: { id: i.hunt_id } }"> -->
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+              </svg>
+              <!-- </router-link> -->
+            </router-link>
           </tr>
       </tbody>
     </table>
