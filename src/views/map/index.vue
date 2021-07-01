@@ -441,6 +441,28 @@ export default {
           },
           filter: ['==', '$id', 0]
         })
+
+        map.addSource('unit-labels', {
+          type: 'vector',
+          tiles: [`${TILE_URL}/features/hunt_unit_labels/{z}/{x}/{y}.pbf`]
+        })
+        map.addLayer({
+          id: 'unit-labels',
+          type: 'symbol',
+          source: 'unit-labels',
+          'source-layer': 'hunt_unit_labels',
+          layout: {
+            'text-font': ['Open Sans Regular'],
+            'text-field': ['get', 'display_name'],
+            'text-size': 16
+          },
+          paint: {
+            'text-color': '#f29645',
+            'text-halo-color': 'white',
+            'text-halo-width': 1,
+            'text-halo-blur': 1
+          }
+        })
       })
 
       // map details, dev only
