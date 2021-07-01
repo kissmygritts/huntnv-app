@@ -13,6 +13,7 @@
 
 <script>
 import maplibregl from 'maplibre-gl'
+const TILE_URL = process.env.VUE_APP_API_URL
 
 export default {
   name: 'hd-map',
@@ -37,11 +38,200 @@ export default {
       })
       // sets the map to local data
       this.map = map
-
       map.addControl(new maplibregl.FullscreenControl())
 
       // when the map loads these functions will run
       map.on('load', () => {
+        // public landownership layers
+        map.addSource('landownership', {
+          type: 'vector',
+          tiles: [`${TILE_URL}/features/public_landownership/{z}/{x}/{y}.pbf`],
+          minzoom: 8,
+          maxzoom: 14
+        })
+
+        // usfs
+        map.addLayer({
+          id: 'landownership-usfs-fill',
+          type: 'fill',
+          source: 'landownership',
+          'source-layer': 'public_landownership',
+          paint: {
+            'fill-opacity': 0.25,
+            'fill-color': '#60C99E'
+          },
+          filter: ['==', 'surface_mgmt_agency', 'US Forest Service']
+        })
+        map.addLayer({
+          id: 'landownership-usfs-outline',
+          type: 'line',
+          source: 'landownership',
+          'source-layer': 'public_landownership',
+          layout: {
+            'line-cap': 'round',
+            'line-join': 'round'
+          },
+          paint: {
+            'line-opacity': 1,
+            'line-color': '#60C99E',
+            'line-width': 1
+          },
+          filter: ['==', 'surface_mgmt_agency', 'US Forest Service']
+        })
+
+        // blm
+        map.addLayer({
+          id: 'landownership-blm-fill',
+          type: 'fill',
+          source: 'landownership',
+          'source-layer': 'public_landownership',
+          paint: {
+            'fill-opacity': 0.25,
+            'fill-color': '#FED17E'
+          },
+          filter: ['==', 'surface_mgmt_agency', 'Bureau of Land Management']
+        })
+        map.addLayer({
+          id: 'landownership-blm-outline',
+          type: 'line',
+          source: 'landownership',
+          'source-layer': 'public_landownership',
+          layout: {
+            'line-cap': 'round',
+            'line-join': 'round'
+          },
+          paint: {
+            'line-opacity': 1,
+            'line-color': '#FED17E',
+            'line-width': 1
+          },
+          filter: ['==', 'surface_mgmt_agency', 'Bureau of Land Management']
+        })
+
+        // usfws
+        map.addLayer({
+          id: 'landownership-usfws-fill',
+          type: 'fill',
+          source: 'landownership',
+          'source-layer': 'public_landownership',
+          paint: {
+            'fill-opacity': 0.25,
+            'fill-color': '#AE9BCE'
+          },
+          filter: ['==', 'surface_mgmt_agency', 'US Fish and Wildlife Service']
+        })
+        map.addLayer({
+          id: 'landownership-usfws-outline',
+          type: 'line',
+          source: 'landownership',
+          'source-layer': 'public_landownership',
+          layout: {
+            'line-cap': 'round',
+            'line-join': 'round'
+          },
+          paint: {
+            'line-opacity': 1,
+            'line-color': '#AE9BCE',
+            'line-width': 1
+          },
+          filter: ['==', 'surface_mgmt_agency', 'US Fish and Wildlife Service']
+        })
+
+        // bia
+        map.addLayer({
+          id: 'landownership-bia-fill',
+          type: 'fill',
+          source: 'landownership',
+          'source-layer': 'public_landownership',
+          paint: {
+            'fill-opacity': 0.25,
+            'fill-color': '#FEA955'
+          },
+          filter: ['==', 'surface_mgmt_agency', 'Bureau of Indian Affairs']
+        })
+        map.addLayer({
+          id: 'landownership-bia-outline',
+          type: 'line',
+          source: 'landownership',
+          'source-layer': 'public_landownership',
+          layout: {
+            'line-cap': 'round',
+            'line-join': 'round'
+          },
+          paint: {
+            'line-opacity': 1,
+            'line-color': '#EDC4A5',
+            'line-width': 1
+          },
+          filter: ['==', 'surface_mgmt_agency', 'Bureau of Indian Affairs']
+        })
+
+        // other federal
+        map.addLayer({
+          id: 'landownership-other-fill',
+          type: 'fill',
+          source: 'landownership',
+          'source-layer': 'public_landownership',
+          paint: {
+            'fill-opacity': 0.25,
+            'fill-color': '#EDC4A5'
+          },
+          filter: ['==', 'surface_mgmt_agency', 'Federal (other)']
+        })
+        map.addLayer({
+          id: 'landownership-other-outline',
+          type: 'line',
+          source: 'landownership',
+          'source-layer': 'public_landownership',
+          layout: {
+            'line-cap': 'round',
+            'line-join': 'round'
+          },
+          paint: {
+            'line-opacity': 1,
+            'line-color': '#FEA955',
+            'line-width': 1
+          },
+          filter: ['==', 'surface_mgmt_agency', 'Federal (other)']
+        })
+
+        // state & local
+        map.addLayer({
+          id: 'landownership-local-fill',
+          type: 'fill',
+          source: 'landownership',
+          'source-layer': 'public_landownership',
+          paint: {
+            'fill-opacity': 0.25,
+            'fill-color': '#96CDDF'
+          },
+          filter: [
+            'any',
+            ['==', 'surface_mgmt_agency', 'Local'],
+            ['==', 'surface_mgmt_agency', 'State']
+          ]
+        })
+        map.addLayer({
+          id: 'landownership-local-outline',
+          type: 'line',
+          source: 'landownership',
+          'source-layer': 'public_landownership',
+          layout: {
+            'line-cap': 'round',
+            'line-join': 'round'
+          },
+          paint: {
+            'line-opacity': 1,
+            'line-color': '#96CDDF',
+            'line-width': 1
+          },
+          filter: [
+            'any',
+            ['==', 'surface_mgmt_agency', 'Local'],
+            ['==', 'surface_mgmt_agency', 'State']
+          ]
+        })
+
         // add hunt polygon to local data from props
         map.addSource('hunt', {
           type: 'geojson',
@@ -55,7 +245,7 @@ export default {
           layout: {},
           paint: {
             'fill-color': '#2e598a',
-            'fill-opacity': 0.2
+            'fill-opacity': 0.25
           }
         })
         // add the hunt unit polygons to local data from props
@@ -63,25 +253,19 @@ export default {
           type: 'geojson',
           data: this.hunt_units
         })
-        // add fill of hunt unit polygons
-        map.addLayer({
-          id: 'huntUnitsLayer-fill',
-          type: 'fill',
-          source: 'hunt_units',
-          layout: {},
-          paint: {
-            'fill-color': '#fff',
-            'fill-opacity': 0
-          }
-        })
         // add outline of hunt unit polygons
         map.addLayer({
           id: 'huntUnitsLayer-line',
           type: 'line',
           source: 'hunt_units',
-          layout: {},
+          layout: {
+            'line-cap': 'round',
+            'line-join': 'round'
+          },
           paint: {
-            'line-color': 'orange'
+            'line-opacity': 1,
+            'line-color': '#f29645',
+            'line-width': 2
           }
         })
         // get coordinates from geojson multipolygon
@@ -94,21 +278,6 @@ export default {
         map.fitBounds(bounds, {
           padding: 20
         })
-      })
-      // on click create popup at cursor location
-      map.on('click', 'huntUnitsLayer-fill', function (e) {
-        new maplibregl.Popup()
-          .setLngLat(e.lngLat)
-          .setHTML(e.features[0].properties.display_name)
-          .addTo(map)
-      })
-      // change the cursor to a pointer when the mouse is over the states layer.
-      map.on('mouseenter', 'huntUnitsLayer-fill', function () {
-        map.getCanvas().style.cursor = 'pointer'
-      })
-      // change it back to a pointer when it leaves.
-      map.on('mouseleave', 'huntUnitsLayer-fill', function () {
-        map.getCanvas().style.cursor = ''
       })
     }
   }

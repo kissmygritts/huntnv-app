@@ -210,7 +210,7 @@ export default {
             'fill-opacity': 0.25,
             'fill-color': '#FED17E'
           },
-          filter: ['==', 'surface_mgmt_agency', 'Bureau of Land Mangement']
+          filter: ['==', 'surface_mgmt_agency', 'Bureau of Land Management']
         })
         map.addLayer({
           id: 'landownership-blm-outline',
@@ -226,7 +226,7 @@ export default {
             'line-color': '#FED17E',
             'line-width': 1
           },
-          filter: ['==', 'surface_mgmt_agency', 'Bureau of Land Mangement']
+          filter: ['==', 'surface_mgmt_agency', 'Bureau of Land Management']
         })
 
         // usfws
