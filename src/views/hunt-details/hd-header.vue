@@ -27,13 +27,13 @@
                 </div>
                 <div class="mt-2 flex items-center text-sm text-gray-500">
                   <TagIcon class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
-                  {{ hunt.quota }}
+                  Tags: {{ hunt.quota }}
                 </div>
               </div>
               <div class="mt-5 flex items-center text-sm text-gray-500">
                 <p>Units: </p>
                   <span v-for="unit in huntUnits" :key="unit" class="relative z-0 inline-flex shadow-sm rounded-md">
-                    <button type="button" class="relative inline-flex items-center mx-2 px-4 py-2 rounded border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500">
+                    <button type="button" class="relative inline-flex items-center mx-2 px-4 py-2 rounded border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-olive-500 focus:border-olive-500">
                       {{ unit }}
                     </button>
                   </span>
