@@ -2,7 +2,7 @@
   <section
     id="map"
     aria-labelledby="primary-heading"
-    class="min-w-0 h-3/6 flex flex-col overflow-hidden lg:order-last bg-olive-200"
+    class="min-w-0 h-3/6 flex flex-col overflow-hidden lg:order-last bg-olive-200 rounded-md shadow-md"
   >
     <h1
       id="primary-heading"
@@ -268,16 +268,29 @@ export default {
             'line-width': 2
           }
         })
-        // get coordinates from geojson multipolygon
-        const coordinates = this.geojson.features[0].geometry.coordinates[0][0]
-        // set bounds based on the coordinates from the multipolygon
-        const bounds = coordinates.reduce(function (bounds, coord) {
-          return bounds.extend(coord)
-        }, new maplibregl.LngLatBounds(coordinates))
-        // set the map bounds based on the bounds from the miltipolygon
-        map.fitBounds(bounds, {
-          padding: 20
-        })
+        if (this.geojson) {
+          // get coordinates from geojson multipolygon
+          const coordinates = this.geojson.features[0].geometry.coordinates[0][0]
+          // set bounds based on the coordinates from the multipolygon
+          const bounds = coordinates.reduce(function (bounds, coord) {
+            return bounds.extend(coord)
+          }, new maplibregl.LngLatBounds(coordinates))
+          // set the map bounds based on the bounds from the miltipolygon
+          map.fitBounds(bounds, {
+            padding: 20
+          })
+        } else {
+          // get coordinates from geojson multipolygon
+          const coordinates = this.hunt_units.features[0].geometry.coordinates[0][0]
+          // set bounds based on the coordinates from the multipolygon
+          const bounds = coordinates.reduce(function (bounds, coord) {
+            return bounds.extend(coord)
+          }, new maplibregl.LngLatBounds(coordinates))
+          // set the map bounds based on the bounds from the miltipolygon
+          map.fitBounds(bounds, {
+            padding: 20
+          })
+        }
       })
     }
   }
