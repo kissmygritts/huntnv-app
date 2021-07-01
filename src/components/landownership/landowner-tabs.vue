@@ -1,7 +1,7 @@
 <template>
-  <div class="bg-gray-50 p-6">
+  <div class="bg-gray-50 p-4">
     <div class="flex flex-wrap">
-      <h3 class="font-bold text-xl text-black uppercase">Landownership Data</h3>
+      <h3 class="font-medium text-xl tracking-wider text-gray-800 uppercase">Landownership Data</h3>
       <div class="w-full">
         <ul class="flex mb-0 list-none flex-wrap py-2 flex-row">
             <li class="-mb-px mr-2 last:mr-0 flex-auto text-center">
