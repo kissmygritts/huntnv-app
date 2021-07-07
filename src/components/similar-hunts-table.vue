@@ -23,7 +23,29 @@
       </select>
     </div>
   </div> -->
-  <div class="rounded-md">
+  <div
+    v-for="i in data"
+    :key="i.id"
+    class="md:hidden capitalize"
+  >
+    <router-link :to="{ name: 'HuntDetails', params: { id: i.hunt_id }}">
+      <div class= "my-5 p-5 bg-white hover:bg-gray-300 text-black rounded-md shadow-md transition duration-500 ease-in-out transform hover:-translate-y-1">
+        <h3 class="capitalize text-lg font-monospaced text-olive-800">
+          {{ i.display_name }}
+        </h3>
+        <div class="text-gray-700 font-light capitalize">
+          <div>
+            <span>{{ i.weapon }}</span>
+            <span class="mx-1 font-medium text-gray-600">&bull;</span>
+            <span>{{ i.draw_type }}</span>
+          </div>
+          <div class="capitalize"><span class="font-normal">Season Dates:</span> {{ i.season_dates }}</div>
+          <div><span class="font-normal">Hunt Units:</span> {{ i.unit_group }}</div>
+        </div>
+      </div>
+    </router-link>
+  </div>
+  <div class="hidden md:block rounded-md overflow-x-scroll">
     <table class="min-w-full divide-y divide-gray-200">
       <thead class="bg-gray-100">
         <tr>
@@ -47,35 +69,41 @@
           </th>
         </tr>
       </thead>
-      <tbody v-if="hunt" class="bg-white divide-y divide-gray-200 capitalize">
-          <tr v-for="i in data" :key="i.hunt_id">
-            <td class="px-2 py-4 whitespace-nowrap text-xs sm:text-sm text-gray-800">
-              {{ i.display_name }}
-            </td>
-            <td class="px-2 py-4 whitespace-nowrap text-xs sm:text-sm text-gray-800">
-              {{ i.draw_type }}
-            </td>
-            <td class="px-2 py-4 whitespace-nowrap text-xs sm:text-sm text-gray-800">
-              {{ i.weapon }}
-            </td>
-            <td class="px-2 py-4 whitespace-nowrap text-xs sm:text-sm text-gray-800">
-              {{ i.season_dates }}
-            </td>
-            <td class="px-2 py-4 whitespace-nowrap text-xs sm:text-sm text-gray-800">
-              {{ i.unit_group }}
-            </td>
-            <router-link
-              tag="td"
-              :to="{ name: 'HuntDetails', params: { id: i.hunt_id } }"
-              class="inline-block px-2 py-4 whitespace-nowrap text-olive-700 hover:text-olive-400"
-            >
-              <!-- <router-link :to="{ name: 'HuntDetails', params: { id: i.hunt_id } }"> -->
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-              </svg>
-              <!-- </router-link> -->
-            </router-link>
-          </tr>
+      <tbody
+        v-if="hunt"
+        class="bg-white divide-y divide-gray-200 capitalize"
+      >
+        <tr
+          v-for="i in data"
+          :key="i.hunt_id"
+        >
+          <td class="px-2 py-4 whitespace-nowrap text-xs sm:text-sm text-gray-800">
+            {{ i.display_name }}
+          </td>
+          <td class="px-2 py-4 whitespace-nowrap text-xs sm:text-sm text-gray-800">
+            {{ i.draw_type }}
+          </td>
+          <td class="px-2 py-4 whitespace-nowrap text-xs sm:text-sm text-gray-800">
+            {{ i.weapon }}
+          </td>
+          <td class="px-2 py-4 whitespace-nowrap text-xs sm:text-sm text-gray-800">
+            {{ i.season_dates }}
+          </td>
+          <td class="px-2 py-4 whitespace-nowrap text-xs sm:text-sm text-gray-800">
+            {{ i.unit_group }}
+          </td>
+          <router-link
+            tag="td"
+            :to="{ name: 'HuntDetails', params: { id: i.hunt_id } }"
+            class="inline-block px-2 py-4 whitespace-nowrap text-olive-700 hover:text-olive-400"
+          >
+            <!-- <router-link :to="{ name: 'HuntDetails', params: { id: i.hunt_id } }"> -->
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+            </svg>
+            <!-- </router-link> -->
+          </router-link>
+        </tr>
       </tbody>
     </table>
   </div>
@@ -116,14 +144,9 @@ export default ({
       this.speciesList = uniqueSpecies
       this.weaponList = uniqueWeapon
     },
-    // sets the species displayed in table, take a parameter filterSpecies passed by @filter listerner
     setSpecies (filterSpecies) {
-      // sets the species from the @click function in the simalar-hunts-tabs component
       this.species = filterSpecies
-      console.log(this.species)
-      // set similar hunts to constant
       const similarHunts = this.hunt.similar_hunts
-      // filter similar hunts by species that match the filterSpecies
       this.data = similarHunts.filter(similarHunts => (similarHunts.species === this.species))
     },
     setDrawType () {

@@ -3,19 +3,21 @@
     <div class="flex flex-wrap">
       <h3 class="font-medium text-xl tracking-wider text-gray-800 uppercase">Landownership Data</h3>
       <div class="w-full">
-        <ul class="flex mb-0 list-none flex-wrap py-2 flex-row">
-            <li class="-mb-px mr-2 last:mr-0 flex-auto text-center">
-              <a class="text-xs font-bold uppercase px-5 py-3 rounded block leading-normal" v-on:click="toggleTabs(1)" :class="{'text-gray-500 bg-gray-200': openTab !== 1, 'text-white bg-gray-500': openTab === 1}">
-                  Table
-              </a>
-            </li>
-            <li class="-mb-px mr-2 last:mr-0 flex-auto text-center">
-              <a class="text-xs font-bold uppercase px-5 py-3 rounded block leading-normal" v-on:click="toggleTabs(2)" :class="{'text-gray-500 bg-gray-200': openTab !== 2, 'text-white bg-gray-500': openTab === 2}">
-                  Chart
-              </a>
-            </li>
-        </ul>
-        <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 rounded">
+        <div class="p-4">
+          <ul class="flex mb-0 list-none flex-wrap py-2 flex-row">
+              <li class="-mb-px mr-2 last:mr-0 flex-auto text-center">
+                <a class="text-xs font-bold uppercase px-5 py-3 rounded block leading-normal" v-on:click="toggleTabs(1)" :class="{'text-gray-500 bg-gray-200': openTab !== 1, 'text-white bg-gray-500': openTab === 1}">
+                    Table
+                </a>
+              </li>
+              <li class="-mb-px mr-2 last:mr-0 flex-auto text-center">
+                <a class="text-xs font-bold uppercase px-5 py-3 rounded block leading-normal" v-on:click="toggleTabs(2)" :class="{'text-gray-500 bg-gray-200': openTab !== 2, 'text-white bg-gray-500': openTab === 2}">
+                    Chart
+                </a>
+              </li>
+          </ul>
+        </div>
+        <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 rounded overflow-x-scroll">
           <div class="flex-auto">
             <div class="tab-content tab-space">
                 <div :class="{'hidden': openTab !== 1, 'block': openTab === 1}">

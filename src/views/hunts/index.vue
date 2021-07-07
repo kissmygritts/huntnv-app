@@ -17,7 +17,8 @@
       <div>
         <div
           v-for="hunt in hunts"
-          :key="hunt.id" :hunt="hunt"
+          :key="hunt.id"
+          :hunt="hunt"
         >
           <router-link :to="{ name: 'HuntDetails', params: { id: hunt.id }}">
             <div class= "my-5 p-5 bg-gray-50 hover:bg-gray-300 text-black rounded-md shadow-md transition duration-500 ease-in-out transform hover:-translate-y-1">
