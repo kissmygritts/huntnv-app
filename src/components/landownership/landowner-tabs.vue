@@ -6,7 +6,11 @@
         <div class="p-4">
           <ul class="flex mb-0 list-none flex-wrap py-2 flex-row">
               <li class="-mb-px mr-2 last:mr-0 flex-auto text-center">
-                <a class="text-xs font-bold uppercase px-5 py-3 rounded block leading-normal" v-on:click="toggleTabs(1)" :class="{'text-gray-500 bg-gray-200': openTab !== 1, 'text-white bg-gray-500': openTab === 1}">
+                <a
+                  class="text-xs font-bold uppercase px-5 py-3 rounded block leading-normal"
+                  v-on:click="toggleTabs(1)"
+                  :class="{'text-gray-500 bg-gray-200': openTab !== 1, 'text-white bg-gray-500': openTab === 1}"
+                >
                     Table
                 </a>
               </li>
@@ -73,7 +77,7 @@ export default {
     }
   },
   methods: {
-    toggleTabs: function (tabNumber) {
+    toggleTabs (tabNumber) {
       this.openTab = tabNumber
     }
   }
