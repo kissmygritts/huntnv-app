@@ -6,7 +6,10 @@
   >
     <h1
       id="primary-heading"
-      class="sr-only">Map</h1>
+      class="sr-only"
+    >
+      Map
+    </h1>
     map
   </section>
 </template>

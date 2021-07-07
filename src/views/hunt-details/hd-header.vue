@@ -4,7 +4,10 @@
       <div class="sm:flex sm:items-center sm:justify-between">
         <div class="sm:flex sm:space-x-5">
           <div class="lg:flex lg:items-center lg:justify-between uppercase">
-            <div v-if="hunt" class="flex-1 min-w-0">
+            <div
+              v-if="hunt"
+              class="flex-1 min-w-0"
+            >
               <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl">
                 {{ hunt.display_name }}
               </h2>
@@ -31,10 +34,14 @@
                 </div>
               </div>
               <div class="mt-5 flex items-center text-sm text-gray-500">
-                <p>Units: </p>
-                  <span v-for="unit in huntUnits" :key="unit" class="relative z-0 inline-flex shadow-sm rounded-md">
+                <p class="mr-2">Units:</p>
+                  <span
+                    v-for="unit in huntUnits"
+                    :key="unit"
+                    class="relative z-0 inline-flex shadow-sm rounded-md"
+                  >
                     <router-link :to="{ name: 'HuntUnits', params: { id: unit }}">
-                      <button class="relative inline-flex items-center mx-2 px-4 py-2 rounded border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-olive-500 focus:border-olive-500">
+                      <button class="relative inline-flex items-center space-x-2 px-4 py-2 rounded border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-olive-500 focus:border-olive-500">
                         {{ unit }}
                       </button>
                     </router-link>

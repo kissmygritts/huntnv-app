@@ -39,8 +39,18 @@
             <span class="mx-1 font-medium text-gray-600">&bull;</span>
             <span>{{ i.draw_type }}</span>
           </div>
-          <div class="capitalize"><span class="font-normal">Season Dates:</span> {{ i.season_dates }}</div>
-          <div><span class="font-normal">Hunt Units:</span> {{ i.unit_group }}</div>
+          <div class="capitalize">
+            <span class="font-normal">
+              Season Dates:
+            </span>
+            {{ i.season_dates }}
+          </div>
+          <div>
+            <span class="font-normal">
+              Hunt Units:
+            </span>
+            {{ i.unit_group }}
+          </div>
         </div>
       </div>
     </router-link>
