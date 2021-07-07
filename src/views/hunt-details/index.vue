@@ -1,22 +1,22 @@
 <template>
   <div
     v-if="hunt"
-    class="h-full w-full overflow-y-auto p-8"
+    class="w-full overflow-y-auto p-8"
   >
-    <hd-header
-      v-bind:hunt="hunt"
-      class="shadow-md rounded-md"
-    />
-    <hd-map
-      :geojson="geojson"
-      :hunt_units="hunt_units"
-      :hunt="hunt"
-      class="h-4/6 shadow-md rounded-md mt-8"
-    />
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-8">
+    <div class="grid grid-cols-1 lg:grid-cols-3 space-y-8">
+      <hd-header
+        v-bind:hunt="hunt"
+        class="col-span-1 lg:col-span-3 shadow-md rounded-md"
+      />
+      <hd-map
+        :geojson="geojson"
+        :hunt_units="hunt_units"
+        :hunt="hunt"
+        class="col-span-1 lg:col-span-3 shadow-md rounded-md"
+      />
       <landowner-tabs
         :landownership="hunt.landownership"
-        class="col-span-1 shadow-md rounded-md"
+        class="col-span-1 lg:col-span-1 lg:mr-8 shadow-md rounded-md"
       />
       <similar-hunts-table
         :hunt="hunt"

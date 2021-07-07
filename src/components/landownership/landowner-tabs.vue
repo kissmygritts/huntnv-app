@@ -21,7 +21,7 @@
               </li>
           </ul>
         </div>
-        <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 rounded overflow-x-scroll">
+        <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 rounded overflow-x-auto">
           <div class="flex-auto">
             <div class="tab-content tab-space">
                 <div :class="{'hidden': openTab !== 1, 'block': openTab === 1}">

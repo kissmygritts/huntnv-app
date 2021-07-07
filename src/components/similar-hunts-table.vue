@@ -55,7 +55,7 @@
       </div>
     </router-link>
   </div>
-  <div class="hidden md:block rounded-md overflow-x-scroll">
+  <div class="hidden md:block rounded-md overflow-x-auto">
     <table class="min-w-full divide-y divide-gray-200">
       <thead class="bg-gray-100">
         <tr>
