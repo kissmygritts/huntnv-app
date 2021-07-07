@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="sm:hidden p-4">
+    <div class="sm:hidden pt-4">
       <label
         for="tabs"
         class="sr-only"
@@ -12,7 +12,7 @@
         @change="$emit('filter', this.species)"
         id="tabs"
         name="tabs"
-        class="capitalize block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-olive-500 focus:border-olive-500 sm:text-sm rounded-md"
+        class="capitalize block w-full text-base border-gray-300 focus:outline-none focus:ring-olive-500 focus:border-olive-500 sm:text-sm rounded-md"
       >
         <option
           v-for="result in results"

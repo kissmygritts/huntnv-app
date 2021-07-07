@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="hunt"
-    class="w-full overflow-y-auto p-8"
+    class="p-8 overflow-y-auto"
   >
     <div class="grid grid-cols-1 lg:grid-cols-3 space-y-8">
       <hd-header

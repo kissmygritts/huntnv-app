@@ -1,6 +1,6 @@
 <template>
   <div v-if="huntUnit" class="p-8 overflow-y-auto">
-    <div class=" flex space-x-4 py-4">
+    <div class="md:flex space-x-4 py-4">
       <h1 class="font-bold text-4xl text-saffron-500">Unit {{ huntUnit.display_name }}</h1>
       <div v-for="i in this.speciesList" :key="i" class="pt-1">
         <a href="#">
