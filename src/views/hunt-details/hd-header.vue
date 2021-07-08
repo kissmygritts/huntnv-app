@@ -28,22 +28,24 @@
                   <ArrowsExpandIcon class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
                   {{ areaAsAcres }} Miles<sup>2</sup>
                 </div>
-                <div class="mt-2 flex items-center text-sm text-gray-500">
+                <div class="py-2 flex items-center text-sm text-gray-500">
                   <TagIcon class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
                   Tags: {{ hunt.quota }}
                 </div>
               </div>
-              <div class="mt-5 flex items-center text-sm text-gray-500">
+              <div class="py-2 flex flex-wrap items-center text-sm text-gray-500">
                 <p class="mr-2">Units:</p>
                   <span
                     v-for="unit in huntUnits"
                     :key="unit"
-                    class="relative z-0 inline-flex shadow-sm rounded-md"
+                    class="relative z-0 inline-flex flex-wrap"
                   >
-                    <router-link :to="{ name: 'HuntUnits', params: { id: unit }}">
-                      <button class="relative inline-flex items-center space-x-2 px-4 py-2 rounded border border-gray-300 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1 focus:ring-olive-500 focus:border-olive-500">
-                        {{ unit }}
-                      </button>
+                    <router-link
+                      :to="{ name: 'HuntUnits', params: { id: unit }}"
+                      tag="button"
+                      class="flex items-center px-2 py-2 mr-2 my-2 rounded border border-olive-300 bg-white text-sm font-medium text-olive-700 hover:bg-olive-200 focus:ring-1 focus:ring-olive-500 focus:border-olive-500"
+                    >
+                      {{ unit }}
                     </router-link>
                   </span>
               </div>
