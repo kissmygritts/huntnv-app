@@ -43,7 +43,7 @@
                     <router-link
                       :to="{ name: 'HuntUnits', params: { id: unit }}"
                       tag="button"
-                      class="flex items-center px-2 py-2 mr-2 my-2 rounded border border-olive-300 bg-white text-sm font-medium text-olive-700 hover:bg-olive-200 focus:ring-1 focus:ring-olive-500 focus:border-olive-500"
+                      class="flex items-center px-2 py-2 mr-1 rounded border border-olive-300 bg-white text-sm font-medium text-olive-700 hover:bg-olive-200 focus:ring-1 focus:ring-olive-500 focus:border-olive-500"
                     >
                       {{ unit }}
                     </router-link>

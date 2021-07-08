@@ -1,6 +1,6 @@
 <template>
   <div>
-    <dl class="grid grid-cols-1 gap-5 sm:grid-cols-3">
+    <dl class="grid grid-cols-1 gap-5 lg:grid-cols-3">
       <div class="flex px-4 py-5 bg-gray-50 shadow rounded-lg overflow-hidden sm:p-6">
         <ArrowsExpandIcon class="flex-shrink-0 mr-6 my-2 h-10 w-10 text-gray-400" aria-hidden="true" />
         <div class="">

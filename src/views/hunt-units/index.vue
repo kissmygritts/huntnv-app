@@ -1,12 +1,12 @@
 <template>
   <div v-if="huntUnit" class="p-8 overflow-y-auto">
-    <div class="md:flex space-x-4 py-4">
+    <div class="md:flex">
       <h1 class="font-bold text-4xl text-saffron-500">Unit {{ huntUnit.display_name }}</h1>
-      <div v-for="i in this.speciesList" :key="i" class="pt-1">
+      <div v-for="i in this.speciesList" :key="i" class="pt-2">
         <a href="#">
           <span
             :class="[ speciesColors[i] ]"
-            class="flex-shrink-0 inline-block space-x-1 mr-2 px-2 py-0.5 text-xs font-medium rounded-full"
+            class="flex-shrink-0 md:ml-4 px-2 py-0.5 text-xs font-medium rounded-full"
           >
             {{ i }}
           </span>
