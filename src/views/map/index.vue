@@ -67,6 +67,7 @@ import hnvSelectResidency from '@/components/form-inputs/hnv-select-residency.vu
 // import MapMenuButton from '@/components/map-ui/map-menu-button.vue'
 
 const TILE_URL = process.env.VUE_APP_API_URL
+const MAPTILER_KEY = process.env.VUE_APP_MAPTILER_KEY
 
 const filterArray = (arr, filters) => {
   const filterKeys = Object.keys(filters)
@@ -156,8 +157,7 @@ export default {
     renderMap () {
       const map = new maplibregl.Map({
         container: 'map',
-        style:
-          'https://api.maptiler.com/maps/topo/style.json?key=BJ5Us337tUIPtCCZeKV8',
+        style: `https://api.maptiler.com/maps/voyager/style.json?key=${MAPTILER_KEY}`,
         center: [-116.6554, 39.1564],
         zoom: 6
       })

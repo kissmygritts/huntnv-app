@@ -14,6 +14,7 @@
 <script>
 import maplibregl from 'maplibre-gl'
 const TILE_URL = process.env.VUE_APP_API_URL
+const MAPTILER_KEY = process.env.VUE_APP_MAPTILER_KEY
 
 export default {
   name: 'hd-map',
@@ -32,7 +33,7 @@ export default {
     renderMap () {
       const map = new maplibregl.Map({
         container: 'map',
-        style: 'https://api.maptiler.com/maps/topo/style.json?key=BJ5Us337tUIPtCCZeKV8',
+        style: `https://api.maptiler.com/maps/voyager/style.json?key=${MAPTILER_KEY}`,
         center: [-117, 39],
         zoom: 5
       })
