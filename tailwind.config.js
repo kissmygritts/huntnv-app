@@ -22,6 +22,9 @@ module.exports = {
       pink: colors.pink
     },
     extend: {
+      spacing: {
+        144: '36rem'
+      },
       fontFamily: {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans]
       },

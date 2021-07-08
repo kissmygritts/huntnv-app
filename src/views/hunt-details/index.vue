@@ -1,7 +1,7 @@
 <template>
   <div
     v-if="hunt"
-    class="p-8 overflow-y-auto"
+    class="w-full p-8 overflow-y-auto"
   >
     <div class="grid grid-cols-1 lg:grid-cols-3 space-y-8">
       <hd-header
@@ -12,7 +12,7 @@
         :geojson="geojson"
         :hunt_units="hunt_units"
         :hunt="hunt"
-        class="col-span-1 lg:col-span-3 shadow-md rounded-md"
+        class="h-96 lg:h-144 col-span-1 lg:col-span-3 shadow-md rounded-md"
       />
       <landowner-tabs
         :landownership="hunt.landownership"

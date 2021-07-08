@@ -14,9 +14,9 @@
       </div>
     </div>
     <hu-stats :huntUnit="huntUnit" class="py-4" />
-    <div class="mt-4 grid grid-cols-1 lg:grid-cols-2 space-x-4">
+    <div class="mt-4 grid grid-cols-1 lg:grid-cols-2 lg:space-x-4 space-y-8 lg:space-y-0">
       <hu-main-card class="col-span-1" />
-      <hd-map :hunt_units="hunt_units" class="h-full col-span-1" />
+      <hd-map :hunt_units="hunt_units" class="h-96 lg:h-auto col-span-1" />
     </div>
     <hu-small-card class="py-4" />
     <hu-hunts-table :huntUnit="huntUnit" />
