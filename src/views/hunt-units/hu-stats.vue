@@ -1,32 +1,41 @@
 <template>
   <div>
-    <dl class="grid grid-cols-1 gap-5 lg:grid-cols-3">
-      <div class="flex px-4 py-5 bg-gray-50 shadow rounded-lg overflow-hidden sm:p-6">
-        <ArrowsExpandIcon class="flex-shrink-0 mr-6 my-2 h-10 w-10 text-gray-400" aria-hidden="true" />
-        <div class="">
-          <dt class="flex text-sm font-medium text-gray-500 truncate">
-            Total Square Miles
+    <dl class="grid grid-cols-1 gap-4 lg:grid-cols-3">
+      <div class="flex px-4 py-4 bg-olive-400 shadow-md rounded-md overflow-hidden sm:p-6">
+        <ArrowsExpandIcon
+          class="flex-shrink-0 mr-6 my-2 h-10 w-10 text-gray-600"
+          aria-hidden="true"
+        />
+        <div>
+          <dt class="flex text-sm font-medium text-gray-600 truncate">
+            Total Miles <span>&#178;</span>
           </dt>
           <dd class="mt-1 text-3xl font-semibold text-gray-900">
             {{ setSquareMiles }}
           </dd>
         </div>
       </div>
-      <div class="flex px-4 py-5 bg-gray-50 shadow rounded-lg overflow-hidden sm:p-6">
-        <ChartPieIcon class="flex-shrink-0 mr-6 my-2 h-10 w-10 text-gray-400" aria-hidden="true" />
-        <div class="">
-          <dt class="flex text-sm font-medium text-gray-500 truncate">
-            Precentage Public Land
+      <div class="flex px-4 py-5 bg-olive-400 shadow rounded-lg overflow-hidden sm:p-6">
+        <ChartPieIcon
+          class="flex-shrink-0 mr-6 my-2 h-10 w-10 text-gray-600"
+          aria-hidden="true"
+        />
+        <div>
+          <dt class="flex text-sm font-medium text-gray-600 truncate">
+            Public Land
           </dt>
           <dd class="mt-1 text-3xl font-semibold text-gray-900">
             58.16%
           </dd>
         </div>
       </div>
-      <div class="flex px-4 py-5 bg-gray-50 shadow rounded-lg overflow-hidden sm:p-6">
-        <SelectorIcon class="flex-shrink-0 mr-6 my-2 h-10 w-10 text-gray-400" aria-hidden="true" />
-        <div class="">
-          <dt class="flex text-sm font-medium text-gray-500 truncate">
+      <div class="flex px-4 py-5 bg-olive-400 shadow rounded-lg overflow-hidden sm:p-6">
+        <SelectorIcon
+          class="flex-shrink-0 mr-6 my-2 h-10 w-10 text-gray-600"
+          aria-hidden="true"
+        />
+        <div>
+          <dt class="flex text-sm font-medium text-gray-600 truncate">
             Elevation Range
           </dt>
           <dd class="mt-1 text-3xl font-semibold text-gray-900">
