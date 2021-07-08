@@ -6,7 +6,7 @@
         <a href="#">
           <span
             :class="[ speciesColors[i] ]"
-            class="flex-shrink-0 md:ml-4 px-2 py-0.5 text-xs font-medium rounded-full"
+            class="flex-shrink-0 md:ml-4 px-2 py-0.5 text-xs font-medium rounded-full shadow-md"
           >
             {{ i }}
           </span>

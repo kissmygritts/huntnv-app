@@ -38,19 +38,19 @@
               <div class="flex border-b-2 text-gray-100 pb-2 mb-2">
                 <span
                   :class="[ speciesColors[hunt.species] ]"
-                  class="flex-shrink-0 inline-block my-2 mr-2 px-2 py-0.5 text-xs font-medium rounded-full"
+                  class="flex-shrink-0 inline-block my-2 mr-2 px-2 py-0.5 text-xs font-medium rounded-full shadow-md"
                 >
                   {{ hunt.species }}
                 </span>
                 <span
                   :class="[ classColors[hunt.class] ]"
-                  class="flex-shrink-0 inline-block my-2 mx-2 px-2 py-0.5 text-xs font-medium rounded-full"
+                  class="flex-shrink-0 inline-block my-2 mx-2 px-2 py-0.5 text-xs font-medium rounded-full shadow-md"
                 >
                   {{ hunt.class }}
                 </span>
                 <span
                   :class="[ weaponColors[hunt.weapon] ]"
-                  class="flex-shrink-0 inline-block my-2 mx-2 px-2 py-0.5 text-xs font-medium rounded-full"
+                  class="flex-shrink-0 inline-block my-2 mx-2 px-2 py-0.5 text-xs font-medium rounded-full shadow-md"
                 >
                   {{ hunt.weapon }}
                 </span>
