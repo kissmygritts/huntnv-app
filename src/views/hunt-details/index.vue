@@ -18,7 +18,7 @@
         :landownership="hunt.landownership"
         class="col-span-1 lg:col-span-1 lg:mr-8 shadow-md rounded-md"
       />
-      <similar-hunts-table
+      <hd-similar-hunts-table
         :hunt="hunt"
         class="col-span-1 lg:col-span-2 shadow-md rounded-md"
       />
@@ -33,7 +33,7 @@ import HdMap from '@/views/hunt-details/hd-map.vue'
 
 // import vue components
 import LandownerTabs from '@/components/landownership/landowner-tabs.vue'
-import SimilarHuntsTable from '@/components/similar-hunts-table.vue'
+import HdSimilarHuntsTable from '@/views/hunt-details/hd-similar-hunts-table.vue'
 
 // import api services
 import { getHunt, getHuntFeature, getHuntUnitFeatures } from '@/services/hunt-services.js'
@@ -42,7 +42,7 @@ export default {
   components: {
     // vue components
     LandownerTabs,
-    SimilarHuntsTable,
+    HdSimilarHuntsTable,
     HdMap,
     HdHeader
   },

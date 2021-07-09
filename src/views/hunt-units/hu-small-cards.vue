@@ -1,6 +1,6 @@
 <template>
   <div>
-    <dl class="mt-4 grid grid-cols-1 gap-4 sm:grid-cols-3">
+    <dl class="grid grid-cols-1 lg:grid-cols-3 gap-4">
       <div class="px-4 py-5 bg-gray-50 shadow-md rounded-md overflow-hidden sm:p-6">
         <dt class="flex text-lg font-semibold text-gray-900">
           <KeyIcon class="flex-shrink-0 mr-2 h-8 w-8 text-gray-400" aria-hidden="true" />

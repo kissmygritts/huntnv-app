@@ -1,25 +1,43 @@
 <template>
-  <div v-if="huntUnit" class="p-8 overflow-y-auto">
-    <div class="md:flex">
-      <h1 class="font-bold text-4xl text-saffron-500">Unit {{ huntUnit.display_name }}</h1>
-      <div v-for="i in this.speciesList" :key="i" class="pt-2">
-        <a href="#">
-          <span
-            :class="[ speciesColors[i] ]"
-            class="flex-shrink-0 md:ml-4 px-2 py-0.5 text-xs font-medium rounded-full shadow-md"
-          >
-            {{ i }}
-          </span>
-        </a>
+  <div
+    v-if="huntUnit"
+    class="p-8 overflow-y-auto "
+  >
+    <div class="grid grid-cols-3 gap-4">
+      <div class="col-span-3 md:flex">
+        <h1 class="font-bold text-4xl text-saffron-500 mr-4">
+          Unit {{ huntUnit.display_name }}
+        </h1>
+        <div
+          v-for="species in this.speciesList"
+          :key="species"
+          class="p-2"
+        >
+          <a href="#">
+            <span
+              :class="[ speciesColors[species] ]"
+              class="flex-shrink-0 px-2 py-0.5 text-xs font-medium rounded-full shadow-md"
+            >
+              {{ species }}
+            </span>
+          </a>
+        </div>
       </div>
+      <hu-stats
+        :huntUnit="huntUnit"
+        class="col-span-3"
+      />
+      <hu-main-card class="col-span-3 lg:col-span-1" />
+      <hd-map
+        :hunt_units="huntGeojson"
+        class="h-96 lg:h-full col-span-3 lg:col-span-2"
+      />
+      <hu-small-card class="col-span-3" />
+      <hu-hunts-table
+        :huntUnit="huntUnit"
+        class="col-span-3"
+      />
     </div>
-    <hu-stats :huntUnit="huntUnit" class="py-4" />
-    <div class="mt-4 grid grid-cols-1 lg:grid-cols-2 lg:space-x-4 space-y-8 lg:space-y-0">
-      <hu-main-card class="col-span-1" />
-      <hd-map :hunt_units="hunt_units" class="h-96 lg:h-auto col-span-1" />
-    </div>
-    <hu-small-card class="py-4" />
-    <hu-hunts-table :huntUnit="huntUnit" />
   </div>
 </template>
 
@@ -48,7 +66,7 @@ export default {
   data () {
     return {
       huntUnit: null,
-      hunt_units: null,
+      huntGeojson: null,
       speciesList: null,
       speciesColors: {
         elk: 'bg-green-300 text-green-800',
@@ -62,14 +80,14 @@ export default {
     }
   },
   async created () {
-    // fetch huntUnit
     await getHuntUnit(this.id).then((response) => {
       this.huntUnit = response.data
     })
+
     this.setSpeciesList()
-    // fetch hunt units
+
     await getHuntUnitFeatures(this.id).then((response) => {
-      this.hunt_units = response.data
+      this.huntGeojson = response.data
     })
   },
   methods: {

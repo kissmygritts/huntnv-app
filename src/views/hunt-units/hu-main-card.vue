@@ -1,8 +1,8 @@
 <!-- This example requires Tailwind CSS v2.0+ -->
 <template>
-  <div class="bg-gray-50 overflow-hidden rounded-md shadow-md">
-    <div class="px-4 py-5 sm:px-6 bg-oxford-500">
-      <h3 class="text-lg leading-6 font-medium text-gray-200">
+  <div class="bg-gray-50 rounded-md shadow-md">
+    <div class="px-4 py-5 sm:px-6">
+      <h3 class="text-lg leading-6 font-medium text-gray-500">
         General Information
       </h3>
     </div>
