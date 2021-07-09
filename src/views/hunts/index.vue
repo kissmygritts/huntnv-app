@@ -62,24 +62,24 @@
                     Season Dates: {{ hunt.season_dates }}
                   </span>
                 </div>
-                <!-- <div class="flex items-center pr-5 py-1 text-sm text-gray-500">
+                <div class="flex items-center pr-5 py-1 text-sm text-gray-500">
                   <ClockIcon class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
                   <span class="capitalize">
-                    Days: 31
+                    Days: {{ hunt.season_length_days }}
+                  </span>
+                </div>
+                <!-- <div class="flex items-center pr-5 py-1 text-sm text-gray-500">
+                  <ArrowsExpandIcon class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
+                  <span class="capitalize">
+                    {{ areaAsAcres }} Miles<sup>2</sup>
                   </span>
                 </div> -->
                 <div class="flex items-center pr-5 py-1 text-sm text-gray-500">
                   <TagIcon class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
                   <span class="capitalize">
-                    Quota: {{ hunt.quota }}
+                    Tags: {{ hunt.quota }}
                   </span>
                 </div>
-                <!-- <div class="flex items-center pr-5 py-1 text-sm text-gray-500">
-                  <ChartBarIcon class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
-                  <span class="capitalize">
-                    Draw Odds: {{ hunt.quota }}%
-                  </span>
-                </div> -->
                 <div class="flex items-center pr-5 py-1 text-sm text-gray-500">
                   <ViewGridIcon class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
                   <span class="capitalize">
@@ -92,6 +92,12 @@
                     Public Land: 50%
                   </span>
                 </div>
+                <!-- <div class="flex items-center pr-5 py-1 text-sm text-gray-500">
+                  <ChartBarIcon class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
+                  <span class="capitalize">
+                    Draw Odds: {{ hunt.quota }}%
+                  </span>
+                </div> -->
               </div>
             </div>
           </router-link>
@@ -102,7 +108,7 @@
 </template>
 
 <script>
-import { CalendarIcon, TagIcon, ChartPieIcon, ViewGridIcon, FilterIcon } from '@heroicons/vue/outline'
+import { CalendarIcon, TagIcon, ChartPieIcon, ViewGridIcon, FilterIcon, ClockIcon } from '@heroicons/vue/outline'
 
 import { getHunts } from '@/services/hunt-services.js'
 
@@ -115,7 +121,8 @@ export default {
     ChartPieIcon,
     // ChartBarIcon,
     // ClockIcon,
-    FilterIcon
+    FilterIcon,
+    ClockIcon
   },
   data () {
     return {
@@ -154,6 +161,10 @@ export default {
     }
   },
   computed: {
+    areaAsAcres () {
+      const acres = this.hunts.landownership[0].hunt_area / 2590000
+      return acres.toFixed(0)
+    },
     huntsCount () {
       const count = this.hunts.length
       return count

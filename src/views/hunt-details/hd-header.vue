@@ -3,7 +3,7 @@
     <div class="p-6">
       <div class="sm:flex sm:items-center sm:justify-between">
         <div class="sm:flex sm:space-x-5">
-          <div class="lg:flex lg:items-center lg:justify-between uppercase">
+          <div class="lg:flex lg:items-center lg:justify-between capitalize">
             <div
               v-if="hunt"
               class="flex-1 min-w-0"
@@ -18,11 +18,15 @@
                 </div>
                 <div class="mt-2 flex items-center text-sm text-gray-500">
                   <img src="@/assets/images/aim.png" class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-200" aria-hidden="true"/>
-                  {{ hunt.weapon }}
+                  Weapon: {{ hunt.weapon }}
                 </div>
                 <div class="mt-2 flex items-center text-sm text-gray-500">
                   <CalendarIcon class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
-                  {{ hunt.season_dates }}
+                  Season Dates: {{ hunt.season_dates }}
+                </div>
+                <div class="mt-2 flex items-center text-sm text-gray-500">
+                  <ClockIcon class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
+                  Days: {{ hunt.season_length_days }}
                 </div>
                 <div class="mt-2 flex items-center text-sm text-gray-500">
                   <ArrowsExpandIcon class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
@@ -58,7 +62,7 @@
 </template>
 
 <script>
-import { CalendarIcon, IdentificationIcon, ArrowsExpandIcon, TagIcon } from '@heroicons/vue/outline'
+import { CalendarIcon, IdentificationIcon, ArrowsExpandIcon, TagIcon, ClockIcon } from '@heroicons/vue/outline'
 
 export default {
   name: 'hd-header',
@@ -66,7 +70,8 @@ export default {
     CalendarIcon,
     IdentificationIcon,
     ArrowsExpandIcon,
-    TagIcon
+    TagIcon,
+    ClockIcon
   },
   props: {
     hunt: {
