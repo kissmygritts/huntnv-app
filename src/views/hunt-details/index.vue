@@ -11,7 +11,7 @@
       <hd-map
         :geojson="geojson"
         :hunt_units_geojson="hunt_units_geojson"
-        class="h-96 lg:h-144 col-span-1 lg:col-span-3 shadow-md rounded-md"
+        class="h-96 lg:h-144 col-span-1 lg:col-span-2 shadow-md rounded-md"
       />
       <landowner-tabs
         :landownership="hunt.landownership"
@@ -19,7 +19,7 @@
       />
       <hd-similar-hunts-table
         :hunt="hunt"
-        class="col-span-1 lg:col-span-2 shadow-md rounded-md"
+        class="col-span-3 shadow-md rounded-md"
       />
     </div>
   </div>
