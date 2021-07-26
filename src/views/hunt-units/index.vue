@@ -29,7 +29,7 @@
       />
       <hu-main-card class="col-span-3 lg:col-span-1" />
       <hd-map
-        :hunt_units="huntGeojson"
+        :hunt_units_geojson="huntGeojson"
         class="h-96 lg:h-full col-span-3 lg:col-span-2"
       />
       <hu-small-card class="col-span-3" />
