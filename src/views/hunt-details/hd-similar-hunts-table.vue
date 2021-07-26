@@ -125,17 +125,17 @@ export default ({
   },
   methods: {
     setHunt () {
-      const similarHunts = this.hunt.similar_hunts
+      const similarHunts = this.hunt.related_hunts
       this.data = similarHunts.filter(similarHunts => (similarHunts.species === this.hunt.species))
     },
     setSpeciesList () {
-      const similarHunts = this.hunt.similar_hunts
+      const similarHunts = this.hunt.related_hunts
       const uniqueSpecies = [...new Set(similarHunts.map(data => data.species))]
       this.speciesList = uniqueSpecies
     },
     setSpecies (filterSpecies) {
       this.species = filterSpecies
-      const similarHunts = this.hunt.similar_hunts
+      const similarHunts = this.hunt.related_hunts
       this.data = similarHunts.filter(similarHunts => (similarHunts.species === this.species))
     }
   }

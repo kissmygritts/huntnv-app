@@ -63,7 +63,7 @@ export default {
   },
   methods: {
     setHunts () {
-      const hunts = this.data.similar_hunts
+      const hunts = this.data.related_hunts
       const data = {}
       for (const { species } of hunts) {
         data[species] = {

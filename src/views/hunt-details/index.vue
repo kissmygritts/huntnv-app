@@ -1,17 +1,16 @@
 <template>
   <div
-    v-if="hunt"
+    v-if="hunt_units_geojson"
     class="w-full p-8 overflow-y-auto"
   >
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
       <hd-header
-        v-bind:hunt="hunt"
+        :hunt="hunt"
         class="col-span-1 lg:col-span-3 shadow-md rounded-md"
       />
       <hd-map
         :geojson="geojson"
-        :hunt_units="hunt_units"
-        :hunt="hunt"
+        :hunt_units_geojson="hunt_units_geojson"
         class="h-96 lg:h-144 col-span-1 lg:col-span-3 shadow-md rounded-md"
       />
       <landowner-tabs
@@ -31,7 +30,7 @@
 import HdHeader from '@/views/hunt-details/hd-header.vue'
 import HdMap from '@/views/hunt-details/hd-map.vue'
 
-// import vue components
+// // import vue components
 import LandownerTabs from '@/components/landownership/landowner-tabs.vue'
 import HdSimilarHuntsTable from '@/views/hunt-details/hd-similar-hunts-table.vue'
 
@@ -51,8 +50,8 @@ export default {
     return {
       hunt: null,
       geojson: null,
-      hunt_units: null,
-      units: null
+      units: null,
+      hunt_units_geojson: null
     }
   },
   async created () {
@@ -61,18 +60,18 @@ export default {
       this.hunt = response.data
     })
     await this.setHuntUnits()
-    // fetch hunt geometry (by id)
+    // fetch hunt geometry geojson (by hunt_geometry_id)
     await getHuntFeature(this.hunt.hunt_geometry_id).then((response) => {
       this.geojson = response.data
     })
     // fetch hunt units
     await getHuntUnitFeatures(this.units).then((response) => {
-      this.hunt_units = response.data
+      this.hunt_units_geojson = response.data
     })
   },
   methods: {
     setHuntUnits () {
-      const initialUnits = this.hunt.units
+      const initialUnits = this.hunt.hunt_units_arr
       this.units = initialUnits.toString()
       return this.units
     }

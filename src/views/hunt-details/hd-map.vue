@@ -21,7 +21,7 @@ const MAPTILER_KEY = process.env.VUE_APP_MAPTILER_KEY
 
 export default {
   name: 'hd-map',
-  props: ['geojson', 'hunt_units'],
+  props: ['geojson', 'hunt_units_geojson'],
   data () {
     return {
       huntUnits: []
@@ -255,7 +255,7 @@ export default {
         // add the hunt unit polygons to local data from props
         map.addSource('hunt_units', {
           type: 'geojson',
-          data: this.hunt_units
+          data: this.hunt_units_geojson
         })
         // add outline of hunt unit polygons
         map.addLayer({
@@ -285,7 +285,7 @@ export default {
           })
         } else {
           // get coordinates from geojson multipolygon
-          const coordinates = this.hunt_units.features[0].geometry.coordinates[0][0]
+          const coordinates = this.hunt_units_geojson.features[0].geometry.coordinates[0][0]
           // set bounds based on the coordinates from the multipolygon
           const bounds = coordinates.reduce(function (bounds, coord) {
             return bounds.extend(coord)

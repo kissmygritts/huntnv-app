@@ -5,7 +5,6 @@
         <div class="sm:flex sm:space-x-5">
           <div class="lg:flex lg:items-center lg:justify-between capitalize">
             <div
-              v-if="hunt"
               class="flex-1 min-w-0"
             >
               <h2 class="text-2xl font-bold leading-7 text-gray-900 sm:text-3xl">
@@ -26,7 +25,7 @@
                 </div>
                 <div class="mt-2 flex items-center text-sm text-gray-500">
                   <ClockIcon class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
-                  Days: {{ hunt.season_length_days }}
+                  Days: {{ hunt.season_length }}
                 </div>
                 <div class="mt-2 flex items-center text-sm text-gray-500">
                   <ArrowsExpandIcon class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
@@ -81,11 +80,11 @@ export default {
   },
   computed: {
     areaAsAcres () {
-      const acres = this.hunt.landownership[0].hunt_area / 2590000
+      const acres = this.hunt.area / 2590000
       return acres.toFixed(0)
     },
     huntUnits () {
-      const huntUnits = this.hunt.units
+      const huntUnits = this.hunt.hunt_units_arr
       huntUnits.sort((a, b) => a - b)
       return huntUnits
     }
