@@ -1,8 +1,8 @@
 <template>
   <div class="w-full overflow-hidden bg-opacity-0">
     <mv-hunt-card
-      v-for="hunt in hunts.hunts"
-      :key="hunt.hunt_geometry_id"
+      v-for="(hunt, i) in hunts.hunts"
+      :key="i"
       :hunt="hunt"
       @mouseover="emitHover(hunt.hunt_geometry_id)"
       @mouseleave="emitMouseLeave"

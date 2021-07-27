@@ -31,25 +31,25 @@
         <p v-if="loading">LOADING...</p>
         <div v-else>
           <div class="w-full px-2 py-4 space-y-2">
-            <!-- <hnv-select-species v-model="species" @update:model-value="setHuntFilters" /> -->
-            <!-- <hnv-select-weapon v-model="weapon" @update:model-value="setHuntFilters" />
-            <hnv-select-residency v-model="residency" @update:model-value="setHuntFilters" /> -->
+            <hnv-select-species v-model="species" @update:model-value="setHuntFilters" />
+            <hnv-select-weapon v-model="weapon" @update:model-value="setHuntFilters" />
+            <hnv-select-residency v-model="residency" @update:model-value="setHuntFilters" />
 
-            <!-- <button
+            <button
               type="button"
               class="ml-1 text-sm text-saffron-700 cursor-pointer hover:underline"
               @click="resetHuntFilters">
                 Reset Filters
-            </button> -->
+            </button>
           </div>
 
           <div class="w-full p-2">
             <div>
               <h2 class="ml-1 text-2xl text-gray-800">
-                {{ activeHunts.total_hunts }} Hunts
+                {{ hunts.total_hunts }} Hunts
               </h2>
             </div>
-            <mv-hunt-list class="mt-1" :hunts="activeHunts" @hunt-card:hover="handleHunCardHover" />
+            <mv-hunt-list class="mt-1" :hunts="hunts" @hunt-card:hover="handleHuntCardHover" />
           </div>
         </div>
       </div>
@@ -61,34 +61,21 @@
 import maplibregl from 'maplibre-gl'
 import { getHuntsFeed } from '@/services/hunt-services.js'
 import mvHuntList from './mv-hunt-list.vue'
-// import hnvSelectSpecies from '@/components/form-inputs/hnv-select-species.vue'
-// import hnvSelectWeapon from '@/components/form-inputs/hnv-select-weapon.vue'
-// import hnvSelectResidency from '@/components/form-inputs/hnv-select-residency.vue'
-// import MapMenuButton from '@/components/map-ui/map-menu-button.vue'
+import hnvSelectSpecies from '@/components/form-inputs/hnv-select-species.vue'
+import hnvSelectWeapon from '@/components/form-inputs/hnv-select-weapon.vue'
+import hnvSelectResidency from '@/components/form-inputs/hnv-select-residency.vue'
 
 const TILE_URL = process.env.VUE_APP_API_URL
 const MAPTILER_KEY = process.env.VUE_APP_MAPTILER_KEY
-
-const filterArray = (arr, filters) => {
-  const filterKeys = Object.keys(filters)
-
-  return arr.filter(item => {
-    return filterKeys.every(key => {
-      if (!filters[key].toString().length) return true
-      return filters[key] === item[key]
-    })
-  })
-}
 
 export default {
   name: 'map-view',
 
   components: {
-    mvHuntList
-    // hnvSelectSpecies
-    // hnvSelectWeapon,
-    // hnvSelectResidency
-    // MapMenuButton
+    mvHuntList,
+    hnvSelectSpecies,
+    hnvSelectWeapon,
+    hnvSelectResidency
   },
 
   data () {
@@ -114,20 +101,16 @@ export default {
     activeFilters () {
       const filters = {}
 
-      if (this.species?.id) Object.assign(filters, { species_id: this.species.id })
+      if (this.species?.id) Object.assign(filters, { species_class_id: this.species.id })
       if (this.residency) Object.assign(filters, { draw_type: this.residency })
       if (this.weapon) Object.assign(filters, { weapon: this.weapon })
 
       return filters
     },
 
-    activeHunts () {
-      if (!Object.keys(this.activeFilters).length) return this.hunts
-      return filterArray(this.hunts, this.activeFilters)
-    },
-
     activeHuntGeomIds () {
-      return [...new Set(this.activeHunts.map(item => item.hunt_geometry_id))]
+      if (!Object.keys(this.hunts).length) return []
+      return [...new Set(this.hunts.hunts.map(item => item.hunt_geometry_id))]
     },
 
     huntMvtFilter () {
@@ -143,10 +126,7 @@ export default {
   },
 
   async created () {
-    this.loading = true
-    const { data } = await getHuntsFeed()
-    this.hunts = data
-    this.loading = false
+    await this.getHuntFeed()
   },
 
   mounted () {
@@ -500,7 +480,17 @@ export default {
       this.map = map
     },
 
-    setHuntFilters () {
+    async getHuntFeed () {
+      this.loading = true
+      const { data } = await getHuntsFeed()
+      this.hunts = data
+      this.loading = false
+    },
+
+    async setHuntFilters () {
+      const hunts = await getHuntsFeed(this.activeFilters)
+      this.hunts = hunts.data
+
       this.map.setFilter('hunts-fill', this.huntMvtFilter)
       this.map.setFilter('hunts-outline', this.huntMvtFilter)
     },
@@ -511,7 +501,7 @@ export default {
       this.weapon = ''
     },
 
-    handleHunCardHover ({ hunt, hover }) {
+    handleHuntCardHover ({ hunt, hover }) {
       if (hover) {
         const huntGeomId = hunt
         console.log(hunt)

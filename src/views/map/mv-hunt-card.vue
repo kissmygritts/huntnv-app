@@ -8,7 +8,7 @@
       <div><span class="font-normal">Hunts:</span> {{ hunt.hunts.length }}</div>
       <mvHuntCardList
         v-for="hunt in hunt.hunts"
-        :key="hunt.hunt_geometry_id"
+        :key="hunt.id"
         :hunt="hunt"
       />
     </div>

@@ -11,8 +11,13 @@ const apiClient = axios.create({
   }
 })
 
-const getHuntsFeed = () => {
-  return apiClient.get('/hunts/feed')
+const getSpeciesFilter = (speciesID) => {
+  return apiClient.get(`hunts/feed?species_class_id=${speciesID}`)
+}
+
+const getHuntsFeed = (query = {}) => {
+  const querystring = genQueryString(query)
+  return apiClient.get(`/hunts/feed${querystring}`)
 }
 
 const getHunts = () => {
@@ -36,10 +41,19 @@ const getHuntUnitFeatures = (id) => {
 }
 
 export {
+  getSpeciesFilter,
   getHuntsFeed,
   getHunts,
   getHunt,
   getHuntFeature,
   getHuntUnitFeatures,
   getHuntUnit
+}
+
+function genQueryString (query) {
+  const keys = Object.keys(query)
+  if (!keys.length) return ''
+
+  const filters = keys.map(key => `${key}=${query[key]}`)
+  return `?${filters.join('&')}`
 }
