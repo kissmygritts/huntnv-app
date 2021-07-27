@@ -27,7 +27,7 @@
 
 <script>
 import { ref } from 'vue'
-import { BookmarkAltIcon, GlobeIcon, HomeIcon, ChartBarIcon, PresentationChartLineIcon } from '@heroicons/vue/outline'
+import { GlobeIcon, HomeIcon } from '@heroicons/vue/outline'
 import HnvSidebarNav from '@/components/hnv-sidebar-nav.vue'
 import HnvMobileNavbar from '@/components/hnv-mobile-navbar.vue'
 import HnvMobileMenu from '@/components/hnv-mobile-menu.vue'
@@ -37,12 +37,13 @@ const user = {
   imageUrl:
     'https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
 }
+
 const navigation = [
   { name: 'Home', href: '/', icon: HomeIcon },
-  { name: 'Map', href: '/map', icon: GlobeIcon },
-  { name: 'Hunts', href: '/hunts', icon: BookmarkAltIcon },
-  { name: 'Odds', href: '#', icon: ChartBarIcon },
-  { name: 'Harvest', href: '#', icon: PresentationChartLineIcon }
+  { name: 'Map', href: '/map', icon: GlobeIcon }
+  // { name: 'Hunts', href: '/hunts', icon: BookmarkAltIcon },
+  // { name: 'Odds', href: '#', icon: ChartBarIcon },
+  // { name: 'Harvest', href: '#', icon: PresentationChartLineIcon }
 ]
 
 export default {
