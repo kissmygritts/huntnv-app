@@ -31,16 +31,16 @@
         <p v-if="loading">LOADING...</p>
         <div v-else>
           <div class="w-full px-2 py-4 space-y-2">
-            <hnv-select-species v-model="species" @update:model-value="setHuntFilters" />
+            <!-- <hnv-select-species v-model="species" @update:model-value="setHuntFilters" /> -->
             <!-- <hnv-select-weapon v-model="weapon" @update:model-value="setHuntFilters" />
             <hnv-select-residency v-model="residency" @update:model-value="setHuntFilters" /> -->
 
-            <button
+            <!-- <button
               type="button"
               class="ml-1 text-sm text-saffron-700 cursor-pointer hover:underline"
               @click="resetHuntFilters">
                 Reset Filters
-            </button>
+            </button> -->
           </div>
 
           <div class="w-full p-2">
@@ -61,7 +61,7 @@
 import maplibregl from 'maplibre-gl'
 import { getHuntsFeed } from '@/services/hunt-services.js'
 import mvHuntList from './mv-hunt-list.vue'
-import hnvSelectSpecies from '@/components/form-inputs/hnv-select-species.vue'
+// import hnvSelectSpecies from '@/components/form-inputs/hnv-select-species.vue'
 // import hnvSelectWeapon from '@/components/form-inputs/hnv-select-weapon.vue'
 // import hnvSelectResidency from '@/components/form-inputs/hnv-select-residency.vue'
 // import MapMenuButton from '@/components/map-ui/map-menu-button.vue'
@@ -84,8 +84,8 @@ export default {
   name: 'map-view',
 
   components: {
-    mvHuntList,
-    hnvSelectSpecies
+    mvHuntList
+    // hnvSelectSpecies
     // hnvSelectWeapon,
     // hnvSelectResidency
     // MapMenuButton
@@ -513,7 +513,8 @@ export default {
 
     handleHunCardHover ({ hunt, hover }) {
       if (hover) {
-        const huntGeomId = hunt.hunt_geometry_id
+        const huntGeomId = hunt
+        console.log(hunt)
         this.map.setFilter('hovered-hunt-fill', ['==', '$id', huntGeomId])
         this.map.setFilter('hovered-hunt-outline', ['==', '$id', huntGeomId])
       } else {

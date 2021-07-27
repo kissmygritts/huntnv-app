@@ -4,7 +4,7 @@
       v-for="hunt in hunts.hunts"
       :key="hunt.hunt_geometry_id"
       :hunt="hunt"
-      @mouseover="emitHover(hunts.hunt_geometry_id)"
+      @mouseover="emitHover(hunt.hunt_geometry_id)"
       @mouseleave="emitMouseLeave"
     />
   </div>
