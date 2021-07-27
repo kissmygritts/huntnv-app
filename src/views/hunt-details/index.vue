@@ -3,19 +3,19 @@
     v-if="hunt_units_geojson"
     class="w-full p-8 overflow-y-auto"
   >
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+    <div class="grid grid-cols-3 gap-4">
       <hd-header
         :hunt="hunt"
-        class="col-span-1 lg:col-span-3 shadow-md rounded-md"
+        class="col-span-3 shadow-md rounded-md"
       />
       <hd-map
         :geojson="geojson"
         :hunt_units_geojson="hunt_units_geojson"
-        class="h-96 lg:h-144 col-span-1 lg:col-span-2 shadow-md rounded-md"
+        class="h-96 lg:h-144 col-span-3 lg:col-span-2 shadow-md rounded-md"
       />
       <landowner-tabs
         :landownership="hunt.landownership"
-        class="col-span-1 lg:col-span-1 shadow-md rounded-md"
+        class="col-span-3 lg:col-span-1 shadow-md rounded-md"
       />
       <hd-similar-hunts-table
         :hunt="hunt"
