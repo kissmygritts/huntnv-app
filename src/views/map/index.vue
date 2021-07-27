@@ -32,21 +32,21 @@
         <div v-else>
           <div class="w-full px-2 py-4 space-y-2">
             <hnv-select-species v-model="species" @update:model-value="setHuntFilters" />
-            <hnv-select-weapon v-model="weapon" @update:model-value="setHuntFilters" />
-            <hnv-select-residency v-model="residency" @update:model-value="setHuntFilters" />
+            <!-- <hnv-select-weapon v-model="weapon" @update:model-value="setHuntFilters" />
+            <hnv-select-residency v-model="residency" @update:model-value="setHuntFilters" /> -->
 
             <button
               type="button"
               class="ml-1 text-sm text-saffron-700 cursor-pointer hover:underline"
               @click="resetHuntFilters">
                 Reset Filters
-              </button>
+            </button>
           </div>
 
           <div class="w-full p-2">
             <div>
               <h2 class="ml-1 text-2xl text-gray-800">
-                {{ activeHunts.length }} Hunts
+                {{ activeHunts.total_hunts }} Hunts
               </h2>
             </div>
             <mv-hunt-list class="mt-1" :hunts="activeHunts" @hunt-card:hover="handleHunCardHover" />
@@ -59,11 +59,11 @@
 
 <script>
 import maplibregl from 'maplibre-gl'
-import { getHunts } from '@/services/hunt-services.js'
+import { getHuntsFeed } from '@/services/hunt-services.js'
 import mvHuntList from './mv-hunt-list.vue'
 import hnvSelectSpecies from '@/components/form-inputs/hnv-select-species.vue'
-import hnvSelectWeapon from '@/components/form-inputs/hnv-select-weapon.vue'
-import hnvSelectResidency from '@/components/form-inputs/hnv-select-residency.vue'
+// import hnvSelectWeapon from '@/components/form-inputs/hnv-select-weapon.vue'
+// import hnvSelectResidency from '@/components/form-inputs/hnv-select-residency.vue'
 // import MapMenuButton from '@/components/map-ui/map-menu-button.vue'
 
 const TILE_URL = process.env.VUE_APP_API_URL
@@ -85,9 +85,9 @@ export default {
 
   components: {
     mvHuntList,
-    hnvSelectSpecies,
-    hnvSelectWeapon,
-    hnvSelectResidency
+    hnvSelectSpecies
+    // hnvSelectWeapon,
+    // hnvSelectResidency
     // MapMenuButton
   },
 
@@ -144,7 +144,7 @@ export default {
 
   async created () {
     this.loading = true
-    const { data } = await getHunts()
+    const { data } = await getHuntsFeed()
     this.hunts = data
     this.loading = false
   },

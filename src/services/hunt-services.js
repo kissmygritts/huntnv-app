@@ -11,6 +11,10 @@ const apiClient = axios.create({
   }
 })
 
+const getHuntsFeed = () => {
+  return apiClient.get('/hunts/feed')
+}
+
 const getHunts = () => {
   return apiClient.get('/hunts')
 }
@@ -32,6 +36,7 @@ const getHuntUnitFeatures = (id) => {
 }
 
 export {
+  getHuntsFeed,
   getHunts,
   getHunt,
   getHuntFeature,

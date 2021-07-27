@@ -1,10 +1,10 @@
 <template>
-  <div class="w-full divide-y-2 divide-gray-200 rounded-md shadow-md overflow-hidden">
+  <div class="w-full overflow-hidden bg-opacity-0">
     <mv-hunt-card
-      v-for="hunt in hunts"
-      :key="hunt.id"
+      v-for="hunt in hunts.hunts"
+      :key="hunt.hunt_geometry_id"
       :hunt="hunt"
-      @mouseover="emitHover(hunt.id)"
+      @mouseover="emitHover(hunts.hunt_geometry_id)"
       @mouseleave="emitMouseLeave"
     />
   </div>
@@ -24,8 +24,7 @@ export default {
   },
   methods: {
     emitHover (id) {
-      const hunt = this.hunts.filter(item => item.id === id)
-      this.$emit('hunt-card:hover', { hunt: hunt[0], hover: true })
+      this.$emit('hunt-card:hover', { hunt: id, hover: true })
     },
 
     emitMouseLeave () {
