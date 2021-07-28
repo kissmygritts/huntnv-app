@@ -31,7 +31,7 @@
             <hnv-select-species v-model="species" @update:model-value="setHuntFilters" />
             <hnv-select-weapon v-model="weapon" @update:model-value="setHuntFilters" />
             <hnv-select-residency v-model="residency" @update:model-value="setHuntFilters" />
-
+            <hnv-range-slider-draw-rate v-model="draw_rate" @update:model-value="setHuntFilters" />
             <button
               type="button"
               class="ml-1 text-sm text-saffron-700 cursor-pointer hover:underline"
@@ -61,6 +61,7 @@ import mvHuntList from './mv-hunt-list.vue'
 import hnvSelectSpecies from '@/components/form-inputs/hnv-select-species.vue'
 import hnvSelectWeapon from '@/components/form-inputs/hnv-select-weapon.vue'
 import hnvSelectResidency from '@/components/form-inputs/hnv-select-residency.vue'
+import hnvRangeSliderDrawRate from '@/components/form-inputs/hnv-range-slider-draw-rate.vue'
 
 const TILE_URL = process.env.VUE_APP_API_URL
 const MAPTILER_KEY = process.env.VUE_APP_MAPTILER_KEY
@@ -72,7 +73,8 @@ export default {
     mvHuntList,
     hnvSelectSpecies,
     hnvSelectWeapon,
-    hnvSelectResidency
+    hnvSelectResidency,
+    hnvRangeSliderDrawRate
   },
 
   data () {
@@ -83,6 +85,8 @@ export default {
       species: {},
       residency: '',
       weapon: '',
+      draw_rate: 0,
+      success_rate: 0,
       map: null,
       mapDetails: {
         zoom: null,
@@ -101,6 +105,9 @@ export default {
       if (this.species?.id) Object.assign(filters, { species_class_id: this.species.id })
       if (this.residency) Object.assign(filters, { draw_type: this.residency })
       if (this.weapon) Object.assign(filters, { weapon: this.weapon })
+      if (this.draw_rate) Object.assign(filters, { draw_rate: this.draw_rate })
+
+      console.log(filters)
 
       return filters
     },
@@ -496,6 +503,7 @@ export default {
       this.species = {}
       this.residency = ''
       this.weapon = ''
+      this.draw_rate = ''
     },
 
     handleHuntCardHover ({ hunt, hover }) {
