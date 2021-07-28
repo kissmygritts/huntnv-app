@@ -17,7 +17,7 @@
         <option
           v-for="result in results"
           :key="result.species"
-          v-bind:value="result.species"
+          :value="result.species"
         >
           {{ result.species }} ({{ result.count }})
         </option>
@@ -30,15 +30,15 @@
           aria-label="Tabs"
         >
           <button
-            @click="$emit('filter', result.species)"
-            v-for="result in results"
+            v-for="(result, index) in results"
             :key="result.species"
-            class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-200 whitespace-nowrap flex py-4 px-1 border-b-2 font-medium text-sm capitalize"
+            @click="$emit('filter', result.species), currentTab = index"
+            :class="[currentTab === index ? 'border-oxford-500' : 'border-transparent', 'text-gray-500 hover:text-gray-700 hover:border-gray-200 whitespace-nowrap flex py-4 px-1 border-b-2 font-medium text-sm capitalize']"
           >
             {{ result.species }}
             <span
               v-if="result.count"
-              :class="['bg-gray-100 text-gray-900', 'hidden ml-3 py-0.5 px-2.5 rounded-full text-xs font-medium md:inline-block']"
+              class="bg-gray-100 text-gray-900 hidden ml-3 py-0.5 px-2.5 rounded-full text-xs font-medium md:inline-block"
             >
               {{ result.count }}
             </span>
@@ -55,7 +55,8 @@ export default {
   data () {
     return {
       results: null,
-      species: this.data.species
+      species: this.data.species,
+      currentTab: null
     }
   },
   created () {
@@ -71,8 +72,8 @@ export default {
           count: data[species] ? data[species].count + 1 : 1
         }
       }
-      const result = Object.values(data)
-      this.results = result
+      this.results = Object.values(data)
+      console.log(this.results[0])
     }
   }
 }
