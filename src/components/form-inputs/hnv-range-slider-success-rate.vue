@@ -1,6 +1,6 @@
 <template>
   <div class="w-100">
-    <label class="block ml-1 font-medium text-gray-700" for="myRange">Draw Rate: {{ (range * 100).toFixed(0) }}%</label>
+    <label class="block ml-1 font-medium text-gray-700" for="myRange">Success Rate: {{ (range * 100).toFixed(0) }}%</label>
     <div class="text-center">
       <input v-model="range" @change="$emit('update:modelValue', this.range)" type="range" min="0" max="1" step="0.01" class="slider" id="myRange">
     </div>
@@ -23,7 +23,7 @@ export default {
 .slider {
   -webkit-appearance: none;  /* Override default CSS styles */
   appearance: none;
-  width: 99%; /* Full-width */
+  width: 98%; /* Full-width */
   height: 5px; /* Specified height */
   background: #d3d3d3; /* Grey background */
   outline: none; /* Remove outline */

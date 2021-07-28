@@ -32,6 +32,7 @@
             <hnv-select-weapon v-model="weapon" @update:model-value="setHuntFilters" />
             <hnv-select-residency v-model="residency" @update:model-value="setHuntFilters" />
             <hnv-range-slider-draw-rate v-model="draw_rate" @update:model-value="setHuntFilters" />
+            <hnv-range-slider-success-rate v-model="success_rate" @update:model-value="setHuntFilters" />
             <button
               type="button"
               class="ml-1 text-sm text-saffron-700 cursor-pointer hover:underline"
@@ -62,6 +63,7 @@ import hnvSelectSpecies from '@/components/form-inputs/hnv-select-species.vue'
 import hnvSelectWeapon from '@/components/form-inputs/hnv-select-weapon.vue'
 import hnvSelectResidency from '@/components/form-inputs/hnv-select-residency.vue'
 import hnvRangeSliderDrawRate from '@/components/form-inputs/hnv-range-slider-draw-rate.vue'
+import hnvRangeSliderSuccessRate from '@/components/form-inputs/hnv-range-slider-success-rate.vue'
 
 const TILE_URL = process.env.VUE_APP_API_URL
 const MAPTILER_KEY = process.env.VUE_APP_MAPTILER_KEY
@@ -74,7 +76,8 @@ export default {
     hnvSelectSpecies,
     hnvSelectWeapon,
     hnvSelectResidency,
-    hnvRangeSliderDrawRate
+    hnvRangeSliderDrawRate,
+    hnvRangeSliderSuccessRate
   },
 
   data () {
@@ -106,8 +109,7 @@ export default {
       if (this.residency) Object.assign(filters, { draw_type: this.residency })
       if (this.weapon) Object.assign(filters, { weapon: this.weapon })
       if (this.draw_rate) Object.assign(filters, { draw_rate: this.draw_rate })
-
-      console.log(filters)
+      if (this.success_rate) Object.assign(filters, { success_rate: this.success_rate })
 
       return filters
     },
