@@ -31,6 +31,10 @@
                   <ArrowsExpandIcon class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
                   {{ areaAsAcres }} Miles<sup>2</sup>
                 </div>
+                <div class="mt-2 flex items-center text-sm text-gray-500">
+                  <ChartPieIcon class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
+                  {{ (hunt.public_land_pct * 100).toFixed(0) }}% Public Land
+                </div>
                 <div class="py-2 flex items-center text-sm text-gray-500">
                   <TagIcon class="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400" aria-hidden="true" />
                   Tags: {{ hunt.quota }}
@@ -43,13 +47,16 @@
                     :key="unit"
                     class="relative z-0 inline-flex flex-wrap"
                   >
-                    <router-link
+                    <span class="flex items-center px-2 py-2 mr-1 rounded border border-olive-300 bg-white text-sm font-medium text-olive-700 focus:ring-1 focus:ring-olive-500 focus:border-olive-500">
+                      {{ unit }}
+                    </span>
+                    <!-- <router-link
                       :to="{ name: 'HuntUnits', params: { id: unit }}"
                       tag="button"
                       class="flex items-center px-2 py-2 mr-1 rounded border border-olive-300 bg-white text-sm font-medium text-olive-700 hover:bg-olive-200 focus:ring-1 focus:ring-olive-500 focus:border-olive-500"
                     >
                       {{ unit }}
-                    </router-link>
+                    </router-link> -->
                   </span>
               </div>
             </div>
@@ -61,7 +68,7 @@
 </template>
 
 <script>
-import { CalendarIcon, IdentificationIcon, ArrowsExpandIcon, TagIcon, ClockIcon } from '@heroicons/vue/outline'
+import { CalendarIcon, IdentificationIcon, ArrowsExpandIcon, TagIcon, ClockIcon, ChartPieIcon } from '@heroicons/vue/outline'
 
 export default {
   name: 'hd-header',
@@ -70,7 +77,8 @@ export default {
     IdentificationIcon,
     ArrowsExpandIcon,
     TagIcon,
-    ClockIcon
+    ClockIcon,
+    ChartPieIcon
   },
   props: {
     hunt: {
