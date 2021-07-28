@@ -14,6 +14,11 @@ export default {
     return {
       range: 0
     }
+  },
+  methods: {
+    resetRange (value) {
+      this.range = value
+    }
   }
 }
 </script>

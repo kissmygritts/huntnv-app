@@ -7,9 +7,9 @@
       class="min-w-0 flex-1 flex flex-col overflow-hidden lg:order-last"
     >
       <h1 id="primary-heading" class="sr-only">Map</h1>
-      <div v-if="isDev" class="absolute z-50 top-0 right-0 w-96 h-1/2 bg-white opacity-75 overflow-auto">
+      <!-- <div v-if="isDev" class="absolute z-50 top-0 right-0 w-96 h-1/2 bg-white opacity-75 overflow-auto">
         <pre><code>{{ mapDetails }}</code></pre>
-      </div>
+      </div> -->
     </section>
 
     <!-- hunt cards and filters (hidden on smaller screens) -->
@@ -31,8 +31,8 @@
             <hnv-select-species v-model="species" @update:model-value="setHuntFilters" />
             <hnv-select-weapon v-model="weapon" @update:model-value="setHuntFilters" />
             <hnv-select-residency v-model="residency" @update:model-value="setHuntFilters" />
-            <hnv-range-slider-draw-rate v-model="draw_rate" @update:model-value="setHuntFilters" />
-            <hnv-range-slider-success-rate v-model="success_rate" @update:model-value="setHuntFilters" />
+            <hnv-range-slider-draw-rate v-model="draw_rate" @update:model-value="setHuntFilters" ref="drawRateSlider"/>
+            <hnv-range-slider-success-rate v-model="success_rate" @update:model-value="setHuntFilters" ref="successRateSlider"/>
             <button
               type="button"
               class="ml-1 text-sm text-saffron-700 cursor-pointer hover:underline"
@@ -144,7 +144,7 @@ export default {
       const map = new maplibregl.Map({
         container: 'map',
         style: `https://api.maptiler.com/maps/voyager/style.json?key=${MAPTILER_KEY}`,
-        center: [-116.6554, 39.1564],
+        center: [-116.6554, 38.55],
         zoom: 6
       })
 
@@ -449,6 +449,9 @@ export default {
             'text-halo-blur': 1
           }
         })
+        map.addControl(new maplibregl.NavigationControl())
+
+        map.addControl(new maplibregl.ScaleControl())
       })
 
       // map details, dev only
@@ -505,13 +508,16 @@ export default {
       this.species = {}
       this.residency = ''
       this.weapon = ''
-      this.draw_rate = ''
+      this.draw_rate = 0
+      this.success_rate = 0
+      this.$refs.drawRateSlider.resetRange(0)
+      this.$refs.successRateSlider.resetRange(0)
+      this.setHuntFilters()
     },
 
     handleHuntCardHover ({ hunt, hover }) {
       if (hover) {
         const huntGeomId = hunt
-        console.log(hunt)
         this.map.setFilter('hovered-hunt-fill', ['==', '$id', huntGeomId])
         this.map.setFilter('hovered-hunt-outline', ['==', '$id', huntGeomId])
       } else {

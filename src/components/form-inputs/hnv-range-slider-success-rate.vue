@@ -2,7 +2,7 @@
   <div class="w-100">
     <label class="block ml-1 font-medium text-gray-700" for="myRange">Success Rate: {{ (range * 100).toFixed(0) }}%</label>
     <div class="text-center">
-      <input v-model="range" @change="$emit('update:modelValue', this.range)" type="range" min="0" max="1" step="0.01" class="slider" id="myRange">
+      <input v-model="range" @change="$emit('update:modelValue', range)" type="range" min="0" max="1" step="0.01" class="slider" id="myRange">
     </div>
   </div>
 </template>
@@ -13,6 +13,11 @@ export default {
   data () {
     return {
       range: 0
+    }
+  },
+  methods: {
+    resetRange (value) {
+      this.range = value
     }
   }
 }
