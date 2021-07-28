@@ -19,7 +19,7 @@
           h-full
           relative
           flex flex-col
-          w-96
+          w-120
           border-r border-gray-200
           bg-gray-200
           overflow-y-scroll overflow-x-hidden
