@@ -73,7 +73,11 @@ export default {
         }
       }
       this.results = Object.values(data)
-      console.log(this.results[0])
+      this.results.forEach((c, index) => {
+        if (c.species === this.species) {
+          this.currentTab = index
+        }
+      })
     }
   }
 }

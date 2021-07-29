@@ -43,7 +43,7 @@ export default {
 }
 
 .slider:focus::-webkit-slider-thumb {
-  border: 2px solid green;
+  border: 2px solid #7a9e7f;
 }
 
 /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
@@ -52,7 +52,7 @@ export default {
   appearance: none;
   width: 1.5rem; /* Set a specific slider handle width */
   height: 1.5rem; /* Slider handle height */
-  background: #04AA6D; /* Green background */
+  background: #7a9e7f; /* Green background */
   cursor: pointer; /* Cursor on hover */
   border-radius: 100%;
 }
@@ -60,7 +60,7 @@ export default {
 .slider::-moz-range-thumb {
   width: 25px; /* Set a specific slider handle width */
   height: 25px; /* Slider handle height */
-  background: #04AA6D; /* Green background */
+  background: #7a9e7f; /* Green background */
   cursor: pointer; /* Cursor on hover */
 }
 </style>

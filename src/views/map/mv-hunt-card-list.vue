@@ -13,7 +13,7 @@
         {{ this.hunt.season_dates }}
       </div>
       <div class="text-sm">
-        Tags: {{ this.hunt.quota }} | Draw: {{ (this.hunt.draw_rate * 100).toFixed(0) }} % | Success: {{ (this.hunt.success_rate * 100).toFixed(0) }}%
+        Tags: {{ this.hunt.quota }} | Draw: {{ (this.hunt.draw_rate * 100).toFixed(2) }} % | Success: {{ (this.hunt.success_rate * 100).toFixed(2) }}%
       </div>
     </div>
   </router-link>
