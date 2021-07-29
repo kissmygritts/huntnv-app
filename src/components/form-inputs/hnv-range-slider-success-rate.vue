@@ -1,18 +1,57 @@
 <template>
   <div class="w-100">
-    <label class="block ml-1 font-medium text-gray-700" for="myRange">Success Rate: {{ (range * 100).toFixed(0) }}%</label>
+    <div class="flex">
+      <label
+        class="block ml-1 font-medium text-gray-700"
+        for="myRange"
+      >
+        Success Rate: {{ formatRange }}%
+      </label>
+      <InformationCircleIcon
+        class="flex-shrink-0 mt-1 ml-2 h-5 w-5 text-gray-400"
+        aria-hidden="true"
+        @mouseover="hover = true"
+        @mouseleave="hover = false"
+      />
+    </div>
     <div class="text-center">
-      <input v-model="range" @change="$emit('update:modelValue', range)" type="range" min="0" max="1" step="0.01" class="slider" id="myRange">
+      <input
+        v-model="range"
+        @change="$emit('update:modelValue', range)"
+        type="range"
+        min="0"
+        max="1"
+        step="0.01"
+        class="slider"
+        id="myRange">
+    </div>
+    <div
+      v-show="hover"
+      class="p-4 text-sm"
+    >
+      The <b>success rate</b> is the number of reported successful hunts divided by the total number of assigned tags.
     </div>
   </div>
 </template>
 
 <script>
+import { InformationCircleIcon } from '@heroicons/vue/outline'
+
 export default {
   name: 'hnv-range-slider-draw-rate',
+  components: {
+    InformationCircleIcon
+  },
   data () {
     return {
-      range: 0
+      range: 0,
+      hover: false
+    }
+  },
+  computed: {
+    formatRange () {
+      const formattedRange = (this.range * 100).toFixed(0)
+      return formattedRange
     }
   },
   methods: {
