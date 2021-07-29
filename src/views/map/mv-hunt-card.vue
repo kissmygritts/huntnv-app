@@ -4,7 +4,7 @@
   >
     <h3 class="capitalize text-lg font-monospaced text-olive-800">{{ hunt.display_name }}</h3>
     <div class="text-gray-700 font-light capitalize">
-      <div><span class="font-normal">Hunt Units:</span> {{ hunt.hunt_units_arr.toString() }}</div>
+      <div><span class="font-normal">Hunt Units:</span> {{ formatHuntUnitArr }}</div>
       <div><span class="font-normal">Hunts:</span> {{ hunt.hunts.length }}</div>
       <mvHuntCardList
         v-for="hunt in hunt.hunts"
@@ -25,6 +25,12 @@ export default {
     hunt: {
       type: Object,
       required: true
+    }
+  },
+  computed: {
+    formatHuntUnitArr () {
+      const formattedUnits = this.hunt.hunt_units_arr.join(', ')
+      return formattedUnits
     }
   }
 }
