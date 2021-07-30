@@ -443,7 +443,7 @@ export default {
             'text-size': 16
           },
           paint: {
-            'text-color': '#f29645',
+            'text-color': '#db6f0f',
             'text-halo-color': 'white',
             'text-halo-width': 1,
             'text-halo-blur': 1
