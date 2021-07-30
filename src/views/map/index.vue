@@ -59,7 +59,7 @@
             </div>
 
             <div>
-              <mv-hunt-list class="mt-1" :hunts="hunts" @hunt-card:hover="handleHuntCardHover" />
+              <mv-hunts-container class="mt-1" :hunts="hunts.hunts" @hunt-card:hover="handleHuntCardHover" />
             </div>
           </div>
         </div>
@@ -72,7 +72,7 @@
 import maplibregl from 'maplibre-gl'
 import { AdjustmentsIcon } from '@heroicons/vue/outline'
 import { getHuntsFeed } from '@/services/hunt-services.js'
-import mvHuntList from './mv-hunt-list.vue'
+import mvHuntsContainer from './mv-hunts-container.vue'
 import hnvSelectSpecies from '@/components/form-inputs/hnv-select-species.vue'
 import hnvSelectWeapon from '@/components/form-inputs/hnv-select-weapon.vue'
 import hnvSelectResidency from '@/components/form-inputs/hnv-select-residency.vue'
@@ -87,7 +87,7 @@ export default {
 
   components: {
     AdjustmentsIcon,
-    mvHuntList,
+    mvHuntsContainer,
     hnvSelectSpecies,
     hnvSelectWeapon,
     hnvSelectResidency,
