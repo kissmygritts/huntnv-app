@@ -27,27 +27,40 @@
       >
         <p v-if="loading">LOADING...</p>
         <div v-else>
-          <div class="w-full px-2 py-4 space-y-2">
-            <hnv-select-species v-model="species" @update:model-value="setHuntFilters" />
-            <hnv-select-weapon v-model="weapon" @update:model-value="setHuntFilters" />
-            <hnv-select-residency v-model="residency" @update:model-value="setHuntFilters" />
-            <hnv-range-slider-draw-rate v-model="draw_rate" @update:model-value="setHuntFilters" ref="drawRateSlider"/>
-            <hnv-range-slider-success-rate v-model="success_rate" @update:model-value="setHuntFilters" ref="successRateSlider"/>
-            <button
-              type="button"
-              class="ml-1 text-sm text-saffron-700 cursor-pointer hover:underline"
-              @click="resetHuntFilters">
-                Reset Filters
-            </button>
-          </div>
+          <div class="w-full px-2 py-4">
 
-          <div class="w-full p-2">
-            <div>
-              <h2 class="ml-1 text-2xl text-gray-800">
+            <div class="inline-flex items-center">
+              <h2 class="inline-block ml-1 text-2xl text-gray-700">
                 {{ hunts.total_hunts }} Hunts
               </h2>
+              <adjustments-icon
+                class="w-6 h-6 ml-2 cursor-pointer text-olive-700"
+                @click="isFiltersVisible = !isFiltersVisible"
+              />
             </div>
-            <mv-hunt-list class="mt-1" :hunts="hunts" @hunt-card:hover="handleHuntCardHover" />
+
+            <div
+              v-show="isFiltersVisible"
+              class="space-y-6 mt-2 px-2 py-4 bg-white rounded-md shadow-lg"
+            >
+              <hnv-select-species v-model="species" @update:model-value="setHuntFilters" />
+              <hnv-select-weapon v-model="weapon" @update:model-value="setHuntFilters" />
+              <hnv-select-residency v-model="residency" @update:model-value="setHuntFilters" />
+              <hnv-range-slider-draw-rate v-model="draw_rate" @update:model-value="setHuntFilters" ref="drawRateSlider"/>
+              <hnv-range-slider-success-rate v-model="success_rate" @update:model-value="setHuntFilters" ref="successRateSlider"/>
+              <div class="w-full">
+                <button
+                  type="button"
+                  class="w-full mt-8 py-2 text-center border border-red-600 text-red-700 rounded-md hover:bg-red-700 hover:text-white"
+                  @click="resetHuntFilters">
+                    Reset Filters
+                </button>
+              </div>
+            </div>
+
+            <div>
+              <mv-hunt-list class="mt-1" :hunts="hunts" @hunt-card:hover="handleHuntCardHover" />
+            </div>
           </div>
         </div>
       </div>
@@ -57,6 +70,7 @@
 
 <script>
 import maplibregl from 'maplibre-gl'
+import { AdjustmentsIcon } from '@heroicons/vue/outline'
 import { getHuntsFeed } from '@/services/hunt-services.js'
 import mvHuntList from './mv-hunt-list.vue'
 import hnvSelectSpecies from '@/components/form-inputs/hnv-select-species.vue'
@@ -72,6 +86,7 @@ export default {
   name: 'map-view',
 
   components: {
+    AdjustmentsIcon,
     mvHuntList,
     hnvSelectSpecies,
     hnvSelectWeapon,
@@ -82,6 +97,7 @@ export default {
 
   data () {
     return {
+      isFiltersVisible: false,
       hunts: null,
       loading: true,
       huntGeojson: null,
@@ -140,6 +156,10 @@ export default {
   },
 
   methods: {
+    setTab ({ tab }) {
+      this.currentTab = tab
+    },
+
     renderMap () {
       const map = new maplibregl.Map({
         container: 'map',
