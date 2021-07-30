@@ -7,9 +7,9 @@
       class="min-w-0 flex-1 flex flex-col overflow-hidden lg:order-last"
     >
       <h1 id="primary-heading" class="sr-only">Map</h1>
-      <!-- <div v-if="isDev" class="absolute z-50 top-0 right-0 w-96 h-1/2 bg-white opacity-75 overflow-auto">
+      <div v-if="isDev" class="absolute z-50 top-0 right-0 w-96 h-1/2 bg-white opacity-75 overflow-auto">
         <pre><code>{{ mapDetails }}</code></pre>
-      </div> -->
+      </div>
     </section>
 
     <!-- hunt cards and filters (hidden on smaller screens) -->
@@ -449,9 +449,12 @@ export default {
             'text-halo-blur': 1
           }
         })
-        map.addControl(new maplibregl.NavigationControl())
 
+        map.addControl(new maplibregl.NavigationControl())
         map.addControl(new maplibregl.ScaleControl())
+
+        const nvBounds = new maplibregl.LngLatBounds([-114.03965394617312, 42.0021960036951], [-120.00574882950774, 35.00208042610391])
+        map.fitBounds(nvBounds, { padding: 20 })
       })
 
       // map details, dev only

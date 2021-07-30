@@ -21,30 +21,27 @@ const MAPTILER_KEY = process.env.VUE_APP_MAPTILER_KEY
 
 export default {
   name: 'hd-map',
-  props: ['geojson', 'hunt_units_geojson'],
+  props: ['huntUnitsArr', 'bounds'],
   data () {
     return {
       huntUnits: []
     }
   },
   mounted () {
-    // renderMap() is called onMounted
     this.renderMap()
   },
   methods: {
-    // renders the map to the html section with id="map"
     renderMap () {
       const map = new maplibregl.Map({
         container: 'map',
         style: `https://api.maptiler.com/maps/voyager/style.json?key=${MAPTILER_KEY}`,
         center: [-117, 39],
-        zoom: 5
+        zoom: 6
       })
-      // sets the map to local data
+
       this.map = map
       map.addControl(new maplibregl.FullscreenControl())
 
-      // when the map loads these functions will run
       map.on('load', () => {
         // public landownership layers
         map.addSource('landownership', {
@@ -236,32 +233,32 @@ export default {
           ]
         })
 
-        // add hunt polygon to local data from props
-        map.addSource('hunt', {
-          type: 'geojson',
-          data: this.geojson
+        // add hunt units as vector tile layer
+        // unit boundaries
+        map.addSource('units', {
+          type: 'vector',
+          tiles: [`${TILE_URL}/features/hunt_units_open_full/{z}/{x}/{y}.pbf`]
         })
-        // add fill layer of the hunt polygon
+
+        // hunt unit filled and colored
         map.addLayer({
-          id: 'huntLayer',
+          id: 'units-fill',
           type: 'fill',
-          source: 'hunt',
-          layout: {},
+          source: 'units',
+          'source-layer': 'hunt_units_open_full',
           paint: {
             'fill-color': '#2e598a',
             'fill-opacity': 0.25
-          }
+          },
+          filter: ['in', 'display_name', ...this.huntUnitsArr]
         })
-        // add the hunt unit polygons to local data from props
-        map.addSource('hunt_units', {
-          type: 'geojson',
-          data: this.hunt_units_geojson
-        })
-        // add outline of hunt unit polygons
+
+        // boundary
         map.addLayer({
-          id: 'huntUnitsLayer-line',
+          id: 'units',
           type: 'line',
-          source: 'hunt_units',
+          source: 'units',
+          'source-layer': 'hunt_units_open_full',
           layout: {
             'line-cap': 'round',
             'line-join': 'round'
@@ -272,28 +269,34 @@ export default {
             'line-width': 2
           }
         })
-        if (this.geojson) {
-          // get coordinates from geojson multipolygon
-          const coordinates = this.geojson.features[0].geometry.coordinates[0][0]
-          // set bounds based on the coordinates from the multipolygon
-          const bounds = coordinates.reduce(function (bounds, coord) {
-            return bounds.extend(coord)
-          }, new maplibregl.LngLatBounds(coordinates))
-          // set the map bounds based on the bounds from the miltipolygon
-          map.fitBounds(bounds, {
-            padding: 20
-          })
-        } else {
-          // get coordinates from geojson multipolygon
-          const coordinates = this.hunt_units_geojson.features[0].geometry.coordinates[0][0]
-          // set bounds based on the coordinates from the multipolygon
-          const bounds = coordinates.reduce(function (bounds, coord) {
-            return bounds.extend(coord)
-          }, new maplibregl.LngLatBounds(coordinates))
-          // set the map bounds based on the bounds from the miltipolygon
-          map.fitBounds(bounds, {
-            padding: 20
-          })
+
+        // unit labels
+        map.addSource('unit-labels', {
+          type: 'vector',
+          tiles: [`${TILE_URL}/features/hunt_unit_labels/{z}/{x}/{y}.pbf`]
+        })
+        map.addLayer({
+          id: 'unit-labels',
+          type: 'symbol',
+          source: 'unit-labels',
+          'source-layer': 'hunt_unit_labels',
+          layout: {
+            'text-font': ['Open Sans Regular'],
+            'text-field': ['get', 'display_name'],
+            'text-size': 16
+          },
+          paint: {
+            'text-color': '#db6f0f',
+            'text-halo-color': 'white',
+            'text-halo-width': 1,
+            'text-halo-blur': 1
+          }
+        })
+
+        // zoom to bounds of geometry
+        if (this.bounds) {
+          const bounds = new maplibregl.LngLatBounds(this.bounds.sw, this.bounds.ne)
+          map.fitBounds(bounds, { padding: 20 })
         }
       })
     }
