@@ -1,7 +1,7 @@
 <template>
   <div class="bg-oxford-700 py-2 px-4 flex items-center justify-between sm:px-6 lg:px-8">
     <div>
-      <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-mark.svg?color=white" alt="Workflow" />
+      <img class="absolute top-2 left-4 h-20 w-auto z-20 shadow-logo" src="../assets/images/huntnv-logo_200x160.png" alt="Workflow" />
     </div>
     <div>
       <button
@@ -31,3 +31,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  .shadow-logo {
+    filter: drop-shadow(0 20px 5px rgb(0 0 0 / 0.1)) drop-shadow(0 8px 4px rgb(0 0 0 / 0.1));
+  }
+</style>
