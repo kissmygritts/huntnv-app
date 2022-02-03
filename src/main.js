@@ -1,10 +1,12 @@
 import { createApp } from 'vue'
+import { createPinia } from 'pinia'
+
 import App from './App.vue'
 import router from './router'
-import VueChartkick from 'vue-chartkick'
-import 'chartkick/chart.js'
 
-import './assets/tailwind.css'
-import '../node_modules/maplibre-gl/dist/maplibre-gl.css'
+const app = createApp(App)
 
-createApp(App).use(router).use(VueChartkick).mount('#app')
+app.use(createPinia())
+app.use(router)
+
+app.mount('#app')
