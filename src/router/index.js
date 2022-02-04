@@ -7,6 +7,12 @@ const routes = [
     name: 'home',
     component: Home,
     meta: { title: 'HuntNV Home' }
+  },
+  {
+    path: '/map',
+    name: 'map',
+    component: () => import('../views/map/index.vue'),
+    meta: { title: 'HuntNV Map' }
   }
 ]
 
