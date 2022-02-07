@@ -61,7 +61,9 @@
           </dd>
         </div>
         <div class="flex flex-col sm:mt-0">
-          <dt class="order-2 text-sm font-light text-gray-500">Draw Difficulty</dt>
+          <dt class="order-2 text-sm font-light text-gray-500">
+            Draw Difficulty
+          </dt>
           <dd class="order-1 text-sm font-bold text-gray-600">
             {{ hunt.draw_difficulty_qtile }}
           </dd>

@@ -3,7 +3,7 @@
     <map-header />
     <div class="flex-1 flex overflow-hidden">
       <section class="block min-w-0 flex-1 lg:order-last bg-hero-topo">
-        <pre><code lang="json">{{ { data, error, loading } }}</code></pre>
+        <pre><code lang="json">{{ { getFeedFilters } }}</code></pre>
       </section>
 
       <!-- side bar -->
@@ -12,7 +12,7 @@
       >
         <div v-if="!loading">
           <h2 class="p-2 text-2xl text-oxford-600">
-            {{ data.total_hunts }} Hunts
+            {{ data.total_hunts ?? 0 }} Hunts
           </h2>
 
           <div>
@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import { watchEffect } from 'vue'
 import MapHeader from './map-header.vue'
 import HfListContainer from './hf-list-container.vue'
 import { useHuntFeedStore } from '../../stores/hunt-feed.js'
@@ -36,13 +37,19 @@ export default {
 
   setup() {
     const huntFeed = useHuntFeedStore()
-    const { data, error, loading } = storeToRefs(huntFeed)
-    huntFeed.getHuntFeed()
+    const { data, error, loading, feedFilters, getFeedFilters } =
+      storeToRefs(huntFeed)
+
+    watchEffect(() => huntFeed.getHuntFeed(getFeedFilters.value), {
+      deep: true
+    })
 
     return {
       data,
       error,
-      loading
+      loading,
+      feedFilters,
+      getFeedFilters
     }
   }
 }

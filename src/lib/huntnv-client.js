@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { pickTruthy } from './objects.js'
 
 const huntNvClient = (baseURL, options = {}) => {
   options = {
@@ -16,13 +17,23 @@ const huntNvClient = (baseURL, options = {}) => {
   // })
 
   return {
-    getHuntFeed: async () => {
+    getHuntFeed: async ({ speciesId, weapon, residency } = {}) => {
+      const params = pickTruthy({
+        species_class_id: speciesId || '',
+        weapon: weapon || '',
+        draw_type: residency || ''
+      })
+
+      console.log(params)
+
       let data
       let error
       let isOk
 
       try {
-        const response = await client.get('hunts/feed')
+        const response = await client.get('hunts/feed', {
+          params
+        })
         data = response.data
         error = undefined
         isOk = true

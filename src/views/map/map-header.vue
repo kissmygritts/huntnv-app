@@ -39,7 +39,22 @@
 
       <!-- Filter popovers -->
       <div class="flex-1 items-center space-x-3 hidden lg:flex">
-        filter popovers
+        <ui-popover>
+          <template #label>Hunt Details</template>
+          <template #content>
+            <filter-hunt-details />
+          </template>
+        </ui-popover>
+
+        <ui-popover>
+          <template #label>Harvest Stats</template>
+          <template #content> content </template>
+        </ui-popover>
+
+        <ui-popover>
+          <template #label>Draw Stats</template>
+          <template #content>content</template>
+        </ui-popover>
       </div>
 
       <!-- mobile page buttons -->
@@ -83,13 +98,18 @@
 </template>
 
 <script>
-import { SearchIcon } from '@heroicons/vue/outline'
+import { SearchIcon, MenuAlt4Icon } from '@heroicons/vue/outline'
 import useMobileMenu from '../../composables/use-mobile-menu.js'
+import UiPopover from '../../components/ui/ui-popover.vue'
+import FilterHuntDetails from './filter-hunt-details.vue'
 
 export default {
   name: 'ndow-map-header',
   components: {
-    SearchIcon
+    SearchIcon,
+    MenuAlt4Icon,
+    UiPopover,
+    FilterHuntDetails
   },
   setup() {
     const { open } = useMobileMenu()
