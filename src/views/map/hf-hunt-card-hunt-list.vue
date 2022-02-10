@@ -25,16 +25,14 @@
         <span class="ml-2 capitalize">{{ hunt.season_dates }}</span>
       </div>
 
-      <dl
-        class="mt-2 text-center sm:max-w-3xl sm:mx-auto sm:grid sm:grid-cols-3 sm:gap-1"
-      >
-        <div class="flex flex-col">
+      <dl class="text-center flex flex-wrap justify-between">
+        <div class="flex flex-col w-1/4 m-1">
           <dt class="order-2 text-sm font-light text-gray-500">Quota</dt>
           <dd class="order-1 text-sm font-bold text-gray-600">
             {{ hunt.quota }}
           </dd>
         </div>
-        <div class="flex flex-col sm:mt-0">
+        <div class="flex flex-col w-1/4 m-1">
           <dt class="order-2 text-sm font-light text-gray-500">Harvest</dt>
           <dd class="order-1 text-sm font-bold text-gray-600">
             {{
@@ -44,7 +42,7 @@
             }}
           </dd>
         </div>
-        <div class="flex flex-col sm:mt-0">
+        <div class="flex flex-col w-1/4 m-1">
           <dt class="order-2 text-sm font-light text-gray-500">Maturity</dt>
           <dd class="order-1 text-sm font-bold text-gray-600">
             {{
@@ -54,13 +52,13 @@
             }}
           </dd>
         </div>
-        <div class="flex flex-col sm:mt-0">
+        <div class="flex flex-col w-1/4 m-1">
           <dt class="order-2 text-sm font-light text-gray-500">Median BP</dt>
           <dd class="order-1 text-sm font-bold text-gray-600">
             {{ hunt.median_bp_of_successful_applications.toFixed(1) }}
           </dd>
         </div>
-        <div class="flex flex-col sm:mt-0">
+        <div class="flex flex-col w-1/4 m-1">
           <dt class="order-2 text-sm font-light text-gray-500">
             Draw Difficulty
           </dt>
@@ -68,7 +66,7 @@
             {{ hunt.draw_difficulty_qtile }}
           </dd>
         </div>
-        <div class="flex flex-col sm:mt-0">
+        <div class="flex flex-col w-1/4 m-1">
           <dt class="order-2 text-sm font-light text-gray-500">Draw Rank</dt>
           <dd class="order-1 text-sm font-bold text-gray-600">
             {{ hunt.draw_difficulty_rank }}

@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full overflow-hidden bg-opacity-0">
+  <div class="w-full overflow-hidden">
     <div class="space-y-4">
       <hf-hunt-card v-for="(hunt, i) in huntFeed" :key="i" :hunt="hunt" />
     </div>
