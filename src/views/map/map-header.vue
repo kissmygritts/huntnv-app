@@ -48,12 +48,16 @@
 
         <ui-popover>
           <template #label>Harvest Stats</template>
-          <template #content> content </template>
+          <template #content>
+            <filter-harvest-stats />
+          </template>
         </ui-popover>
 
         <ui-popover>
           <template #label>Draw Stats</template>
-          <template #content>content</template>
+          <template #content>
+            <filter-draw-stats />
+          </template>
         </ui-popover>
       </div>
 
@@ -102,6 +106,8 @@ import { SearchIcon, MenuAlt4Icon } from '@heroicons/vue/outline'
 import useMobileMenu from '../../composables/use-mobile-menu.js'
 import UiPopover from '../../components/ui/ui-popover.vue'
 import FilterHuntDetails from './filter-hunt-details.vue'
+import FilterHarvestStats from './filter-harvest-stats.vue'
+import FilterDrawStats from './filter-draw-stats.vue'
 
 export default {
   name: 'ndow-map-header',
@@ -109,7 +115,9 @@ export default {
     SearchIcon,
     MenuAlt4Icon,
     UiPopover,
-    FilterHuntDetails
+    FilterHuntDetails,
+    FilterHarvestStats,
+    FilterDrawStats
   },
   setup() {
     const { open } = useMobileMenu()

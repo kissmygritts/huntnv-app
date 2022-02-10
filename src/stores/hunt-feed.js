@@ -12,7 +12,13 @@ export const useHuntFeedStore = defineStore({
     feedFilters: {
       species: {},
       residency: '',
-      weapon: ''
+      weapon: '',
+      publicLand: 0,
+      harvestRate: 0,
+      maturityRate: 0,
+      drawDifficulty: 0,
+      drawRank: 0,
+      medianBp: 0
     }
   }),
 
@@ -21,10 +27,15 @@ export const useHuntFeedStore = defineStore({
       const filters = {
         speciesId: state.feedFilters.species?.id || '',
         residency: state.feedFilters.residency,
-        weapon: state.feedFilters.weapon
+        weapon: state.feedFilters.weapon,
+        publicLand: state.feedFilters.publicLand,
+        harvestRate: state.feedFilters.harvestRate,
+        maturityRate: state.feedFilters.maturityRate,
+        drawDifficulty: state.feedFilters.drawDifficulty,
+        drawRank: state.feedFilters.drawRank,
+        medianBp: state.feedFilters.medianBp
       }
-      const _filters = pickTruthy(filters)
-      return Object.keys(_filters) ? _filters : undefined
+      return pickTruthy(filters)
     }
   },
 
@@ -41,6 +52,11 @@ export const useHuntFeedStore = defineStore({
       this.feedFilters.species = {}
       this.feedFilters.residency = ''
       this.feedFilters.weapon = ''
+      this.feedFilters.publicLand = 0
+      this.feedFilters.harvestRate = 0
+      this.feedFilters.maturityRate = 0
+      this.feedFilters.drawDifficulty = 0
+      this.feedFilters.drawRank = 0
     }
   }
 })

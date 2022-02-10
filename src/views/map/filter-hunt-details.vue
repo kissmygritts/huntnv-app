@@ -10,6 +10,7 @@
     <select-species v-model="store.feedFilters.species" />
     <radio-residency v-model="store.feedFilters.residency" />
     <radio-weapon v-model="store.feedFilters.weapon" />
+    <slider-public-land v-model.number="store.feedFilters.publicLand" />
 
     <div class="flex justify-end">
       <button
@@ -27,6 +28,7 @@
 import SelectSpecies from '../../components/form-inputs/select-species.vue'
 import RadioResidency from '../../components/form-inputs/radio-residency.vue'
 import RadioWeapon from '../../components/form-inputs/radio-weapon.vue'
+import SliderPublicLand from '../../components/form-inputs/slider-public-land.vue'
 import { useHuntFeedStore } from '../../stores/hunt-feed.js'
 
 const store = useHuntFeedStore()

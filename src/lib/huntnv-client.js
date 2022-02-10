@@ -17,11 +17,27 @@ const huntNvClient = (baseURL, options = {}) => {
   // })
 
   return {
-    getHuntFeed: async ({ speciesId, weapon, residency } = {}) => {
+    getHuntFeed: async ({
+      speciesId,
+      residency,
+      weapon,
+      publicLand,
+      harvestRate,
+      maturityRate,
+      drawDifficulty,
+      drawRank,
+      medianBp
+    } = {}) => {
       const params = pickTruthy({
         species_class_id: speciesId || '',
+        draw_type: residency || '',
         weapon: weapon || '',
-        draw_type: residency || ''
+        percent_public_land: publicLand || 0,
+        harvest_rate: harvestRate || 0,
+        maturity_value: maturityRate || 0,
+        draw_difficulty_qtile: drawDifficulty || 0,
+        draw_difficulty_rank: drawRank || 0,
+        median_bp_of_successful_applications: medianBp || 0
       })
 
       console.log(params)
