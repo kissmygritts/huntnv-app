@@ -68,4 +68,6 @@ const huntNvClient = (baseURL, options = {}) => {
   }
 }
 
-export const huntNvApi = huntNvClient('http://localhost:3333')
+export const huntNvApi = huntNvClient(
+  import.meta.env.VITE_APP_API_URL || 'http://localhost:3333'
+)

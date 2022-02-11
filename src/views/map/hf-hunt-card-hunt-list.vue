@@ -12,7 +12,7 @@
           {{ hunt.draw_type }} &bull; {{ hunt.weapon }}
         </h4>
         <div
-          v-if="hunt.harvest_rate === null"
+          v-if="hunt.is_new"
           class="flex items-center bg-blue-100 text-blue-500 px-2 py-1 rounded"
         >
           <sparkles-icon class="h-3 w-3" />

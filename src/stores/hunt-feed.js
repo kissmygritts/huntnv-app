@@ -57,6 +57,7 @@ export const useHuntFeedStore = defineStore({
       this.feedFilters.maturityRate = 0
       this.feedFilters.drawDifficulty = 0
       this.feedFilters.drawRank = 0
+      this.feedFilters.medianBp = 0
     }
   }
 })
