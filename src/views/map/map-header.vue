@@ -63,46 +63,56 @@
 
       <!-- mobile page buttons -->
       <div class="flex-none space-x-1 lg:hidden">
-        mobile buttons
-        <!-- <button
+        <button
           type="button"
           class="relative flex-shrink-0 bg-white rounded p-2 text-gray-400 hover:text-olive-600 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-olive-500"
-          @click="transitionDisplay('openFilters')"
+          @click="transitionLayout('openFilters')"
         >
           <span class="sr-only">Open filters panel</span>
           <adjustments-icon class="h-6 w-6" aria-hidden="true" />
           <span
-            v-if="activeFilters.length"
             class="absolute inline-flex items-center justify-center bg-olive-500 h-2 w-2 text-xxs text-olive-100 font-bold rounded-full shadow top-1 right-1"
           />
         </button>
 
         <button
-          v-if="display === 'list' || (display === 'filters' && previousDisplay === 'list')"
+          v-if="
+            layout === 'list' ||
+            (layout === 'filters' && previousLayout === 'list')
+          "
           type="button"
           class="flex-shrink-0 bg-white rounded p-2 text-gray-400 hover:text-olive-600 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-olive-500"
-          @click="transitionDisplay('toggle')"
+          @click="transitionLayout('toggle')"
         >
           <span class="sr-only">Open map panel</span>
           <map-icon class="h-6 w-6" aria-hidden="true" />
         </button>
 
         <button
-          v-if="display === 'map' || (display === 'filters' && previousDisplay === 'map')"
+          v-if="
+            layout === 'map' ||
+            (layout === 'filters' && previousLayout === 'map')
+          "
           type="button"
           class="flex-shrink-0 bg-white rounded p-2 text-gray-400 hover:text-olive-600 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-olive-500"
-          @click="transitionDisplay('toggle')"
+          @click="transitionLayout('toggle')"
         >
           <span class="sr-only">Open list panel</span>
           <view-grid-icon class="h-6 w-6" aria-hidden="true" />
-        </button> -->
+        </button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { SearchIcon, MenuAlt4Icon } from '@heroicons/vue/outline'
+import {
+  SearchIcon,
+  MenuAlt4Icon,
+  AdjustmentsIcon,
+  MapIcon,
+  ViewGridIcon
+} from '@heroicons/vue/outline'
 import useMobileMenu from '../../composables/use-mobile-menu.js'
 import UiPopover from '../../components/ui/ui-popover.vue'
 import FilterHuntDetails from './filter-hunt-details.vue'
@@ -114,16 +124,22 @@ export default {
   components: {
     SearchIcon,
     MenuAlt4Icon,
+    AdjustmentsIcon,
+    MapIcon,
+    ViewGridIcon,
     UiPopover,
     FilterHuntDetails,
     FilterHarvestStats,
     FilterDrawStats
   },
   setup() {
-    const { open } = useMobileMenu()
+    const { open, layout, previousLayout, transitionLayout } = useMobileMenu()
 
     return {
-      open
+      open,
+      layout,
+      previousLayout,
+      transitionLayout
     }
   }
 }
