@@ -116,7 +116,7 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import {
   SearchIcon,
   MenuAlt4Icon,
@@ -132,30 +132,6 @@ import FilterDrawStats from './filter-draw-stats.vue'
 import useMobileMenu from '../../composables/use-mobile-menu.js'
 import { useHuntFeedStore } from '../../stores/hunt-feed.js'
 
-export default {
-  name: 'ndow-map-header',
-  components: {
-    SearchIcon,
-    MenuAlt4Icon,
-    AdjustmentsIcon,
-    MapIcon,
-    ViewGridIcon,
-    UiPopover,
-    FilterHuntDetails,
-    FilterHarvestStats,
-    FilterDrawStats
-  },
-  setup() {
-    const { open, layout, previousLayout, transitionLayout } = useMobileMenu()
-    const huntFeed = useHuntFeedStore()
-
-    return {
-      open,
-      layout,
-      previousLayout,
-      transitionLayout,
-      huntFeed
-    }
-  }
-}
+const { open, layout, previousLayout, transitionLayout } = useMobileMenu()
+const huntFeed = useHuntFeedStore()
 </script>
