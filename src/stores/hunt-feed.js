@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { huntNvApi } from '../lib/huntnv-client.js'
-import { pickTruthy } from '../lib/objects.js'
+import { pick, pickTruthy } from '../lib/objects.js'
 
 export const useHuntFeedStore = defineStore({
   id: 'huntFeed',
@@ -36,6 +36,36 @@ export const useHuntFeedStore = defineStore({
         medianBp: state.feedFilters.medianBp
       }
       return pickTruthy(filters)
+    },
+
+    isFiltered() {
+      return Object.keys(this.getFeedFilters).length > 0
+    },
+
+    isHuntDetailsFiltered() {
+      const huntDetails = pickTruthy(
+        pick(this.getFeedFilters, [
+          'speciesId',
+          'residency',
+          'weapon',
+          'publicLand'
+        ])
+      )
+      return Object.keys(huntDetails).length > 0
+    },
+
+    isHarvestFiltered() {
+      const harvest = pickTruthy(
+        pick(this.getFeedFilters, ['harvestRate', 'maturityRate'])
+      )
+      return Object.keys(harvest).length > 0
+    },
+
+    isDrawFiltered() {
+      const draw = pickTruthy(
+        pick(this.getFeedFilters, ['drawDifficulty', 'drawRank', 'medianBp'])
+      )
+      return Object.keys(draw).length > 0
     }
   },
 

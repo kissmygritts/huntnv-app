@@ -9,7 +9,7 @@
         v-show="layout === 'both' || layout === 'map'"
         class="block min-w-0 flex-1 lg:order-last bg-hero-topo"
       >
-        {{ { layout, previousLayout } }}
+        {{ { isFiltered } }}
       </section>
 
       <!-- side bar -->
@@ -23,8 +23,7 @@
           </h2>
 
           <div class="mt-2">
-            <!-- <hf-list-container :hunt-feed="data.hunt_feed" /> -->
-            {{ { layout, previousLayout } }}
+            <hf-list-container :hunt-feed="data.hunt_feed" />
           </div>
         </div>
       </aside>
@@ -51,7 +50,7 @@ export default {
     const { layout, previousLayout } = useMobileMenu()
 
     const huntFeed = useHuntFeedStore()
-    const { data, error, loading, feedFilters, getFeedFilters } =
+    const { data, error, loading, feedFilters, getFeedFilters, isFiltered } =
       storeToRefs(huntFeed)
 
     watchEffect(() => huntFeed.getHuntFeed(getFeedFilters.value), {
@@ -64,6 +63,7 @@ export default {
       loading,
       feedFilters,
       getFeedFilters,
+      isFiltered,
 
       layout,
       previousLayout

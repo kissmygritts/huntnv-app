@@ -39,26 +39,36 @@
 
       <!-- Filter popovers -->
       <div class="flex-1 items-center space-x-3 hidden lg:flex">
-        <ui-popover>
+        <ui-popover :show-badge="huntFeed.isHuntDetailsFiltered">
           <template #label>Hunt Details</template>
           <template #content>
             <filter-hunt-details />
           </template>
         </ui-popover>
 
-        <ui-popover>
+        <ui-popover :show-badge="huntFeed.isHarvestFiltered">
           <template #label>Harvest Stats</template>
           <template #content>
             <filter-harvest-stats />
           </template>
         </ui-popover>
 
-        <ui-popover>
+        <ui-popover :show-badge="huntFeed.isDrawFiltered">
           <template #label>Draw Stats</template>
           <template #content>
             <filter-draw-stats />
           </template>
         </ui-popover>
+
+        <div>
+          <button
+            type="button"
+            class="p-2 rounded text-sm text-gray-500 font-light hover:text-red-500 hover:underline"
+            @click="huntFeed.clearFilters"
+          >
+            Clear Filters
+          </button>
+        </div>
       </div>
 
       <!-- mobile page buttons -->
@@ -71,6 +81,7 @@
           <span class="sr-only">Open filters panel</span>
           <adjustments-icon class="h-6 w-6" aria-hidden="true" />
           <span
+            v-if="huntFeed.isFiltered"
             class="absolute inline-flex items-center justify-center bg-saffron-600 h-2 w-2 text-xxs font-bold rounded-full shadow top-1 right-1"
           />
         </button>
@@ -113,11 +124,13 @@ import {
   MapIcon,
   ViewGridIcon
 } from '@heroicons/vue/outline'
-import useMobileMenu from '../../composables/use-mobile-menu.js'
 import UiPopover from '../../components/ui/ui-popover.vue'
 import FilterHuntDetails from './filter-hunt-details.vue'
 import FilterHarvestStats from './filter-harvest-stats.vue'
 import FilterDrawStats from './filter-draw-stats.vue'
+
+import useMobileMenu from '../../composables/use-mobile-menu.js'
+import { useHuntFeedStore } from '../../stores/hunt-feed.js'
 
 export default {
   name: 'ndow-map-header',
@@ -134,12 +147,14 @@ export default {
   },
   setup() {
     const { open, layout, previousLayout, transitionLayout } = useMobileMenu()
+    const huntFeed = useHuntFeedStore()
 
     return {
       open,
       layout,
       previousLayout,
-      transitionLayout
+      transitionLayout,
+      huntFeed
     }
   }
 }

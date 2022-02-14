@@ -2,7 +2,8 @@
   <div class="w-100 mt-1">
     <div class="inline-flex items-center">
       <label class="inline-block ml-1 font-medium text-gray-700">
-        Percent Public Land: {{ modelValue }}%
+        Percent Public Land &#8805;
+        <span class="text-saffron-600"> {{ modelValue }}% </span>
       </label>
     </div>
     <div class="text-center">

@@ -46,7 +46,15 @@
       <div
         class="bg-gray-200 flex-grow flex flex-col p-2 space-y-2 overflow-y-auto"
       >
-        {{ { layout } }}
+        <div class="bg-white rounded-md py-3 px-2">
+          <filter-hunt-details />
+        </div>
+        <div class="bg-white rounded-md py-3 px-2">
+          <filter-harvest-stats />
+        </div>
+        <div class="bg-white rounded-md py-3 px-2">
+          <filter-draw-stats />
+        </div>
       </div>
 
       <!-- panel footer -->
@@ -58,7 +66,7 @@
             Reset Filters
           </button>
           <button
-            class="bg-olive-500 rounded text-white px-3 py-2 hover:bg-olive-600"
+            class="bg-saffron-200/75 border border-saffron-600 text-saffron-800 rounded px-3 py-2 hover:bg-saffron-200/50"
             @click="transitionLayout('close')"
           >
             Filter Hunts
@@ -71,6 +79,10 @@
 
 <script setup>
 import useMobileMenu from '../../composables/use-mobile-menu.js'
+
+import FilterHuntDetails from './filter-hunt-details.vue'
+import FilterHarvestStats from './filter-harvest-stats.vue'
+import FilterDrawStats from './filter-draw-stats.vue'
 
 const { layout, transitionLayout } = useMobileMenu()
 </script>
