@@ -5,8 +5,8 @@
       <div class="flex-none flex items-center lg:hidden">
         <button
           type="button"
-          class="flex-shrink-0 bg-white rounded p-2 text-gray-400 hover:text-olive-600 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-olive-500"
-          @click="openMobileMenu()"
+          class="flex-shrink-0 bg-white rounded p-2 text-gray-400 hover:text-saffron-600 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-saffron-600"
+          @click="open"
         >
           <span class="sr-only">Open mobile navigation menu</span>
           <menu-alt4-icon class="h-6 w-6" aria-hidden="true" />
@@ -27,8 +27,8 @@
               <input
                 id="search"
                 name="search"
-                class="block w-full bg-white border border-gray-300 rounded py-2 pl-10 pr-3 text-sm placeholder-gray-500 focus:outline-none focus:text-gray-900 focus:placeholder-gray-400 focus:ring-1 focus:ring-olive-500 focus:border-olive-500"
-                placeholder="Search"
+                class="block w-full bg-white border border-gray-300 rounded py-2 pl-10 pr-3 text-sm placeholder-gray-500 focus:outline-none focus:text-gray-900 focus:placeholder-gray-400 focus:ring-2 focus:ring-saffron-600"
+                placeholder="Find hunt units..."
                 type="search"
                 v-model="searchTerm"
               />
@@ -65,13 +65,13 @@
       <div class="flex-none space-x-1 lg:hidden">
         <button
           type="button"
-          class="relative flex-shrink-0 bg-white rounded p-2 text-gray-400 hover:text-olive-600 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-olive-500"
+          class="relative flex-shrink-0 bg-white rounded p-2 text-gray-400 hover:text-saffron-600 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-saffron-500"
           @click="transitionLayout('openFilters')"
         >
           <span class="sr-only">Open filters panel</span>
           <adjustments-icon class="h-6 w-6" aria-hidden="true" />
           <span
-            class="absolute inline-flex items-center justify-center bg-olive-500 h-2 w-2 text-xxs text-olive-100 font-bold rounded-full shadow top-1 right-1"
+            class="absolute inline-flex items-center justify-center bg-saffron-600 h-2 w-2 text-xxs font-bold rounded-full shadow top-1 right-1"
           />
         </button>
 
@@ -81,7 +81,7 @@
             (layout === 'filters' && previousLayout === 'list')
           "
           type="button"
-          class="flex-shrink-0 bg-white rounded p-2 text-gray-400 hover:text-olive-600 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-olive-500"
+          class="flex-shrink-0 bg-white rounded p-2 text-gray-400 hover:text-saffron-600 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-saffron-500"
           @click="transitionLayout('toggle')"
         >
           <span class="sr-only">Open map panel</span>
@@ -94,7 +94,7 @@
             (layout === 'filters' && previousLayout === 'map')
           "
           type="button"
-          class="flex-shrink-0 bg-white rounded p-2 text-gray-400 hover:text-olive-600 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-olive-500"
+          class="flex-shrink-0 bg-white rounded p-2 text-gray-400 hover:text-saffron-600 focus:outline-none focus:ring-2 focus:ring-offset-0 focus:ring-saffron-500"
           @click="transitionLayout('toggle')"
         >
           <span class="sr-only">Open list panel</span>

@@ -40,6 +40,7 @@ const machineDef = {
 }
 const layoutMachine = createMachine(machineDef)
 
+// mobile layout state variables
 const visible = ref(false)
 const layout = ref(layoutMachine.value)
 const previousLayout = ref('')
@@ -60,12 +61,6 @@ export default function useMobileMenu() {
     previousLayout.value = layout.value
     const nextValue = layoutMachine.transition(layout.value, event)
     layout.value = nextValue
-    console.log({
-      event,
-      current: layout.value,
-      previous: previousLayout.value,
-      layoutMachine
-    })
   }
 
   // watch breakpoints, transition layout when needed
@@ -79,12 +74,13 @@ export default function useMobileMenu() {
   )
 
   return {
+    // mobile layout, menu
     visible,
     open,
     close,
     toggle,
 
-    // mobile layout state machine
+    // mobile layout, state machine
     layout,
     previousLayout,
     transitionLayout
