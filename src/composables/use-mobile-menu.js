@@ -1,5 +1,6 @@
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { createMachine } from '../lib/fsm.js'
+import useBreakpoints from './use-breakpoints.js'
 
 const machineDef = {
   initial: 'list',
@@ -30,9 +31,9 @@ const machineDef = {
           target(ctx) {
             const value = ctx.history.pop()
             return value
-          },
-          toBoth: { target: 'both' }
-        }
+          }
+        },
+        toBoth: { target: 'both' }
       }
     }
   }
@@ -60,11 +61,22 @@ export default function useMobileMenu() {
     const nextValue = layoutMachine.transition(layout.value, event)
     layout.value = nextValue
     console.log({
-      layout: layout.value,
+      event,
+      current: layout.value,
       previous: previousLayout.value,
       layoutMachine
     })
   }
+
+  // watch breakpoints, transition layout when needed
+  const { breakpoints } = useBreakpoints()
+  watch(
+    () => breakpoints.w,
+    (bp) => {
+      if (bp >= 1024) transitionLayout('toBoth')
+      else transitionLayout('toList')
+    }
+  )
 
   return {
     visible,
