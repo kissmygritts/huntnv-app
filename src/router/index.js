@@ -13,6 +13,13 @@ const routes = [
     name: 'map',
     component: () => import('../views/map/index.vue'),
     meta: { title: 'HuntNV Map' }
+  },
+  {
+    path: '/hunts/:id',
+    name: 'hunts-id',
+    component: () => import('../views/hunts/_id.vue'),
+    props: true,
+    meta: { title: 'HuntNV Hunt' }
   }
 ]
 

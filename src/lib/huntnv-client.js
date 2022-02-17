@@ -40,8 +40,6 @@ const huntNvClient = (baseURL, options = {}) => {
         median_bp_of_successful_applications: medianBp || 0
       })
 
-      console.log(params)
-
       let data
       let error
       let isOk
@@ -63,6 +61,23 @@ const huntNvClient = (baseURL, options = {}) => {
         ok: isOk,
         data,
         error
+      }
+    },
+
+    getHunt: async (id) => {
+      try {
+        const response = await client.get(`hunts/${id}`)
+        return {
+          data: response.data,
+          error: null,
+          ok: true
+        }
+      } catch (err) {
+        return {
+          data: null,
+          error: err,
+          ok: false
+        }
       }
     }
   }
