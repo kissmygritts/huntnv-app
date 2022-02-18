@@ -10,7 +10,7 @@ export const MultiLineChart = (
     yType = d3.scaleLinear,
     xTitle = 'x axis label',
     yTitle = 'y axis title',
-    color = 'steelblue',
+    color = ['#e57310', '#2e598a'],
     width = 650,
     height = 350,
     marginTop = 30,
@@ -28,9 +28,18 @@ export const MultiLineChart = (
   // const xDomain = d3.extent(X)
   const xDomain = [d3.min(X) - 0.1, d3.max(X) + 0.1]
   const yDomain = [0, d3.max(Y)]
-  // const zDomain = new d3.InternSet(Z)
+  const zDomain = new d3.InternSet(Z)
   const xRange = [marginLeft, width - marginRight]
   const yRange = [height - marginBottom, marginTop]
+
+  const colorMatch = (z) => {
+    const k = Array.from(zDomain)
+    const obj = k.reduce((p, c, i) => {
+      return { ...p, [c]: color[i] }
+    }, {})
+
+    return obj[z]
+  } 
 
   // scales
   const xScale = xType(xDomain, xRange)
@@ -99,7 +108,7 @@ export const MultiLineChart = (
     .data(d3.group(I, (i) => Z[i]))
     .join('path')
     .style('mix-blend-mode', 'multiply')
-    .attr('stroke', typeof color === 'function' ? ([z]) => color(z) : null)
+    .attr('stroke', ([z]) => colorMatch(z))
     .attr('d', ([, I]) => line(I))
 
   // add labels to lines
@@ -114,7 +123,7 @@ export const MultiLineChart = (
       y: yScale(Y[d[1][d[1].length - 1]])
     }))
     .attr('transform', (d) => `translate(${d.x}, ${d.y})`)
-    .attr('fill', (d, i) => color(Z[i]))
+    .attr('fill', (d, i) => colorMatch(Z[i]))
     .text((d) => d.id)
     .attr('x', 10)
     .attr('text-anchor', 'start')
@@ -131,7 +140,7 @@ export const MultiLineChart = (
     .attr('r', 6)
     .attr('cx', (d, i) => xScale(X[i]))
     .attr('cy', (d, i) => yScale(Y[i]))
-    .attr('fill', (d, i) => color(Z[i]))
+    .attr('fill', (d, i) => colorMatch(Z[i]))
     .attr('stroke', 'white')
     .attr('stroke-width', 2)
 
@@ -151,7 +160,7 @@ export const MultiLineChart = (
     .attr('x', (i) => xScale(X[i]))
     .attr('y', (i) => yScale(Y[i]))
     .text((i) => Y[i])
-    .attr('fill', (i) => color(Z[i]))
+    .attr('fill', (i) => colorMatch(Z[i]))
     .attr('text-anchor', 'middle')
     .attr('dy', '-0.75em')
 
