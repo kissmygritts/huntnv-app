@@ -1,23 +1,19 @@
 <template>
-  <div class="flex flex-col flex-1 px-4 overflow-x-auto">
+  <div class="flex flex-col flex-1 px-4 overflow-x-auto bg-gray-200">
     <ui-loading v-if="loading" />
     <!-- content container -->
     <div v-else class="my-4 min-w-full flex flex-col space-y-4">
       <!-- first row -->
-      <div class="flex space-x-2">
+      <div class="flex gap-6">
         <!-- side hunt details -->
         <div class="flex-0 flex flex-col w-88">
           <!-- header -->
-          <div class="space-y-3">
+          <div class="space-y-3 pt-8">
             <div>
-              <h1
-                class="text-2xl font-semibold leading-7 text-gray-700 capitalize"
-              >
+              <h1 class="text-2xl font-bold leading-7 text-gray-700 capitalize">
                 {{ data.display_name.split(' - ')[0] }}
               </h1>
-              <h1
-                class="text-2xl font-semibold leading-7 text-gray-700 capitalize"
-              >
+              <h1 class="text-2xl font-bold leading-7 text-gray-700 capitalize">
                 {{ data.display_name.split(' - ')[1] }}
               </h1>
             </div>
@@ -56,43 +52,49 @@
                   /></span>
                   <span class="capitalize">{{ data.season_length }} days</span>
                 </li>
-                <li class="flex items-center space-x-2 py-1">
-                  <span class="text-gray-500"
-                    ><tag-icon class="h-6 w-6"
-                  /></span>
-                  <span class="capitalize">{{ data.quota }} (2021 quota)</span>
-                </li>
               </ul>
             </div>
           </div>
         </div>
 
-        <div class="flex-1 rounded-md bg-white h-156">hello world</div>
+        <div
+          class="order-first flex-1 rounded-md bg-hero-topo outline outline-gray-300/60 h-156"
+        ></div>
       </div>
 
       <!-- Row: hero stats -->
       <div class="w-full">
-        <dl class="flex flex-wrap space-x-24 justify-center pt-10 pb-4">
-          <div class="flex flex-col px-8 text-center">
+        <dl class="flex flex-wrap space-x-24 justify-center pt-12 pb-6">
+          <div class="flex flex-col text-center">
             <dt class="order-2 text-lg leading-7 text-gray-500">Public Land</dt>
-            <dd class="order-1 text-6xl font-extrabold text-saffron-600">
-              81.66<small class="text-3xl">%</small>
+            <dd class="order-1 text-6xl font-extrabold text-saffron-600/90">
+              {{ pctPublicLand }}<small class="text-3xl">%</small>
             </dd>
           </div>
-          <div class="flex flex-col px-8 text-center">
+          <div class="flex flex-col text-center">
             <dt class="order-2 text-lg leading-7 text-gray-500">2021 Quota</dt>
-            <dd class="order-1 text-6xl font-extrabold text-saffron-600">25</dd>
-          </div>
-          <div class="flex flex-col px-8 text-center">
-            <dt class="order-2 text-lg leading-7 text-gray-500">Apps</dt>
-            <dd class="order-1 text-6xl font-extrabold text-saffron-600">
-              148
+            <dd class="order-1 text-6xl font-extrabold text-saffron-600/90">
+              {{ lastQuota }}
             </dd>
           </div>
-          <div class="flex flex-col px-8 text-center">
-            <dt class="order-2 text-lg leading-7 text-gray-500">Harvest</dt>
-            <dd class="order-1 text-6xl font-extrabold text-saffron-600">
-              12<small class="text-3xl">%</small>
+          <div class="flex flex-col text-center">
+            <dt class="order-2 text-lg leading-7 text-gray-500">2021 Apps</dt>
+            <dd class="order-1 text-6xl font-extrabold text-saffron-600/90">
+              {{ lastApps }}
+            </dd>
+          </div>
+          <div class="flex flex-col text-center">
+            <dt class="order-2 text-lg leading-7 text-gray-500">Draw Rank</dt>
+            <dd class="order-1 text-6xl font-extrabold text-saffron-600/90">
+              {{ drawDifficulty }}
+            </dd>
+          </div>
+          <div class="flex flex-col text-center">
+            <dt class="order-2 text-lg leading-7 text-gray-500">
+              2020 Harvest
+            </dt>
+            <dd class="order-1 text-6xl font-extrabold text-saffron-600/90">
+              {{ lastHarvest }}<small class="text-3xl">%</small>
             </dd>
           </div>
         </dl>
@@ -283,7 +285,6 @@
 import {
   LocationMarkerIcon,
   IdentificationIcon,
-  TagIcon,
   CalendarIcon,
   ClockIcon,
   CheckCircleIcon
@@ -304,6 +305,11 @@ const {
   data,
   loading,
   getHunt,
+  pctPublicLand,
+  drawDifficulty,
+  lastQuota,
+  lastApps,
+  lastHarvest,
   tidyHuntData,
   tidyHarvestData,
   tidyBonusPoints,

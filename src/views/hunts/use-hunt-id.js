@@ -30,6 +30,31 @@ const getHunt = (id) => {
     })
 }
 
+// computed props for hero stats
+const pctPublicLand = computed(() => {
+  return data.value.public_land_pct || 'N/A'
+})
+
+const lastQuota = computed(() => {
+  return data.value.quota || 'N/A'
+})
+
+const lastApps = computed(() => {
+  const x = data.value.draw_data.filter((d) => d.hunt_year === 2021)
+  return x[0].n_applications || 'N/A'
+})
+
+const lastHarvest = computed(() => {
+  const x = data.value.harvest_data.filter((d) => d.hunt_year === 2020)
+  return parseInt(x[0].harvest_rate * 100) || 'N/A'
+})
+
+const drawDifficulty = computed(() => {
+  const x = data.value.draw_data.filter((d) => d.hunt_year === 2021)
+  return x[0].draw_difficulty_rank || 'N/A'
+})
+
+// computed props for figures
 const tidyHuntData = computed(() => {
   const tidy = data.value?.draw_data
     .sort(sortHuntYear('asc'))
@@ -72,6 +97,13 @@ export function useHuntId() {
     data,
     error,
     getHunt,
+
+    // computed props: used for hero stats
+    pctPublicLand,
+    lastQuota,
+    lastApps,
+    lastHarvest,
+    drawDifficulty,
 
     // computed props: used for hunt figures & tables
     tidyHuntData,

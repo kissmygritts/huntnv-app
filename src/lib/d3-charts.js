@@ -39,7 +39,7 @@ export const MultiLineChart = (
     }, {})
 
     return obj[z]
-  } 
+  }
 
   // scales
   const xScale = xType(xDomain, xRange)
