@@ -1,8 +1,8 @@
 <template>
-  <div class="flex flex-col flex-1 px-4 overflow-x-auto bg-gray-200">
+  <div class="flex flex-col flex-1 px-4 pb-4 overflow-x-auto bg-gray-200">
     <ui-loading v-if="loading" />
     <!-- content container -->
-    <div v-else class="my-4 min-w-full flex flex-col space-y-4">
+    <div v-else class="my-4 min-w-full flex flex-col space-y-8">
       <!-- first row -->
       <div class="flex gap-6">
         <!-- side hunt details -->
@@ -112,8 +112,8 @@
         </div>
       </div>
       <!-- Row: annual figures -->
-      <div class="flex gap-4 pt-4">
-        <ui-card-flippable class="flex-1 bg-white rounded-md">
+      <div class="grid grid-cols-2 gap-8 pt-4">
+        <ui-card-flippable class="bg-white rounded-md">
           <template v-slot:title>
             <h2 class="font-semibold text-gray-600">Quota & Applications</h2>
           </template>
@@ -137,7 +137,7 @@
           </template>
         </ui-card-flippable>
 
-        <ui-card-flippable class="flex-1 bg-white rounded-md">
+        <ui-card-flippable class="bg-white rounded-md">
           <template v-slot:title>
             <h2 class="font-semibold text-gray-600">Draw Details</h2>
           </template>
@@ -175,7 +175,7 @@
           </template>
         </ui-card-flippable>
 
-        <ui-card-flippable class="flex-1 bg-white rounded-md">
+        <ui-card-flippable class="bg-white rounded-md">
           <template v-slot:title>
             <h2 class="font-semibold text-gray-600">Harvest and Maturity</h2>
           </template>
@@ -229,11 +229,8 @@
             </div>
           </template>
         </ui-card-flippable>
-      </div>
 
-      <!-- Row: bp figures -->
-      <div class="flex gap-4">
-        <ui-card-flippable class="flex-1 bg-white rounded-md h-96">
+        <ui-card-flippable class="bg-white rounded-md">
           <template v-slot:title>
             <h2 class="font-semibold text-gray-600">
               Bonus Point Distribution
@@ -273,10 +270,32 @@
             </div>
           </template>
         </ui-card-flippable>
-        <div class="h-96 flex-1 bg-white"></div>
       </div>
 
-      <pre><code lang="json">{{ { data } }}</code></pre>
+      <!-- Row: bp figures, waiting on bonus point bar chart -->
+      <!-- <div class="flex gap-4">
+        <div class="h-96 flex-1 bg-white"></div>
+      </div> -->
+
+      <!-- Row: table -->
+      <div class="flex flex-col space-y-2 bg-white w-full rounded-md overflow-hidden">
+        <h2 class="font-semibold text-gray-600 p-2">Draw Results Table</h2>
+        <ui-table-simple :fields="drawTable.fields" :rows="drawTable.rows" />
+      </div>
+
+      <!-- Row: table -->
+      <div class="flex flex-col space-y-2 bg-white w-full rounded-md overflow-hidden">
+        <h2 class="font-semibold text-gray-600 p-2">Harvest Results Table</h2>
+        <ui-table-simple :fields="drawTable.fields" :rows="drawTable.rows" />
+      </div>
+
+      <!-- Row: related and similar hunts table -->
+      <div class="flex flex-col space-y-2 bg-white w-full rounded-md overflow-hidden">
+        <h2 class="font-semibold text-gray-600 p-2">Draw Results Table</h2>
+        <ui-table-simple :fields="drawTable.fields" :rows="drawTable.rows" />
+      </div>
+
+      <!-- <pre><code lang="json">{{ { data } }}</code></pre> -->
     </div>
   </div>
 </template>
@@ -293,6 +312,7 @@ import { useHuntId } from './use-hunt-id.js'
 import MultiLineChart from '../../components/charts/multi-line-chart.vue'
 import UiLoading from '../../components/ui/ui-loading.vue'
 import UiCardFlippable from '../../components/ui/ui-card-flippable.vue'
+import UiTableSimple from '../../components/ui/ui-table-simple.vue'
 
 const props = defineProps({
   id: {
@@ -313,7 +333,8 @@ const {
   tidyHuntData,
   tidyHarvestData,
   tidyBonusPoints,
-  tidyDrawData
+  tidyDrawData,
+  drawTable
 } = useHuntId()
 getHunt(props.id)
 </script>

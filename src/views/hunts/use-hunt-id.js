@@ -5,7 +5,8 @@ import {
   pickHuntData,
   pickHarvestData,
   pickBonusPoints,
-  pickDrawData
+  pickDrawData,
+  drawTableData
 } from '../../lib/data-utils.js'
 
 const loading = ref(false)
@@ -32,7 +33,7 @@ const getHunt = (id) => {
 
 // computed props for hero stats
 const pctPublicLand = computed(() => {
-  return data.value.public_land_pct || 'N/A'
+  return parseInt(data.value.public_land_pct) || 'N/A'
 })
 
 const lastQuota = computed(() => {
@@ -91,6 +92,9 @@ const tidyDrawData = computed(() => {
     .flat()
 })
 
+// computed props for tables
+const drawTable = computed(() => drawTableData(data.value?.draw_data))
+
 export function useHuntId() {
   return {
     loading,
@@ -109,6 +113,9 @@ export function useHuntId() {
     tidyHuntData,
     tidyHarvestData,
     tidyBonusPoints,
-    tidyDrawData
+    tidyDrawData,
+
+    // computed props: used for tables
+    drawTable
   }
 }
