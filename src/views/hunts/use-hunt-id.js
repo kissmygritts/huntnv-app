@@ -80,7 +80,7 @@ const tidyBonusPoints = computed(() => {
     .n_applications
 
   const tidy = data.value?.bonus_points
-    .filter((d) => d.hunt_year === 2021 && d.n_applications > 0)
+    .filter((d) => d.hunt_year === 2021)
     .sort((a, b) => a.bonus_points > b.bonus_points)
     .map(pickBonusPoints(apps))
     .flat()

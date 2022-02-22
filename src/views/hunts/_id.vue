@@ -145,7 +145,7 @@
         </div>
       </div>
       <!-- Row: annual figures -->
-      <div id="figures" class="grid grid-cols-2 gap-8 pt-4">
+      <div id="figures" class="grid grid-cols-2 gap-4 pt-4">
         <ui-card-flippable class="bg-white rounded-md">
           <template v-slot:title>
             <h2 class="font-semibold text-gray-600">Quota & Applications</h2>
@@ -367,9 +367,15 @@
               >
                 {{ species }}
                 <span
-                  class="bg-saffron-200/75 ml-1 text-saffron-700 px-2 py-1 text-xs rounded-full"
-                  >{{ relatedHuntTable[species].total }}</span
+                  :class="[
+                    selected
+                      ? 'bg-saffron-200/75 text-saffron-700'
+                      : 'bg-gray-100 text-gray-600',
+                    'ml-2 px-2 py-1 text-xs rounded-full'
+                  ]"
                 >
+                  {{ relatedHuntTable[species].total }}
+                </span>
               </div>
             </tab>
           </tab-list>

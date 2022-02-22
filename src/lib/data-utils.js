@@ -82,12 +82,12 @@ export const pickBonusPoints = (apps) => (d) => {
     {
       bp: d.bonus_points,
       metric: '% Apps',
-      value: Number(((d.n_applications / apps) * 100).toFixed(2))
+      value: Number(((d.n_applications / apps) * 100).toFixed(2)) || 0
     },
     {
       bp: d.bonus_points,
       metric: '% Drawn',
-      value: Number(((d.n_successful / d.n_applications) * 100).toFixed(2))
+      value: Number(((d.n_successful / d.n_applications) * 100).toFixed(2)) || 0
     }
   ]
 }

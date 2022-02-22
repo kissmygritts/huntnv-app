@@ -55,7 +55,14 @@ defineProps({
                   >
                     {{ row[field.field] ?? naValue }}
                   </router-link>
-                  <span v-else>{{ row[field.field] ?? naValue }}</span>
+                  <span
+                    v-else
+                    :class="[
+                      row[field.field] === null ? 'text-gray-400 text-xs' : ''
+                    ]"
+                  >
+                    {{ row[field.field] ?? naValue }}
+                  </span>
                 </td>
               </tr>
             </tbody>
