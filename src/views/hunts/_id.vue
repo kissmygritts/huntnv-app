@@ -4,7 +4,7 @@
     <!-- content container -->
     <div v-else class="my-4 min-w-full flex flex-col space-y-8">
       <!-- first row -->
-      <div class="flex gap-6">
+      <div class="flex flex-col lg:flex-row gap-6">
         <!-- side hunt details -->
         <div class="flex-0 flex flex-col w-88">
           <!-- header -->
@@ -59,13 +59,15 @@
 
         <div
           id="hunt-map"
-          class="order-first flex-1 rounded-md bg-hero-topo outline outline-gray-300/60 h-156"
+          class="lg:order-first flex-auto lg:flex-1 rounded-md bg-hero-topo outline outline-gray-300/60 h-96 lg:h-156"
         ></div>
       </div>
 
       <!-- Row: hero stats -->
       <div class="w-full">
-        <dl class="flex flex-wrap space-x-24 justify-center pt-12 pb-6">
+        <dl
+          class="flex flex-wrap gap-8 lg:gap-24 justify-start md:justify-center pt-4 pb-2 lg:pt-12 lg:pb-6"
+        >
           <div class="flex flex-col text-center">
             <dt class="order-2 text-lg leading-7 text-gray-500">Public Land</dt>
             <dd class="order-1 text-6xl font-extrabold text-saffron-600/90">
@@ -102,7 +104,9 @@
       </div>
 
       <!-- Row: floating header -->
-      <div class="w-full h-18 bg-gray-200 sticky top-0 flex items-end">
+      <div
+        class="hidden md:flex w-full h-18 bg-gray-200 sticky top-0 items-end"
+      >
         <div
           class="flex items-center py-4 bg-white rounded-md shadow w-full text-gray-500 text-center divide-x-2"
         >
@@ -145,7 +149,7 @@
         </div>
       </div>
       <!-- Row: annual figures -->
-      <div id="figures" class="grid grid-cols-2 gap-4 pt-4">
+      <div id="figures" class="grid grid-cols-1 lg:grid-cols-2 gap-4 pt-4">
         <ui-card-flippable class="bg-white rounded-md">
           <template v-slot:title>
             <h2 class="font-semibold text-gray-600">Quota & Applications</h2>
@@ -463,5 +467,7 @@ const scrollTo = (el) => {
 </script>
 
 <style scoped>
-/* * { outline: solid 1px blue; } */
+/* * {
+  outline: solid 1px blue;
+} */
 </style>
