@@ -1,13 +1,12 @@
 <template>
   <div class="bg-gray-100 group">
-    <!-- <router-link
+    <router-link
       class="block w-full p-2"
-      :to="{ name: 'HuntDetails', params: { id: hunt.hunt_id } }"
-    > -->
-    <div class="block w-full p-2">
+      :to="{ name: 'hunts-id', params: { id: hunt.hunt_id } }"
+    >
       <div class="w-full flex items-center justify-between">
         <h4
-          class="text-lg capitalize text-olive-800 group-hover:text-saffron-600"
+          class="text-lg capitalize text-oxford-800 group-hover:text-saffron-600"
         >
           {{ hunt.draw_type }} &bull; {{ hunt.weapon }}
         </h4>
@@ -25,14 +24,14 @@
         <span class="ml-2 capitalize">{{ hunt.season_dates }}</span>
       </div>
 
-      <dl class="text-center flex flex-wrap justify-between">
-        <div class="flex flex-col w-1/4 m-1">
+      <dl class="text-center flex flex-wrap justify-between gap-2">
+        <div class="flex flex-col w-[30%]">
           <dt class="order-2 text-sm font-light text-gray-500">Quota</dt>
           <dd class="order-1 text-sm font-bold text-gray-600">
             {{ hunt.quota }}
           </dd>
         </div>
-        <div class="flex flex-col w-1/4 m-1">
+        <div class="flex flex-col w-[30%]">
           <dt class="order-2 text-sm font-light text-gray-500">Harvest</dt>
           <dd class="order-1 text-sm font-bold text-gray-600">
             {{
@@ -42,7 +41,7 @@
             }}
           </dd>
         </div>
-        <div class="flex flex-col w-1/4 m-1">
+        <div class="flex flex-col w-[30%]">
           <dt class="order-2 text-sm font-light text-gray-500">Maturity</dt>
           <dd class="order-1 text-sm font-bold text-gray-600">
             {{
@@ -52,13 +51,13 @@
             }}
           </dd>
         </div>
-        <div class="flex flex-col w-1/4 m-1">
+        <div class="flex flex-col w-[30%]">
           <dt class="order-2 text-sm font-light text-gray-500">Median BP</dt>
           <dd class="order-1 text-sm font-bold text-gray-600">
             {{ hunt.median_bp_of_successful_applications.toFixed(1) }}
           </dd>
         </div>
-        <div class="flex flex-col w-1/4 m-1">
+        <div class="flex flex-col w-[30%]">
           <dt class="order-2 text-sm font-light text-gray-500">
             Draw Difficulty
           </dt>
@@ -66,15 +65,14 @@
             {{ hunt.draw_difficulty_qtile }}
           </dd>
         </div>
-        <div class="flex flex-col w-1/4 m-1">
+        <div class="flex flex-col w-[30%]">
           <dt class="order-2 text-sm font-light text-gray-500">Draw Rank</dt>
           <dd class="order-1 text-sm font-bold text-gray-600">
             {{ hunt.draw_difficulty_rank }}
           </dd>
         </div>
       </dl>
-    </div>
-    <!-- </router-link> -->
+    </router-link>
   </div>
 </template>
 
