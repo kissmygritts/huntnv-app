@@ -8,7 +8,8 @@ import {
   pickDrawData,
   drawTableData,
   harvestTableData,
-  bpTableData
+  bpTableData,
+  relatedHuntsData
 } from '../../lib/data-utils.js'
 
 const loading = ref(false)
@@ -80,7 +81,7 @@ const tidyBonusPoints = computed(() => {
 
   const tidy = data.value?.bonus_points
     .filter((d) => d.hunt_year === 2021 && d.n_applications > 0)
-    .sort(sortHuntYear('asc'))
+    .sort((a, b) => a.bonus_points > b.bonus_points)
     .map(pickBonusPoints(apps))
     .flat()
 
@@ -98,6 +99,12 @@ const tidyDrawData = computed(() => {
 const drawTable = computed(() => drawTableData(data.value?.draw_data))
 const harvestTable = computed(() => harvestTableData(data.value?.harvest_data))
 const bpTable = computed(() => bpTableData(data.value?.bonus_points))
+const relatedHuntTable = computed(() =>
+  relatedHuntsData([
+    ...data.value.related_hunts.hunts,
+    ...data.value.similar_hunts.hunts
+  ])
+)
 
 export function useHuntId() {
   return {
@@ -122,6 +129,7 @@ export function useHuntId() {
     // computed props: used for tables
     drawTable,
     harvestTable,
-    bpTable
+    bpTable,
+    relatedHuntTable
   }
 }

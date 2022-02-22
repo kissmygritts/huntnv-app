@@ -8,6 +8,29 @@ export const sortHuntYear = (direction) => (f, s) => {
   }
 }
 
+const groupBy = (list, accessor) => {
+  const map = new Map()
+  list.forEach((item) => {
+    const key = accessor(item)
+    const collection = map.get(key)
+    if (!collection) {
+      map.set(key, [item])
+    } else {
+      collection.push(item)
+    }
+  })
+
+  let out = {}
+  map.forEach((v, k) => {
+    out[k] = {
+      total: v.length,
+      values: v
+    }
+  })
+
+  return out
+}
+
 export const pickHuntData = (d) => {
   return [
     {
@@ -144,4 +167,9 @@ export const bpTableData = (data) => {
   const fields = [{ field: 'hunt_year', label: 'Hunt Year' }, ...bpFields]
 
   return { fields, rows }
+}
+
+export const relatedHuntsData = (data) => {
+  const grouped = groupBy(data, (d) => d.species)
+  return grouped
 }

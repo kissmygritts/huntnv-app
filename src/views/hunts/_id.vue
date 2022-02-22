@@ -58,6 +58,7 @@
         </div>
 
         <div
+          id="hunt-map"
           class="order-first flex-1 rounded-md bg-hero-topo outline outline-gray-300/60 h-156"
         ></div>
       </div>
@@ -105,14 +106,46 @@
         <div
           class="flex items-center py-4 bg-white rounded-md shadow w-full text-gray-500 text-center divide-x-2"
         >
-          <div class="flex-1 hover:text-saffron-600">Map</div>
-          <div class="flex-1 hover:text-saffron-600">Figures</div>
-          <div class="flex-1 hover:text-saffron-600">Harvest Tables</div>
-          <div class="flex-1 hover:text-saffron-600">Draw Tables</div>
+          <a
+            class="flex-1 hover:text-saffron-600"
+            href="#hunt-map"
+            @click.prevent="scrollTo('hunt-map')"
+            >Map</a
+          >
+          <a
+            class="flex-1 hover:text-saffron-600"
+            href="#figures"
+            @click.prevent="scrollTo('figures')"
+            >Figures</a
+          >
+          <a
+            class="flex-1 hover:text-saffron-600"
+            href="#draw-results-tables"
+            @click.prevent="scrollTo('draw-results-table')"
+            >Draw Tables</a
+          >
+          <a
+            class="flex-1 hover:text-saffron-600"
+            href="#harvest-results-table"
+            @click.prevent="scrollTo('harvest-results-table')"
+            >Harvest Tables</a
+          >
+          <a
+            class="flex-1 hover:text-saffron-600"
+            href="#bonus-points-table"
+            @click.prevent="scrollTo('bonus-points-table')"
+            >Bonus Points</a
+          >
+          <a
+            class="flex-1 hover:text-saffron-600"
+            href="#bonus-points-table"
+            @click.prevent="scrollTo('related-hunts-table')"
+            >Similar Hunts</a
+          >
         </div>
       </div>
       <!-- Row: annual figures -->
-      <div class="grid grid-cols-2 gap-8 pt-4">
+      <div id="figures" class="grid grid-cols-2 gap-8 pt-4">
         <ui-card-flippable class="bg-white rounded-md">
           <template v-slot:title>
             <h2 class="font-semibold text-gray-600">Quota & Applications</h2>
@@ -279,14 +312,16 @@
 
       <!-- Row: table -->
       <div
+        id="draw-results-table"
         class="flex flex-col space-y-2 bg-white w-full rounded-md overflow-hidden"
       >
         <h2 class="font-semibold text-gray-600 p-2">Draw Results Table</h2>
         <ui-table-simple :fields="drawTable.fields" :rows="drawTable.rows" />
       </div>
 
-      <!-- Row: table -->
+      <!-- Row: harvest table -->
       <div
+        id="harvest-results-table"
         class="flex flex-col space-y-2 bg-white w-full rounded-md overflow-hidden"
       >
         <h2 class="font-semibold text-gray-600 p-2">Harvest Results Table</h2>
@@ -296,12 +331,62 @@
         />
       </div>
 
-      <!-- Row: related and similar hunts table -->
+      <!-- Row: bonus points table -->
       <div
+        id="bonus-points-table"
         class="flex flex-col space-y-2 bg-white w-full rounded-md overflow-hidden"
       >
         <h2 class="font-semibold text-gray-600 p-2">Bonus Point Table</h2>
         <ui-table-simple :fields="bpTable.fields" :rows="bpTable.rows" />
+      </div>
+
+      <!-- Row: related and similar hunts table  -->
+      <div
+        id="related-hunts-table"
+        class="flex flex-col bg-white w-full rounded-md overflow-hidden"
+      >
+        <h2 class="font-semibold text-gray-600 p-2">Related & Similar Hunts</h2>
+        <tab-group :default-index="0">
+          <tab-list
+            as="div"
+            class="flex space-x-8 border-b border-gray-200 px-2 overflow-y-auto"
+          >
+            <tab
+              as="template"
+              v-for="species in Object.keys(relatedHuntTable)"
+              :key="species"
+              v-slot="{ selected }"
+            >
+              <div
+                :class="[
+                  selected
+                    ? 'border-saffron-600 text-saffron-700 font-medium'
+                    : 'border-transparent hover:text-gray-700 hover:border-gray-300',
+                  'whitespace-nowrap text-gray-500 py-2 px-1 border-b-2 cursor-pointer capitalize'
+                ]"
+              >
+                {{ species }}
+                <span
+                  class="bg-saffron-200/75 ml-1 text-saffron-700 px-2 py-1 text-xs rounded-full"
+                  >{{ relatedHuntTable[species].total }}</span
+                >
+              </div>
+            </tab>
+          </tab-list>
+          <tab-panels>
+            <tab-panel
+              v-for="species in Object.keys(relatedHuntTable)"
+              :key="species"
+            >
+              <ui-table-simple
+                class="capitalize"
+                :fields="relatedHuntTableFields"
+                :rows="relatedHuntTable[species].values"
+                :link-cell="(d) => d.hunt_id"
+              />
+            </tab-panel>
+          </tab-panels>
+        </tab-group>
       </div>
 
       <!-- <pre><code lang="json">{{ { data } }}</code></pre> -->
@@ -317,11 +402,12 @@ import {
   ClockIcon,
   CheckCircleIcon
 } from '@heroicons/vue/outline'
-import { useHuntId } from './use-hunt-id.js'
+import { TabGroup, TabList, Tab, TabPanels, TabPanel } from '@headlessui/vue'
 import MultiLineChart from '../../components/charts/multi-line-chart.vue'
 import UiLoading from '../../components/ui/ui-loading.vue'
 import UiCardFlippable from '../../components/ui/ui-card-flippable.vue'
 import UiTableSimple from '../../components/ui/ui-table-simple.vue'
+import { useHuntId } from './use-hunt-id.js'
 
 const props = defineProps({
   id: {
@@ -345,9 +431,29 @@ const {
   tidyDrawData,
   drawTable,
   harvestTable,
-  bpTable
+  bpTable,
+  relatedHuntTable
 } = useHuntId()
 getHunt(props.id)
+
+const relatedHuntTableFields = [
+  { field: 'display_name', label: 'Species' },
+  { field: 'draw_type', label: 'Residency' },
+  { field: 'weapon', label: 'Weapon' },
+  { field: 'season_dates', label: 'Season' },
+  { field: 'quota', label: '2021 Quota' },
+  { field: 'harvest_rate', label: 'Harvest %' },
+  { field: 'draw_difficulty_rank', label: 'Draw Rank' },
+  { field: 'draw_difficulty_qtile', label: 'Draw Difficulty' },
+  { field: 'median_bp_of_successful_applications', label: 'Median BP' }
+]
+
+const scrollTo = (el) => {
+  document.getElementById(el).scrollIntoView({
+    behavior: 'smooth',
+    block: 'center'
+  })
+}
 </script>
 
 <style scoped>

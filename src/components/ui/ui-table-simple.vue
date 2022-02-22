@@ -12,6 +12,10 @@ defineProps({
     type: String,
     required: false,
     default: 'N/A'
+  },
+  linkCell: {
+    type: Function,
+    required: false
   }
 })
 </script>
@@ -20,7 +24,9 @@ defineProps({
   <div class="flex flex-col">
     <div class="overflow-x-auto">
       <div class="align-middle inline-block min-w-full">
-        <div class="shadow overflow-hidden border-b border-gray-200 rounded-md">
+        <div
+          class="shadow overflow-hidden border-b border-gray-200 rounded-b-md"
+        >
           <table class="min-w-full divide-y divide-gray-200">
             <thead class="bg-gray-50">
               <tr>
@@ -42,7 +48,14 @@ defineProps({
                   :key="index"
                   class="px-2 py-4 whitespace-nowrap text-sm text-gray-700"
                 >
-                  {{ row[field.field] ?? naValue }}
+                  <router-link
+                    v-if="linkCell && index === 0"
+                    :to="{ name: 'hunts-id', params: { id: linkCell(row) } }"
+                    class="text-saffron-700 cursor-pointer hover:text-saffron-500 hover:underline"
+                  >
+                    {{ row[field.field] ?? naValue }}
+                  </router-link>
+                  <span v-else>{{ row[field.field] ?? naValue }}</span>
                 </td>
               </tr>
             </tbody>
@@ -52,3 +65,9 @@ defineProps({
     </div>
   </div>
 </template>
+
+<style scoped>
+/* * {
+  outline: solid 1px blue;
+} */
+</style>
