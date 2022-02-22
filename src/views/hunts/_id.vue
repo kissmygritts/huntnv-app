@@ -272,27 +272,36 @@
         </ui-card-flippable>
       </div>
 
-      <!-- Row: bp figures, waiting on bonus point bar chart -->
+      <!-- TODO: Row: bp figures, waiting on bonus point bar chart -->
       <!-- <div class="flex gap-4">
         <div class="h-96 flex-1 bg-white"></div>
       </div> -->
 
       <!-- Row: table -->
-      <div class="flex flex-col space-y-2 bg-white w-full rounded-md overflow-hidden">
+      <div
+        class="flex flex-col space-y-2 bg-white w-full rounded-md overflow-hidden"
+      >
         <h2 class="font-semibold text-gray-600 p-2">Draw Results Table</h2>
         <ui-table-simple :fields="drawTable.fields" :rows="drawTable.rows" />
       </div>
 
       <!-- Row: table -->
-      <div class="flex flex-col space-y-2 bg-white w-full rounded-md overflow-hidden">
+      <div
+        class="flex flex-col space-y-2 bg-white w-full rounded-md overflow-hidden"
+      >
         <h2 class="font-semibold text-gray-600 p-2">Harvest Results Table</h2>
-        <ui-table-simple :fields="drawTable.fields" :rows="drawTable.rows" />
+        <ui-table-simple
+          :fields="harvestTable.fields"
+          :rows="harvestTable.rows"
+        />
       </div>
 
       <!-- Row: related and similar hunts table -->
-      <div class="flex flex-col space-y-2 bg-white w-full rounded-md overflow-hidden">
-        <h2 class="font-semibold text-gray-600 p-2">Draw Results Table</h2>
-        <ui-table-simple :fields="drawTable.fields" :rows="drawTable.rows" />
+      <div
+        class="flex flex-col space-y-2 bg-white w-full rounded-md overflow-hidden"
+      >
+        <h2 class="font-semibold text-gray-600 p-2">Bonus Point Table</h2>
+        <ui-table-simple :fields="bpTable.fields" :rows="bpTable.rows" />
       </div>
 
       <!-- <pre><code lang="json">{{ { data } }}</code></pre> -->
@@ -334,7 +343,9 @@ const {
   tidyHarvestData,
   tidyBonusPoints,
   tidyDrawData,
-  drawTable
+  drawTable,
+  harvestTable,
+  bpTable
 } = useHuntId()
 getHunt(props.id)
 </script>

@@ -6,7 +6,9 @@ import {
   pickHarvestData,
   pickBonusPoints,
   pickDrawData,
-  drawTableData
+  drawTableData,
+  harvestTableData,
+  bpTableData
 } from '../../lib/data-utils.js'
 
 const loading = ref(false)
@@ -94,6 +96,8 @@ const tidyDrawData = computed(() => {
 
 // computed props for tables
 const drawTable = computed(() => drawTableData(data.value?.draw_data))
+const harvestTable = computed(() => harvestTableData(data.value?.harvest_data))
+const bpTable = computed(() => bpTableData(data.value?.bonus_points))
 
 export function useHuntId() {
   return {
@@ -116,6 +120,8 @@ export function useHuntId() {
     tidyDrawData,
 
     // computed props: used for tables
-    drawTable
+    drawTable,
+    harvestTable,
+    bpTable
   }
 }

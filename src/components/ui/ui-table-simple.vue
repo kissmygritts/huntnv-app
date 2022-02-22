@@ -7,6 +7,11 @@ defineProps({
   rows: {
     type: Array,
     required: true
+  },
+  naValue: {
+    type: String,
+    required: false,
+    default: 'N/A'
   }
 })
 </script>
@@ -35,9 +40,9 @@ defineProps({
                 <td
                   v-for="(field, index) in fields"
                   :key="index"
-                  class="px-2 py-4 whitespace-nowrap text-sm text-gray-800"
+                  class="px-2 py-4 whitespace-nowrap text-sm text-gray-700"
                 >
-                  {{ row[field.field] }}
+                  {{ row[field.field] ?? naValue }}
                 </td>
               </tr>
             </tbody>

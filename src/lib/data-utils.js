@@ -98,7 +98,50 @@ export const drawTableData = (data) => {
     { field: 'draw_difficulty_rank', label: 'Draw Rank' },
     { field: 'draw_difficulty_qtile', label: 'Draw Difficulty' }
   ]
-  const rows = data.map((d) => omit(d, 'id'))
+  const rows = data.map((d) => omit(d, 'id')).sort(sortHuntYear('desc'))
+
+  return { fields, rows }
+}
+
+export const harvestTableData = (data) => {
+  const fields = [
+    { field: 'hunt_year', label: 'Hunt Year' },
+    { field: 'hunters_afield', label: 'Hunters Affield' },
+    { field: 'effort_days', label: 'Effort Days' },
+    { field: 'hunt_days', label: 'Hunt Days' },
+    { field: 'harvest_rate', label: 'Harvest Rate' },
+    { field: 'successful_hunters', label: '# Harvested' },
+    { field: 'points_or_greater', label: '>= Points' },
+    { field: 'length_or_greater', label: '>= Length' },
+    { field: 'age_or_greater', label: '>= Age' },
+    { field: 'bc_or_greater', label: '>= BC Score' }
+  ]
+  const rows = data
+    .map((d) => omit(d, ['id', 'hunter_satisfaction']))
+    .sort(sortHuntYear('desc'))
+
+  return { fields, rows }
+}
+
+export const bpTableData = (data) => {
+  const huntYears = [...new Set(data.map((d) => d.hunt_year))]
+  const rows = huntYears
+    .map((y) => {
+      return data
+        .filter((d) => d.hunt_year === y)
+        .reduce(
+          (p, c) => {
+            return { ...p, [c.bonus_points]: c.n_applications }
+          },
+          { hunt_year: y }
+        )
+    })
+    .sort(sortHuntYear('desc'))
+
+  const bpFields = Object.keys(omit(rows[0], 'hunt_year')).map((k) => {
+    return { field: `${k}`, label: `${k}` }
+  })
+  const fields = [{ field: 'hunt_year', label: 'Hunt Year' }, ...bpFields]
 
   return { fields, rows }
 }
