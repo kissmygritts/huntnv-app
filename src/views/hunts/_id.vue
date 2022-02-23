@@ -59,7 +59,7 @@
 
         <div
           id="hunt-map"
-          class="lg:order-first flex-auto lg:flex-1 rounded-md bg-hero-topo outline outline-gray-300/60 h-96 lg:h-156"
+          class="lg:order-first flex-auto lg:flex-1 rounded-md bg-hero-topo outline outline-gray-300/60 h-96 lg:h-156 scroll-m-12"
         ></div>
       </div>
 
@@ -149,7 +149,10 @@
         </div>
       </div>
       <!-- Row: annual figures -->
-      <div id="figures" class="grid grid-cols-1 lg:grid-cols-2 gap-4 pt-4">
+      <div
+        id="figures"
+        class="grid grid-cols-1 lg:grid-cols-2 gap-4 pt-4 scroll-m-24"
+      >
         <ui-card-flippable class="bg-white rounded-md">
           <template v-slot:title>
             <h2 class="font-semibold text-gray-600">Quota & Applications</h2>
@@ -317,7 +320,7 @@
       <!-- Row: table -->
       <div
         id="draw-results-table"
-        class="flex flex-col space-y-2 bg-white w-full rounded-md overflow-hidden"
+        class="flex flex-col space-y-2 bg-white w-full rounded-md overflow-hidden scroll-m-24"
       >
         <h2 class="font-semibold text-gray-600 p-2">Draw Results Table</h2>
         <ui-table-simple :fields="drawTable.fields" :rows="drawTable.rows" />
@@ -326,7 +329,7 @@
       <!-- Row: harvest table -->
       <div
         id="harvest-results-table"
-        class="flex flex-col space-y-2 bg-white w-full rounded-md overflow-hidden"
+        class="flex flex-col space-y-2 bg-white w-full rounded-md overflow-hidden scroll-m-24"
       >
         <h2 class="font-semibold text-gray-600 p-2">Harvest Results Table</h2>
         <ui-table-simple
@@ -338,7 +341,7 @@
       <!-- Row: bonus points table -->
       <div
         id="bonus-points-table"
-        class="flex flex-col space-y-2 bg-white w-full rounded-md overflow-hidden"
+        class="flex flex-col space-y-2 bg-white w-full rounded-md overflow-hidden scroll-m-24"
       >
         <h2 class="font-semibold text-gray-600 p-2">Bonus Point Table</h2>
         <ui-table-simple :fields="bpTable.fields" :rows="bpTable.rows" />
@@ -347,7 +350,7 @@
       <!-- Row: related and similar hunts table  -->
       <div
         id="related-hunts-table"
-        class="flex flex-col bg-white w-full rounded-md overflow-hidden"
+        class="flex flex-col bg-white w-full rounded-md overflow-hidden scroll-m-24"
       >
         <h2 class="font-semibold text-gray-600 p-2">Related & Similar Hunts</h2>
         <tab-group :default-index="0">
@@ -460,8 +463,7 @@ const relatedHuntTableFields = [
 
 const scrollTo = (el) => {
   document.getElementById(el).scrollIntoView({
-    behavior: 'smooth',
-    block: 'center'
+    behavior: 'smooth'
   })
 }
 </script>
