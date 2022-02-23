@@ -101,8 +101,8 @@ const harvestTable = computed(() => harvestTableData(data.value?.harvest_data))
 const bpTable = computed(() => bpTableData(data.value?.bonus_points))
 const relatedHuntTable = computed(() =>
   relatedHuntsData([
-    ...data.value.related_hunts.hunts,
-    ...data.value.similar_hunts.hunts
+    ...(data.value.related_hunts.hunts || []),
+    ...(data.value.similar_hunts.hunts || [])
   ])
 )
 
