@@ -5,6 +5,7 @@ import App from './App.vue'
 import router from './router'
 
 import './assets/index.css'
+import '../node_modules/maplibre-gl/dist/maplibre-gl.css'
 
 const app = createApp(App)
 

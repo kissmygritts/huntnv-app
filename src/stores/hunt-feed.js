@@ -66,6 +66,14 @@ export const useHuntFeedStore = defineStore({
         pick(this.getFeedFilters, ['drawDifficulty', 'drawRank', 'medianBp'])
       )
       return Object.keys(draw).length > 0
+    },
+
+    huntGeomIds(state) {
+      if (this.isFiltered) {
+        return [...new Set(state.data.hunt_feed.map((d) => d.id))]
+      } else {
+        return 0
+      }
     }
   },
 

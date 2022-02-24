@@ -7,9 +7,10 @@
       <!-- map -->
       <section
         v-show="layout === 'both' || layout === 'map'"
+        id="map"
         class="block min-w-0 flex-1 lg:order-last bg-hero-topo"
       >
-        {{ { isFiltered } }}
+        <maplibre-map ref="maplibre" :portal-slider="true" />
       </section>
 
       <!-- side bar -->
@@ -31,8 +32,8 @@
   </div>
 </template>
 
-<script>
-import { watchEffect } from 'vue'
+<script setup>
+import { ref, watchEffect } from 'vue'
 import { storeToRefs } from 'pinia'
 
 import { useHuntFeedStore } from '../../stores/hunt-feed.js'
@@ -41,33 +42,16 @@ import useMobileMenu from '../../composables/use-mobile-menu.js'
 import MapHeader from './map-header.vue'
 import HfListContainer from './hf-list-container.vue'
 import FilterPanelMobile from './filter-panel-mobile.vue'
+import MaplibreMap from '../../components/maplibre/maplibre-map.vue'
 
-export default {
-  name: 'huntnv-map',
-  components: { MapHeader, HfListContainer, FilterPanelMobile },
+const { layout } = useMobileMenu()
 
-  setup() {
-    const { layout, previousLayout } = useMobileMenu()
+const huntFeed = useHuntFeedStore()
+const { data, loading, getFeedFilters } = storeToRefs(huntFeed)
 
-    const huntFeed = useHuntFeedStore()
-    const { data, error, loading, feedFilters, getFeedFilters, isFiltered } =
-      storeToRefs(huntFeed)
+watchEffect(() => huntFeed.getHuntFeed(getFeedFilters.value), {
+  deep: true
+})
 
-    watchEffect(() => huntFeed.getHuntFeed(getFeedFilters.value), {
-      deep: true
-    })
-
-    return {
-      data,
-      error,
-      loading,
-      feedFilters,
-      getFeedFilters,
-      isFiltered,
-
-      layout,
-      previousLayout
-    }
-  }
-}
+const maplibre = ref(null)
 </script>
