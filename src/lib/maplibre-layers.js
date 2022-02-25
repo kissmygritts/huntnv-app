@@ -29,83 +29,6 @@ export const basemaps = [
   }
 ]
 
-// overlays (layers)
-// export const fishableWaters = {
-//   name: 'fishable waters',
-//   id: 'fishable-waters',
-//   description: 'Fishable waters of Nevada.',
-//   active: true,
-//   thumbnail:
-//     'https://ndow-cdn.s3.us-west-2.amazonaws.com/maptile-previews/fishable-waters.png',
-//   source: {
-//     'fishable-waters': {
-//       type: 'vector',
-//       tiles: [`${TILE_URL}/features/fishable_waters/{z}/{x}/{y}.pbf`]
-//     }
-//   },
-//   layers: [
-//     {
-//       id: 'fw-lines',
-//       type: 'line',
-//       source: 'fishable-waters',
-//       'source-layer': 'fishable_waters',
-//       layout: {
-//         visibility: 'visible',
-//         'line-cap': 'round',
-//         'line-join': 'round'
-//       },
-//       paint: {
-//         'line-opacity': 1,
-//         'line-color': '#589fd6',
-//         'line-width': 2
-//       }
-//     },
-//     {
-//       id: 'fw-polygons',
-//       type: 'fill',
-//       source: 'fishable-waters',
-//       'source-layer': 'fishable_waters',
-//       layout: {
-//         visibility: 'visible'
-//       },
-//       paint: {
-//         'fill-opacity': 0.75,
-//         'fill-color': '#589fd6'
-//       },
-//       filter: ['==', '$type', 'Polygon']
-//     },
-//     {
-//       id: 'hovered-fw-lines',
-//       type: 'line',
-//       source: 'fishable-waters',
-//       'source-layer': 'fishable_waters',
-//       layout: {
-//         visibility: 'visible',
-//         'line-cap': 'round',
-//         'line-join': 'round'
-//       },
-//       paint: {
-//         'line-color': '#f29647',
-//         'line-width': 4
-//       },
-//       filter: ['==', '$id', 0]
-//     },
-//     {
-//       id: 'hovered-fw-polygons',
-//       type: 'fill',
-//       source: 'fishable-waters',
-//       'source-layer': 'fishable_waters',
-//       layout: {
-//         visibility: 'visible'
-//       },
-//       paint: {
-//         'fill-color': '#f29647'
-//       },
-//       filter: ['all', ['==', '$type', 'Polygon'], ['==', '$id', 0]]
-//     }
-//   ]
-// }
-
 export const huntUnits = {
   name: 'hunt units',
   id: 'hunt-units',
@@ -129,22 +52,6 @@ export const huntUnits = {
   },
   layers: [
     {
-      id: 'hunt-units-outline',
-      type: 'line',
-      source: 'hunt-units',
-      'source-layer': 'hunt_units_open_full',
-      layout: {
-        visibility: 'visible',
-        'line-cap': 'round',
-        'line-join': 'round'
-      },
-      paint: {
-        'line-opacity': 1,
-        'line-color': '#f29645',
-        'line-width': 2
-      }
-    },
-    {
       id: 'unit-labels',
       type: 'symbol',
       source: 'hunt-unit-labels',
@@ -160,6 +67,22 @@ export const huntUnits = {
         'text-halo-color': 'white',
         'text-halo-width': 1,
         'text-halo-blur': 1
+      }
+    },
+    {
+      id: 'hunt-units-outline',
+      type: 'line',
+      source: 'hunt-units',
+      'source-layer': 'hunt_units_open_full',
+      layout: {
+        visibility: 'visible',
+        'line-cap': 'round',
+        'line-join': 'round'
+      },
+      paint: {
+        'line-opacity': 1,
+        'line-color': '#f29645',
+        'line-width': 2
       }
     }
   ]
@@ -291,7 +214,7 @@ export const publicLandownership = {
 export const huntGeometries = {
   name: 'hunt boundaries',
   id: 'hunt-geometries',
-  description: 'Hunt units merged into hunt boundaries.',
+  description: 'Units merged into hunt boundaries.',
   active: true,
   thumbnail:
     'https://ndow-cdn.s3.us-west-2.amazonaws.com/maptile-previews/hunt-units.png',
@@ -315,14 +238,44 @@ export const huntGeometries = {
         'fill-opacity': 0.5
       },
       filter: ['==', '$id', 0]
+    },
+    {
+      id: 'hunt-geometry-outline',
+      type: 'line',
+      source: 'hunt-geometries',
+      'source-layer': 'hunt_geometries',
+      layout: {
+        visibility: 'visible',
+        'line-cap': 'round',
+        'line-join': 'round'
+      },
+      paint: {
+        'line-color': '#2e598a',
+        'line-opacity': 0.5,
+        'line-width': 1
+      },
+      filter: ['==', '$id', 0]
+    },
+    {
+      id: 'hovered-hunt-geometry',
+      type: 'fill',
+      source: 'hunt-geometries',
+      'source-layer': 'hunt_geometries',
+      layout: {
+        visibility: 'visible'
+      },
+      paint: {
+        'fill-color': '#EF7D1B',
+        'fill-opacity': 0.9
+      },
+      filter: ['==', '$id', 0]
     }
   ]
 }
 
 export const layers = [
-  // fishableWaters,
   // contours,
+  huntUnits,
   publicLandownership,
-  huntGeometries,
-  huntUnits
+  huntGeometries
 ]

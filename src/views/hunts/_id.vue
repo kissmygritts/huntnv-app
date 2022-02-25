@@ -59,8 +59,10 @@
 
         <div
           id="hunt-map"
-          class="lg:order-first flex-auto lg:flex-1 rounded-md bg-hero-topo outline outline-gray-300/60 h-96 lg:h-156 scroll-m-12"
-        ></div>
+          class="lg:order-first lg:relative flex-auto lg:flex-1 rounded-md bg-hero-topo outline outline-1 outline-gray-300/60 h-96 lg:h-156 scroll-m-12 overflow-hidden"
+        >
+          <maplibre-map ref="maplibre" @map:ready="initMap" />
+        </div>
       </div>
 
       <!-- Row: hero stats -->
@@ -408,6 +410,7 @@
 </template>
 
 <script setup>
+import { ref, watchEffect } from 'vue'
 import {
   LocationMarkerIcon,
   IdentificationIcon,
@@ -420,6 +423,7 @@ import MultiLineChart from '../../components/charts/multi-line-chart.vue'
 import UiLoading from '../../components/ui/ui-loading.vue'
 import UiCardFlippable from '../../components/ui/ui-card-flippable.vue'
 import UiTableSimple from '../../components/ui/ui-table-simple.vue'
+import MaplibreMap from '../../components/maplibre/maplibre-map.vue'
 import { useHuntId } from './use-hunt-id.js'
 
 const props = defineProps({
@@ -466,6 +470,22 @@ const scrollTo = (el) => {
     behavior: 'smooth'
   })
 }
+
+// map interactions
+const maplibre = ref(null)
+watchEffect(
+  () => {
+    if (data.value && maplibre.value) {
+      const layerFilter = ['==', '$id', data.value.hunt_geometry_id]
+      console.log(layerFilter)
+      maplibre.value.map.on('idle', () => {
+        maplibre.value.map.setFilter('hunt-geometry-fill', layerFilter)
+        maplibre.value.map.setFilter('hunt-geometry-outline', layerFilter)
+      })
+    }
+  },
+  { flush: 'post' }
+)
 </script>
 
 <style scoped>

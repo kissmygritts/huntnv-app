@@ -24,7 +24,10 @@
           </h2>
 
           <div class="mt-2">
-            <hf-list-container :hunt-feed="data.hunt_feed" />
+            <hf-list-container
+              :hunt-feed="data.hunt_feed"
+              @hunt-card:hover="hoverHunt"
+            />
           </div>
         </div>
       </aside>
@@ -33,7 +36,7 @@
 </template>
 
 <script setup>
-import { ref, watchEffect } from 'vue'
+import { ref, watchEffect, watch, nextTick } from 'vue'
 import { storeToRefs } from 'pinia'
 
 import { useHuntFeedStore } from '../../stores/hunt-feed.js'
@@ -47,11 +50,35 @@ import MaplibreMap from '../../components/maplibre/maplibre-map.vue'
 const { layout } = useMobileMenu()
 
 const huntFeed = useHuntFeedStore()
-const { data, loading, getFeedFilters } = storeToRefs(huntFeed)
+const { data, loading, getFeedFilters, activeHuntGeomIds } =
+  storeToRefs(huntFeed)
 
-watchEffect(() => huntFeed.getHuntFeed(getFeedFilters.value), {
-  deep: true
-})
+watchEffect(() => huntFeed.getHuntFeed(getFeedFilters.value), { flush: 'pre' })
 
+// map interactions
 const maplibre = ref(null)
+
+// show hunt geoms on filter
+watch(
+  activeHuntGeomIds,
+  (ids) => {
+    const layerFilter = ['in', '$id', ...ids]
+    nextTick(() => {
+      maplibre.value.layers[2].layers[0].filter = layerFilter
+      maplibre.value.layers[2].layers[1].filter = layerFilter
+      maplibre.value.map.setFilter('hunt-geometry-fill', layerFilter)
+      maplibre.value.map.setFilter('hunt-geometry-outline', layerFilter)
+    })
+  },
+  { flush: 'post' }
+)
+
+// show hovered hunt geom
+const hoverHunt = ({ hunt, hover }) => {
+  if (hover) {
+    maplibre.value.map.setFilter('hovered-hunt-geometry', ['==', '$id', hunt])
+  } else {
+    maplibre.value.map.setFilter('hovered-hunt-geometry', ['==', '$id', 0])
+  }
+}
 </script>

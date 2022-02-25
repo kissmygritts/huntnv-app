@@ -33,19 +33,9 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import HfHuntCardHuntList from './hf-hunt-card-hunt-list.vue'
-
-export default {
-  name: 'hunt-feed-hunt-card',
-  components: {
-    HfHuntCardHuntList
-  },
-  props: {
-    hunt: {
-      type: Object,
-      required: true
-    }
-  }
-}
+defineProps({
+  hunt: { type: Object, required: true }
+})
 </script>

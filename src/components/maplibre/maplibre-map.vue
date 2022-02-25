@@ -22,7 +22,7 @@ const ready = ref(false)
 const basemaps = ref(styles)
 const layers = ref(overlays)
 
-defineExpose({ map })
+defineExpose({ map, layers })
 
 onMounted(() => {
   const options = {

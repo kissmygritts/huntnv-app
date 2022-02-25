@@ -1,4 +1,4 @@
-import { defineStore } from 'pinia'
+import { defineStore, acceptHMRUpdate } from 'pinia'
 import { huntNvApi } from '../lib/huntnv-client.js'
 import { pick, pickTruthy } from '../lib/objects.js'
 
@@ -9,6 +9,7 @@ export const useHuntFeedStore = defineStore({
     data: undefined,
     error: undefined,
     loading: false,
+    activeHuntGeomIds: [0],
     feedFilters: {
       species: {},
       residency: '',
@@ -66,14 +67,6 @@ export const useHuntFeedStore = defineStore({
         pick(this.getFeedFilters, ['drawDifficulty', 'drawRank', 'medianBp'])
       )
       return Object.keys(draw).length > 0
-    },
-
-    huntGeomIds(state) {
-      if (this.isFiltered) {
-        return [...new Set(state.data.hunt_feed.map((d) => d.id))]
-      } else {
-        return 0
-      }
     }
   },
 
@@ -84,6 +77,17 @@ export const useHuntFeedStore = defineStore({
       this.data = data
       this.error = error
       this.loading = false
+
+      this.setActiveIds()
+    },
+
+    setActiveIds() {
+      const huntFeed = this.data.hunt_feed
+      if (huntFeed && this.isFiltered) {
+        this.activeHuntGeomIds = [...new Set(huntFeed.map((d) => d.id))]
+      } else {
+        this.activeHuntGeomIds = [0]
+      }
     },
 
     clearFilters() {
@@ -99,3 +103,7 @@ export const useHuntFeedStore = defineStore({
     }
   }
 })
+
+if (import.meta.hot) {
+  import.meta.hot.accept(acceptHMRUpdate(useHuntFeedStore, import.meta.hot))
+}

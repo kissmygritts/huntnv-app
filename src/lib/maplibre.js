@@ -22,7 +22,7 @@ export const renderMaplibre = (options, layers) => {
         map.addSource(source, def.source[source])
       })
       def.layers.forEach((layer) => {
-        map.addLayer(layer)
+        map.addLayer(layer, layer.id === 'unit-labels' ? '' : 'unit-labels')
       })
     })
   })
