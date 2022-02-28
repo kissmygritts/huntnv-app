@@ -457,6 +457,7 @@ const relatedHuntTableFields = [
   { field: 'display_name', label: 'Species' },
   { field: 'draw_type', label: 'Residency' },
   { field: 'weapon', label: 'Weapon' },
+  { field: 'unit_group', label: 'Units' },
   { field: 'season_dates', label: 'Season' },
   { field: 'quota', label: '2021 Quota' },
   { field: 'harvest_rate', label: 'Harvest %' },
