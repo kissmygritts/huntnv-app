@@ -30,7 +30,9 @@
                 class="block w-full bg-white border border-gray-300 rounded py-2 pl-10 pr-3 text-sm placeholder-gray-500 focus:outline-none focus:text-gray-900 focus:placeholder-gray-400 focus:ring-2 focus:ring-saffron-600"
                 placeholder="Find hunt units..."
                 type="search"
+                maxlength="3"
                 v-model="searchTerm"
+                @keyup.enter="search"
               />
             </div>
           </div>
@@ -117,6 +119,7 @@
 </template>
 
 <script setup>
+import { ref } from 'vue'
 import {
   SearchIcon,
   MenuAlt4Icon,
@@ -134,4 +137,9 @@ import { useHuntFeedStore } from '../../stores/hunt-feed.js'
 
 const { open, layout, previousLayout, transitionLayout } = useMobileMenu()
 const huntFeed = useHuntFeedStore()
+
+const searchTerm = ref(null)
+const search = () => {
+  huntFeed.setSearchTerm(searchTerm.value)
+}
 </script>

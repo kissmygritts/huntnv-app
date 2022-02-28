@@ -19,7 +19,8 @@ export const useHuntFeedStore = defineStore({
       maturityRate: 0,
       drawDifficulty: 0,
       drawRank: 0,
-      medianBp: 0
+      medianBp: 0,
+      search: null
     }
   }),
 
@@ -34,7 +35,8 @@ export const useHuntFeedStore = defineStore({
         maturityRate: state.feedFilters.maturityRate,
         drawDifficulty: state.feedFilters.drawDifficulty,
         drawRank: state.feedFilters.drawRank,
-        medianBp: state.feedFilters.medianBp
+        medianBp: state.feedFilters.medianBp,
+        huntUnits: state.feedFilters.search
       }
       return pickTruthy(filters)
     },
@@ -81,6 +83,17 @@ export const useHuntFeedStore = defineStore({
       this.setActiveIds()
     },
 
+    setSearchTerm(search) {
+      console.log(search)
+      this.feedFilters.search = !search
+        ? null
+        : search.length > 3
+        ? search.slice(0, 3)
+        : search.length < 3
+        ? search.padStart(3, '0')
+        : search
+    },
+
     setActiveIds() {
       const huntFeed = this.data.hunt_feed
       if (huntFeed && this.isFiltered) {
@@ -100,6 +113,7 @@ export const useHuntFeedStore = defineStore({
       this.feedFilters.drawDifficulty = 0
       this.feedFilters.drawRank = 0
       this.feedFilters.medianBp = 0
+      this.feedFilters.search = null
     }
   }
 })

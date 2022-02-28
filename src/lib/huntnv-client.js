@@ -26,7 +26,8 @@ const huntNvClient = (baseURL, options = {}) => {
       maturityRate,
       drawDifficulty,
       drawRank,
-      medianBp
+      medianBp,
+      huntUnits
     } = {}) => {
       const params = pickTruthy({
         species_class_id: speciesId || '',
@@ -37,7 +38,8 @@ const huntNvClient = (baseURL, options = {}) => {
         maturity_value: maturityRate || 0,
         draw_difficulty_qtile: drawDifficulty || 0,
         draw_difficulty_rank: drawRank || 0,
-        median_bp_of_successful_applications: medianBp || 0
+        median_bp_of_successful_applications: medianBp || 0,
+        hunt_unit: huntUnits || ''
       })
 
       let data
