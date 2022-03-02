@@ -72,7 +72,7 @@ export const pickHarvestData = (species) => (d) => {
     {
       hunt_year: d.hunt_year,
       metric: 'Maturity %',
-      value: d[maturity] * 100
+      value: (d[maturity] * 100).toFixed(0)
     }
   ]
 }
