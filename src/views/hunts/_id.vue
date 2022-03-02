@@ -61,7 +61,7 @@
           id="hunt-map"
           class="lg:order-first lg:relative flex-auto lg:flex-1 rounded-md bg-hero-topo outline outline-1 outline-gray-300/60 h-96 lg:h-156 scroll-m-12 overflow-hidden"
         >
-          <maplibre-map ref="maplibre" @map:ready="initMap" />
+          <maplibre-map ref="maplibre" @map:ready="centerHuntGeom" />
         </div>
       </div>
 
@@ -414,7 +414,7 @@
 </template>
 
 <script setup>
-import { ref, watchEffect } from 'vue'
+import { ref, watchEffect, nextTick } from 'vue'
 import {
   LocationMarkerIcon,
   IdentificationIcon,
@@ -480,6 +480,16 @@ const scrollTo = (el) => {
 
 // map interactions
 const maplibre = ref(null)
+
+// center hunt geometry on load
+const centerHuntGeom = () => {
+  nextTick(() => {
+    const bounds = Object.values(data.value.bbox)
+    maplibre.value.map.fitBounds(bounds, { padding: 50 })
+  })
+}
+
+// filter hunt geometry to currently selected hunt
 watchEffect(
   () => {
     if (data.value && maplibre.value) {
