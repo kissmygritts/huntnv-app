@@ -127,6 +127,8 @@ export const drawTableData = (data) => {
 }
 
 export const harvestTableData = (data) => {
+  if (!data) return null
+
   const fields = [
     { field: 'hunt_year', label: 'Hunt Year' },
     { field: 'hunters_afield', label: 'Hunters Affield' },

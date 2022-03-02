@@ -223,6 +223,7 @@
           </template>
           <template v-slot:content>
             <multi-line-chart
+              v-if="hasHarvestData"
               class="h-80 text-gray-500"
               :data="tidyHarvestData"
               :options="{
@@ -230,6 +231,7 @@
                 yTitle: 'Percentage'
               }"
             />
+            <ui-no-data v-else />
           </template>
           <template v-slot:back>
             <div class="h-80 py-2 overflow-y-auto text-gray-600">
@@ -335,9 +337,11 @@
       >
         <h2 class="font-semibold text-gray-600 p-2">Harvest Results Table</h2>
         <ui-table-simple
+          v-if="hasHarvestData"
           :fields="harvestTable.fields"
           :rows="harvestTable.rows"
         />
+        <ui-no-data v-else class="py-2" />
       </div>
 
       <!-- Row: bonus points table -->
@@ -423,6 +427,7 @@ import MultiLineChart from '../../components/charts/multi-line-chart.vue'
 import UiLoading from '../../components/ui/ui-loading.vue'
 import UiCardFlippable from '../../components/ui/ui-card-flippable.vue'
 import UiTableSimple from '../../components/ui/ui-table-simple.vue'
+import UiNoData from '../../components/ui/ui-no-data.vue'
 import MaplibreMap from '../../components/maplibre/maplibre-map.vue'
 import { useHuntId } from './use-hunt-id.js'
 
@@ -437,6 +442,7 @@ const {
   data,
   loading,
   getHunt,
+  hasHarvestData,
   pctPublicLand,
   drawDifficulty,
   lastQuota,

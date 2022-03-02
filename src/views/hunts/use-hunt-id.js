@@ -34,6 +34,11 @@ const getHunt = (id) => {
     })
 }
 
+// computed props to check if hunt has data
+const hasHarvestData = computed(() => !!data.value.harvest_data)
+const hasDrawData = computed(() => !!data.value.draw_data)
+const hasBpData = computed(() => !!data.value.bonus_points)
+
 // computed props for hero stats
 const pctPublicLand = computed(() => {
   return parseInt(data.value.public_land_pct) || 'N/A'
@@ -49,6 +54,8 @@ const lastApps = computed(() => {
 })
 
 const lastHarvest = computed(() => {
+  if (!data.value.harvest_data) return 'N/A'
+
   const x = data.value.harvest_data.filter((d) => d.hunt_year === 2020)
   return parseInt(x[0].harvest_rate * 100) || 'N/A'
 })
@@ -112,6 +119,11 @@ export function useHuntId() {
     data,
     error,
     getHunt,
+
+    // computed props: has data
+    hasHarvestData,
+    hasDrawData,
+    hasBpData,
 
     // computed props: used for hero stats
     pctPublicLand,
