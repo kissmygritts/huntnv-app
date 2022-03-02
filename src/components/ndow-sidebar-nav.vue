@@ -8,7 +8,7 @@
             class="flex-shrink-0 bg-oxford-700 py-2 flex items-center justify-center"
           >
             <img
-              class="h-16 w-auto ml-1"
+              class="h-16 w-auto ml-1 img-fix"
               src="../assets/images/huntnv-logo_200x160.png"
               alt="HuntNV Logo"
             />
@@ -41,7 +41,7 @@
             rel="noreferrer noopener"
           >
             <img
-              class="block mx-auto h-auto w-16"
+              class="block mx-auto h-auto w-16 img-fix"
               src="https://ndow-cdn.s3.us-west-2.amazonaws.com/ndow-logo.png"
               alt="to ndow.org website"
             />
@@ -63,3 +63,19 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+@media screen and (-webkit-min-device-pixel-ratio: 0) and (min-resolution: 0.001dpcm) {
+  .img-fix {
+    image-rendering: -webkit-optimize-contrast !important;
+  }
+}
+
+@media not all and (min-resolution: 0.001dpcm) {
+  @supports (-webkit-apperance: none) and (stroke-color: transparent) {
+    .img-fix {
+      image-rendering: unset !important;
+    }
+  }
+}
+</style>
