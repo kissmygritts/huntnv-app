@@ -12,12 +12,12 @@
           HuntNV
         </h3>
         <h2
-          class="text-shadow text-4xl lg:text-8xl font-extrabold tracking-wider text-olive-400"
+          class="text-shadow text-4xl lg:text-8xl font-extrabold tracking-wider text-saffron-600"
         >
           Get Online
         </h2>
         <h2
-          class="text-shadow text-4xl lg:text-8xl font-extrabold tracking-wider text-olive-400"
+          class="text-shadow text-4xl lg:text-8xl font-extrabold tracking-wider text-saffron-600"
         >
           Get Outside
         </h2>
@@ -29,12 +29,12 @@
         <div class="flex items-center space-x-4 mt-10 ml-2">
           <router-link
             to="/map"
-            class="inline-block px-4 py-2 rounded-md text-normal lg:text-xl text-gray-100 bg-olive-500 border border-olive-500 shadow-md hover:bg-olive-600"
+            class="inline-block px-4 py-2 rounded-md text-normal lg:text-xl text-gray-100 bg-saffron-600 border border-saffron-600 shadow-md hover:bg-saffron-500 hover:border-saffron-500"
             >Explore The Map</router-link
           >
           <a
             href="https://nevada.licensing.kalkomey.com/licenses"
-            class="inline-block px-4 py-2 rounded-md text-normal lg:text-xl text-olive-200 bg-transparent border border-olive-200 shadow-md hover:border-olive-400 hover:text-olive-400"
+            class="inline-block px-4 py-2 rounded-md text-normal lg:text-xl text-saffron-200 bg-transparent border border-saffron-200 shadow-md hover:border-saffron-600 hover:text-saffron-600"
             >Buy a License</a
           >
         </div>
