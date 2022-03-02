@@ -3,7 +3,8 @@
     <div class="flex flex-col w-16">
       <div class="flex flex-col h-0 flex-1 overflow-y-auto bg-oxford-700">
         <div class="flex-1 flex flex-col">
-          <div
+          <router-link
+            to="/"
             class="flex-shrink-0 bg-oxford-700 py-2 flex items-center justify-center"
           >
             <img
@@ -11,7 +12,7 @@
               src="../assets/images/huntnv-logo_200x160.png"
               alt="HuntNV Logo"
             />
-          </div>
+          </router-link>
           <nav
             aria-label="Sidebar"
             class="py-3 px-2 flex flex-col items-center space-y-3"
