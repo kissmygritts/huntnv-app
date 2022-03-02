@@ -16,6 +16,11 @@ defineProps({
 })
 const emit = defineEmits(['map:ready', 'map:moveend'])
 
+const initMapView = {
+  center: [-116.6554, 38.55],
+  zoom: 5.75
+}
+
 const root = ref(null)
 const map = ref(null)
 const ready = ref(false)
@@ -27,8 +32,7 @@ defineExpose({ map, layers })
 onMounted(() => {
   const options = {
     container: root.value,
-    center: [-116.6554, 38.55],
-    zoom: 5.75
+    ...initMapView
   }
   map.value = renderMaplibre(options, layers.value)
   ready.value = true
@@ -46,6 +50,9 @@ onMounted(() => {
 })
 
 // map menu function
+// recenter map
+const recenter = () => map.value.flyTo(initMapView)
+
 // map layer slider panel
 const sliderOpen = ref(false)
 const toggleSlider = () => {
@@ -76,7 +83,7 @@ const toggleLayer = (payload) => {
 
 <template>
   <div id="maplibre-map" ref="root" class="relative w-full h-full">
-    <map-menu-button @click:layers="toggleSlider" />
+    <map-menu-button @click:layers="toggleSlider" @click:recenter="recenter" />
   </div>
   <map-layer-panel
     :open="sliderOpen"

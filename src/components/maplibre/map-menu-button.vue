@@ -8,7 +8,7 @@ const toggle = () => {
   menuVisible.value = !menuVisible.value
 }
 
-const geolocate = () => emit('click:geolocate')
+// const geolocate = () => emit('click:geolocate')
 const recenter = () => emit('click:recenter')
 const layers = () => emit('click:layers')
 </script>
@@ -18,7 +18,7 @@ const layers = () => emit('click:layers')
     <div
       class="absolute bottom-0 h-64 w-10 flex flex-col justify-end pb-20 space-y-2"
     >
-      <transition
+      <!-- <transition
         enter-active-class="transition-all transform duration-200 ease-in-out delay-300"
         leave-active-class="transition-all transform duration-200 ease-in-out"
         enter-from-class="opacity-0 translate-y-full"
@@ -46,9 +46,8 @@ const layers = () => emit('click:layers')
             <circle r="15" cy="50" cx="50" />
           </svg>
         </button>
-      </transition>
+      </transition> -->
 
-      <!-- layers or recenter, can't decide -->
       <transition
         enter-active-class="transition-all transform duration-200 ease-in-out delay-150"
         leave-active-class="transition-all transform duration-200 ease-in-out delay-150"
