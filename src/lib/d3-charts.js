@@ -153,7 +153,6 @@ export const MultiLineChart = (
     .selectAll('g')
     .data(I)
     .join('g')
-    .attr('transform', (i) => `tranlate(${xScale(X[i])}, ${yScale(Y[i])})`)
 
   labels
     .append('text')

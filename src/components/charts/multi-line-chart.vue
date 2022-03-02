@@ -40,7 +40,10 @@ const mergedOptions = Object.assign({ ...defaultOptions }, props.options)
 useResizeObserver(chart, (entries) => {
   const entry = entries[0]
   const { width, height } = entry.contentRect
-  const options = Object.assign({ ...mergedOptions }, { width, height })
+  const options = Object.assign(
+    { ...mergedOptions },
+    { width: Math.floor(width), height: Math.floor(height) }
+  )
 
   svg.value = MultiLineChart(props.data, options)
 })
