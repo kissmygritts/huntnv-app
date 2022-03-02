@@ -3,7 +3,9 @@
     <div class="inline-flex items-center">
       <label class="inline-block ml-1 font-medium text-gray-700">
         Maturity Rate &#8805;
-        <span class="text-saffron-600">{{ modelValue * 100 }}%</span>
+        <span class="text-saffron-600"
+          >{{ Math.round(modelValue * 100) }}%</span
+        >
       </label>
     </div>
     <div class="text-center">

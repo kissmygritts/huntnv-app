@@ -81,4 +81,12 @@ const hoverHunt = ({ hunt, hover }) => {
     maplibre.value.map.setFilter('hovered-hunt-geometry', ['==', '$id', 0])
   }
 }
+
+// resize map when switching between map and card display
+watch(layout, async (newLayout) => {
+  await nextTick
+  if (newLayout === 'map') {
+    maplibre.value.map.resize()
+  }
+})
 </script>

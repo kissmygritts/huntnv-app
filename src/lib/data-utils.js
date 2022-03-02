@@ -2,9 +2,9 @@ import { omit } from './objects.js'
 
 export const sortHuntYear = (direction) => (f, s) => {
   if (direction === 'desc') {
-    return f.hunt_year < s.hunt_year
+    return s.hunt_year - f.hunt_year
   } else {
-    return f.hunt_year > s.hunt_year
+    return f.hunt_year - s.hunt_year
   }
 }
 
