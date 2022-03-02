@@ -20,6 +20,12 @@ const routes = [
     component: () => import('../views/hunts/_id.vue'),
     props: true,
     meta: { title: 'HuntNV Hunt' }
+  },
+  {
+    path: '/faq',
+    name: 'faq',
+    component: () => import('../views/faq/index.vue'),
+    meta: { title: 'FAQ' }
   }
 ]
 
