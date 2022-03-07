@@ -36,7 +36,7 @@
           <dd class="order-1 text-sm font-bold text-gray-600">
             {{
               hunt.harvest_rate
-                ? `${(hunt.harvest_rate * 100).toFixed(2)}%`
+                ? `${(hunt.harvest_rate * 100).toFixed(1)}%`
                 : 'N/A'
             }}
           </dd>
@@ -46,7 +46,7 @@
           <dd class="order-1 text-sm font-bold text-gray-600">
             {{
               hunt.maturity_value
-                ? `${(hunt.maturity_value * 100).toFixed(2)}%`
+                ? `${(hunt.maturity_value * 100).toFixed(1)}%`
                 : 'N/A'
             }}
           </dd>
@@ -54,7 +54,7 @@
         <div class="flex flex-col w-[30%]">
           <dt class="order-2 text-sm font-light text-gray-500">Median BP</dt>
           <dd class="order-1 text-sm font-bold text-gray-600">
-            {{ hunt.median_bp_of_successful_applications.toFixed(1) }}
+            {{ hunt.median_bp_of_successful_applications.toFixed(0) }}
           </dd>
         </div>
         <div class="flex flex-col w-[30%]">

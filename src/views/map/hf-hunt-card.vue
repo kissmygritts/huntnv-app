@@ -12,7 +12,7 @@
       <div class="w-1/2 flex flex-col sm:mt-0">
         <dt class="order-2 text-sm font-light text-gray-500">Public Land</dt>
         <dd class="order-1 text-gray-600 font-bold tracking-wide text-lg">
-          {{ hunt.percent_public_land.toFixed(2) }}%
+          {{ hunt.percent_public_land.toFixed(1) }}%
         </dd>
       </div>
       <div class="w-1/2 flex flex-col sm:mt-0">
