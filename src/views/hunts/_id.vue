@@ -63,6 +63,13 @@
                 </ul>
               </div>
             </div>
+            <a
+              href="https://nevada.licensing.kalkomey.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="mt-6 block text-center w-full rounded-md py-2 border border-saffron-600 bg-saffron-200/75 text-saffron-700 hover:bg-saffron-600 hover:text-white hover:border-transparent"
+              >Buy A License</a
+            >
           </div>
 
           <div
