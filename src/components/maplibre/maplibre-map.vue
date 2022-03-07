@@ -14,7 +14,7 @@ defineProps({
     default: false
   }
 })
-const emit = defineEmits(['map:ready', 'map:moveend'])
+const emit = defineEmits(['map:ready', 'map:moveend', 'click:faq'])
 
 const initMapView = {
   center: [-116.6554, 38.55],
@@ -50,6 +50,9 @@ onMounted(() => {
 })
 
 // map menu function
+// click faq button
+const faq = () => emit('click:faq')
+
 // recenter map
 const recenter = () => map.value.flyTo(initMapView)
 
@@ -83,7 +86,11 @@ const toggleLayer = (payload) => {
 
 <template>
   <div id="maplibre-map" ref="root" class="relative w-full h-full">
-    <map-menu-button @click:layers="toggleSlider" @click:recenter="recenter" />
+    <map-menu-button
+      @click:layers="toggleSlider"
+      @click:recenter="recenter"
+      @click:faq="faq"
+    />
   </div>
   <map-layer-panel
     :open="sliderOpen"

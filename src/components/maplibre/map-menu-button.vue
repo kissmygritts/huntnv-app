@@ -1,16 +1,16 @@
 <script setup>
 import { ref } from 'vue'
 
-const emit = defineEmits(['click:geolocate', 'click:recenter', 'click:layers'])
+const emit = defineEmits(['click:faq', 'click:recenter', 'click:layers'])
 
 const menuVisible = ref(false)
 const toggle = () => {
   menuVisible.value = !menuVisible.value
 }
 
-// const geolocate = () => emit('click:geolocate')
 const recenter = () => emit('click:recenter')
 const layers = () => emit('click:layers')
+const faq = () => emit('click:faq')
 </script>
 
 <template>
@@ -18,7 +18,7 @@ const layers = () => emit('click:layers')
     <div
       class="absolute bottom-0 h-64 w-10 flex flex-col justify-end pb-20 space-y-2"
     >
-      <!-- <transition
+      <transition
         enter-active-class="transition-all transform duration-200 ease-in-out delay-300"
         leave-active-class="transition-all transform duration-200 ease-in-out"
         enter-from-class="opacity-0 translate-y-full"
@@ -27,26 +27,26 @@ const layers = () => emit('click:layers')
         leave-to-class="opacity-0 translate-y-full"
       >
         <button
-          v-show="menuVisible"
+          v-show="menuVisible & ($route.name === 'map')"
           class="bg-saffron-600 text-white p-2 w-10 h-10 rounded-full shadow-xl hover:bg-saffron-500"
-          @click="geolocate"
+          @click="faq"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            fill="currentColor"
-            viewBox="0 0 100 100"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
             stroke="currentColor"
+            stroke-width="2"
           >
             <path
               stroke-linecap="round"
               stroke-linejoin="round"
-              stroke-width="1"
-              d="M 43 0 L 43 13.166016 C 27.943936 16.030435 16.030435 27.943936 13.166016 43 L 0 43 L 0 57 L 13.166016 57 C 16.030435 72.056064 27.943936 83.969565 43 86.833984 L 43 100 L 57 100 L 57 86.833984 C 72.056064 83.969565 83.969565 72.056064 86.833984 57 L 100 57 L 100 43 L 86.833984 43 C 83.969565 27.943936 72.056064 16.030435 57 13.166016 L 57 0 L 43 0 z M 50 22.5 C 65.247054 22.5 77.5 34.752946 77.5 50 C 77.5 65.247054 65.247054 77.5 50 77.5 C 34.752946 77.5 22.5 65.247054 22.5 50 C 22.5 34.752946 34.752946 22.5 50 22.5 z "
+              d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
             />
-            <circle r="15" cy="50" cx="50" />
           </svg>
         </button>
-      </transition> -->
+      </transition>
 
       <transition
         enter-active-class="transition-all transform duration-200 ease-in-out delay-150"
