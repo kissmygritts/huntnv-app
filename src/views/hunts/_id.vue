@@ -347,6 +347,16 @@
         >
           <h2 class="font-semibold text-gray-600 p-2">Draw Results Table</h2>
           <ui-table-simple :fields="drawTable.fields" :rows="drawTable.rows" />
+          <p
+            class="text-gray-500 text-xs md:text-sm pb-2 px-3 w-full md:w-1/2 max-w-2xl"
+          >
+            This table shows the last few years of draw results for this hunt.
+            <em>Median BP</em> is the middle number of bonus points of
+            successful hunters. <em>Draw Rank</em> is the raw rank of how
+            difficult a hunt is to draw. The lower the number the harder to
+            draw. <em>Draw Difficulty</em> groups draw rank into five
+            categories.
+          </p>
         </div>
 
         <!-- Row: harvest table -->
@@ -361,6 +371,19 @@
             :rows="harvestTable.rows"
           />
           <ui-no-data v-else class="py-2" />
+          <p
+            class="text-gray-500 text-xs md:text-sm pb-2 px-3 w-full md:w-1/2 max-w-2xl"
+          >
+            This table shows the last few years of harvest results for this
+            hunt. Harvest results are reported when hunters fill in their hunter
+            return card.
+            <em>>= Points:</em> is used to indicate 4 points or greater for mule
+            deer and 6 points or greater for elk. <em>>= Length</em> is used to
+            indacate 16" or greater for antelope and 50" or greater for elk.
+            <em>>= Age</em> is used to indicate 7 years or older for bighorn
+            sheep. <em>>= BC Score</em> is used to to indicate a B&C Score of
+            160 or greater for bighorn sheep.
+          </p>
         </div>
 
         <!-- Row: bonus points table -->
@@ -370,6 +393,12 @@
         >
           <h2 class="font-semibold text-gray-600 p-2">Bonus Point Table</h2>
           <ui-table-simple :fields="bpTable.fields" :rows="bpTable.rows" />
+          <p
+            class="text-gray-500 text-xs md:text-sm pb-2 px-3 w-full md:w-1/2 max-w-2xl"
+          >
+            This table shows the number of applicants at each bonus point level
+            over the last several years.
+          </p>
         </div>
 
         <!-- Row: related and similar hunts table  -->
