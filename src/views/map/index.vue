@@ -70,7 +70,9 @@
               <strong class="text-gray-900 font-medium"
                 >Draw Difficulty:</strong
               >
-              This groups hunts into 5 categories based on the draw rate.
+              This groups hunts into 5 categories based on the draw rate. VH:
+              very hard, H: harder, M: moderately difficult, E: easier, VE:
+              easiest.
             </li>
             <li>
               <strong class="text-gray-900 font-medium">Draw Rank:</strong>
@@ -90,11 +92,11 @@
         id="map"
         class="block min-w-0 flex-1 lg:order-last bg-hero-topo"
       >
-        <maplibre-map
+        <!-- <maplibre-map
           ref="maplibre"
           :portal-slider="true"
           @click:faq="toggleModal"
-        />
+        /> -->
       </section>
 
       <!-- side bar -->

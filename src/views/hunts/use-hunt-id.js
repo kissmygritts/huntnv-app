@@ -38,6 +38,8 @@ const getHunt = (id) => {
 const hasHarvestData = computed(() => !!data.value.harvest_data)
 const hasDrawData = computed(() => !!data.value.draw_data)
 const hasBpData = computed(() => !!data.value.bonus_points)
+const hasHuntRestriction = computed(() => data.value.hunt_restrictions !== null)
+const isNew = computed(() => data.value.is_new)
 
 // computed props for hero stats
 const pctPublicLand = computed(() => {
@@ -56,13 +58,13 @@ const lastApps = computed(() => {
 const lastHarvest = computed(() => {
   if (!data.value.harvest_data) return 'N/A'
 
-  const x = data.value.harvest_data.filter((d) => d.hunt_year === 2020)
+  const x = data.value.harvest_data.filter((d) => d.hunt_year === 2021)
   return parseInt(x[0].harvest_rate * 100) || 'N/A'
 })
 
 const drawDifficulty = computed(() => {
   const x = data.value.draw_data.filter((d) => d.hunt_year === 2021)
-  return x[0].draw_difficulty_rank || 'N/A'
+  return x[0].draw_difficulty_ratio || 'N/A'
 })
 
 // computed props for figures
@@ -105,7 +107,7 @@ const tidyDrawData = computed(() => {
 // computed props for tables
 const drawTable = computed(() => drawTableData(data.value?.draw_data))
 const harvestTable = computed(() => harvestTableData(data.value?.harvest_data))
-const bpTable = computed(() => bpTableData(data.value?.bonus_points))
+const bpTable = computed(() => bpTableData(data.value?.bonus_points) ?? null)
 const relatedHuntTable = computed(() =>
   relatedHuntsData([
     ...(data.value.related_hunts.hunts || []),
@@ -124,6 +126,8 @@ export function useHuntId() {
     hasHarvestData,
     hasDrawData,
     hasBpData,
+    hasHuntRestriction,
+    isNew,
 
     // computed props: used for hero stats
     pctPublicLand,

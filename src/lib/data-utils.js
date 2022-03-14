@@ -1,5 +1,17 @@
 import { omit } from './objects.js'
 
+export const drawDifficultyToStr = (v, abbr = true) => {
+  const mapper = {
+    1: ['VH', 'Very Hard'],
+    2: ['H', 'Hard'],
+    3: ['M', 'Moderate'],
+    4: ['E', 'Easier'],
+    5: ['VE', 'Easiest']
+  }
+
+  return mapper[v][abbr ? 0 : 1] || 'N/A'
+}
+
 export const sortHuntYear = (direction) => (f, s) => {
   if (direction === 'desc') {
     return s.hunt_year - f.hunt_year
@@ -118,10 +130,16 @@ export const drawTableData = (data) => {
     { field: 'n_fourth_choice_apps', label: '4th Choice' },
     { field: 'n_fifth_choice_apps', label: '5th Choice' },
     { field: 'median_bp_of_successful_applications', label: 'Median BP' },
-    { field: 'draw_difficulty_rank', label: 'Draw Rank' },
+    { field: 'draw_difficulty_ratio', label: 'Draw Rank' },
     { field: 'draw_difficulty_qtile', label: 'Draw Difficulty' }
   ]
-  const rows = data.map((d) => omit(d, 'id')).sort(sortHuntYear('desc'))
+  const rows = data
+    .map((d) => omit(d, 'id'))
+    .map((d) => ({
+      ...d,
+      draw_difficulty_qtile: drawDifficultyToStr(d.draw_difficulty_qtile, false)
+    }))
+    .sort(sortHuntYear('desc'))
 
   return { fields, rows }
 }
@@ -139,11 +157,10 @@ export const harvestTableData = (data) => {
     { field: 'points_or_greater', label: '>= Points' },
     { field: 'length_or_greater', label: '>= Length' },
     { field: 'age_or_greater', label: '>= Age' },
-    { field: 'bc_or_greater', label: '>= BC Score' }
+    { field: 'bc_or_greater', label: '>= BC Score' },
+    { field: 'hunter_satisfaction', label: 'Satisfaction' }
   ]
-  const rows = data
-    .map((d) => omit(d, ['id', 'hunter_satisfaction']))
-    .sort(sortHuntYear('desc'))
+  const rows = data.map((d) => omit(d, ['id'])).sort(sortHuntYear('desc'))
 
   return { fields, rows }
 }
@@ -172,6 +189,11 @@ export const bpTableData = (data) => {
 }
 
 export const relatedHuntsData = (data) => {
+  data = data.map((d) => ({
+    ...d,
+    draw_difficulty_qtile: drawDifficultyToStr(d.draw_difficulty_qtile, false)
+  }))
   const grouped = groupBy(data, (d) => d.species)
+
   return grouped
 }

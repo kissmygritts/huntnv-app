@@ -19,14 +19,37 @@
         </div>
       </div>
 
-      <div class="inline-flex items-center text-gray-700 font-light text-sm">
-        <calendar-icon class="h-4 w-4 text-gray-500" />
-        <span class="ml-2 capitalize">{{ hunt.season_dates }}</span>
+      <!-- hunt restriction info -->
+      <div
+        v-if="hunt.hunt_restrictions"
+        class="flex items-center space-x-1.5 text-sm font-light text-gray-700 bg-gray-100"
+      >
+        <span class="text-gray-600/90">
+          <information-circle-icon class="h-4 w-4" />
+        </span>
+        <span>{{ hunt.hunt_restrictions }}</span>
       </div>
 
-      <dl class="text-center flex flex-wrap justify-between gap-2">
+      <!-- hunt seasons -->
+      <div
+        class="flex items-center space-x-1.5 pb-1 text-gray-700 font-light text-sm"
+      >
+        <span class="text-gray-600/90">
+          <calendar-icon class="h-4 w-4" />
+        </span>
+        <span class="capitalize">{{ hunt.season_dates }}</span>
+        <span v-if="hunt.season_order_modifier" class="capitalize">
+          - {{ hunt.season_order_modifier }}</span
+        >
+      </div>
+
+      <!-- hunt stats data -->
+      <dl
+        v-if="!hunt.is_new"
+        class="text-center flex flex-wrap justify-between gap-2"
+      >
         <div class="flex flex-col w-[30%]">
-          <dt class="order-2 text-sm font-light text-gray-500">Quota</dt>
+          <dt class="order-2 text-sm font-light text-gray-500">2021 Quota</dt>
           <dd class="order-1 text-sm font-bold text-gray-600">
             {{ hunt.quota }}
           </dd>
@@ -54,7 +77,11 @@
         <div class="flex flex-col w-[30%]">
           <dt class="order-2 text-sm font-light text-gray-500">Median BP</dt>
           <dd class="order-1 text-sm font-bold text-gray-600">
-            {{ hunt.median_bp_of_successful_applications.toFixed(0) }}
+            {{
+              hunt.median_bp_of_successful_applications
+                ? `${hunt.median_bp_of_successful_applications.toFixed(0)}`
+                : 'N/A'
+            }}
           </dd>
         </div>
         <div class="flex flex-col w-[30%]">
@@ -62,32 +89,35 @@
             Draw Difficulty
           </dt>
           <dd class="order-1 text-sm font-bold text-gray-600">
-            {{ hunt.draw_difficulty_qtile }}
+            {{ drawDifficultyToStr(hunt.draw_difficulty_qtile) }}
           </dd>
         </div>
         <div class="flex flex-col w-[30%]">
           <dt class="order-2 text-sm font-light text-gray-500">Draw Rank</dt>
           <dd class="order-1 text-sm font-bold text-gray-600">
-            {{ hunt.draw_difficulty_rank }}
+            {{ hunt.draw_difficulty_rank }}/{{ hunt.draw_difficulty_rank_max }}
           </dd>
         </div>
       </dl>
+
+      <div v-else class="text-center flex flex-wrap justify-between gap-2">
+        <p class="w-full text-gray-500 text-sm pt-2 py-1 font-light">
+          Hunt data isn't available for new hunts.
+        </p>
+      </div>
     </router-link>
   </div>
 </template>
 
-<script>
+<script setup>
 import { SparklesIcon } from '@heroicons/vue/solid'
-import { CalendarIcon } from '@heroicons/vue/outline'
+import { CalendarIcon, InformationCircleIcon } from '@heroicons/vue/outline'
+import { drawDifficultyToStr } from '../../lib/data-utils.js'
 
-export default {
-  name: 'hf-hunt-card-hunt-list',
-  components: { SparklesIcon, CalendarIcon },
-  props: {
-    hunt: {
-      type: Object,
-      required: true
-    }
+defineProps({
+  hunt: {
+    type: Object,
+    required: true
   }
-}
+})
 </script>
