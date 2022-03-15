@@ -23,7 +23,7 @@ const emitMouseleave = () => {
   <div class="w-full overflow-hidden">
     <div class="space-y-4">
       <hf-hunt-card
-        v-for="(hunt, i) in huntFeed.slice(0, 5)"
+        v-for="(hunt, i) in huntFeed"
         v-once
         :key="i"
         :hunt="hunt"

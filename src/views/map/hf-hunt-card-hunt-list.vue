@@ -46,7 +46,7 @@
       <!-- hunt stats data -->
       <dl
         v-if="!hunt.is_new"
-        class="text-center flex flex-wrap justify-between gap-2"
+        class="hidden text-center lg:flex flex-wrap justify-between gap-2"
       >
         <div class="flex flex-col w-[30%]">
           <dt class="order-2 text-sm font-light text-gray-500">2021 Quota</dt>
