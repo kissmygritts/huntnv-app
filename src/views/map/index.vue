@@ -126,7 +126,7 @@
 </template>
 
 <script setup>
-import { ref, watchEffect, watch, nextTick } from 'vue'
+import { ref, watchEffect, watch, nextTick, onMounted } from 'vue'
 import { storeToRefs } from 'pinia'
 
 import { useHuntFeedStore } from '../../stores/hunt-feed.js'
@@ -140,11 +140,38 @@ import FilterPanelMobile from './filter-panel-mobile.vue'
 
 const { layout } = useMobileMenu()
 
-const modalVisible = ref(true)
+const modalVisible = ref(false)
+const modalLastSeen = ref(null)
+
+const setLastSeen = () => {
+  const now = new Date()
+  modalLastSeen.value = now
+  localStorage.setItem('modalLastSeen', JSON.stringify(now))
+}
+const getLastSeen = () => {
+  const data = localStorage.getItem('modalLastSeen')
+  const lastSeen = JSON.parse(data) ?? ''
+  modalLastSeen.value = lastSeen
+}
 const toggleModal = () => {
   modalVisible.value = !modalVisible.value
+  setLastSeen()
 }
 
+onMounted(() => {
+  getLastSeen()
+
+  if (modalLastSeen.value) {
+    const now = new Date()
+    const prev = new Date(modalLastSeen.value)
+
+    if (now - prev > 60000) {
+      modalVisible.value = true
+    }
+  }
+})
+
+// hunt feed data and composable
 const huntFeed = useHuntFeedStore()
 const { data, loading, getFeedFilters, activeHuntGeomIds } =
   storeToRefs(huntFeed)
