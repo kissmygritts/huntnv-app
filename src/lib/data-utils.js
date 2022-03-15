@@ -166,6 +166,8 @@ export const harvestTableData = (data) => {
 }
 
 export const bpTableData = (data) => {
+  if (!data) return null
+
   const huntYears = [...new Set(data.map((d) => d.hunt_year))]
   const rows = huntYears
     .map((y) => {
@@ -196,4 +198,10 @@ export const relatedHuntsData = (data) => {
   const grouped = groupBy(data, (d) => d.species)
 
   return grouped
+}
+
+export const isDepredation = (huntName) => {
+  const answer = huntName?.includes('depredation') ?? null
+  console.log({ huntName, answer })
+  return answer
 }

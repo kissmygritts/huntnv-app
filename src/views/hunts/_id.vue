@@ -1,7 +1,7 @@
 <template>
   <div class="flex flex-col flex-1 overflow-x-auto bg-gray-200">
     <ndow-mobile-navbar class="sticky top-0 z-30" />
-    <div class="px-4 pb-4">
+    <div class="px-4 pb-4 flex-1">
       <ui-loading v-if="loading" />
       <!-- content container -->
       <div v-else class="my-4 min-w-full flex flex-col space-y-8">
@@ -174,6 +174,7 @@
                 >Harvest Tables</a
               >
               <a
+                v-if="hasBpData"
                 class="flex-1 hover:text-saffron-600"
                 href="#bonus-points-table"
                 @click.prevent="scrollTo('bonus-points-table')"
@@ -316,7 +317,7 @@
               </template>
             </ui-card-flippable>
 
-            <ui-card-flippable class="bg-white rounded-md">
+            <ui-card-flippable v-if="hasBpData" class="bg-white rounded-md">
               <template v-slot:title>
                 <h2 class="font-semibold text-gray-600">
                   Bonus Point Distribution
@@ -416,6 +417,7 @@
 
           <!-- Row: bonus points table -->
           <div
+            v-if="hasBpData"
             id="bonus-points-table"
             class="flex flex-col space-y-2 bg-white w-full rounded-md overflow-hidden scroll-m-24"
           >
@@ -524,6 +526,7 @@ const {
   isNew,
   hasHuntRestriction,
   hasHarvestData,
+  hasBpData,
   pctPublicLand,
   drawDifficulty,
   lastQuota,

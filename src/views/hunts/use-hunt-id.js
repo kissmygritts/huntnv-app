@@ -9,7 +9,8 @@ import {
   drawTableData,
   harvestTableData,
   bpTableData,
-  relatedHuntsData
+  relatedHuntsData,
+  isDepredation
 } from '../../lib/data-utils.js'
 
 const loading = ref(false)
@@ -40,6 +41,7 @@ const hasDrawData = computed(() => !!data.value.draw_data)
 const hasBpData = computed(() => !!data.value.bonus_points)
 const hasHuntRestriction = computed(() => data.value.hunt_restrictions !== null)
 const isNew = computed(() => data.value.is_new)
+const isDepredationHunt = computed(() => isDepredation(data.value.hunt_name))
 
 // computed props for hero stats
 const pctPublicLand = computed(() => {
@@ -128,6 +130,7 @@ export function useHuntId() {
     hasBpData,
     hasHuntRestriction,
     isNew,
+    isDepredationHunt,
 
     // computed props: used for hero stats
     pctPublicLand,
