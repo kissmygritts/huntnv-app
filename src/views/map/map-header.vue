@@ -14,7 +14,7 @@
       </div>
 
       <!-- Search bar -->
-      <div class="flex-1">
+      <div class="flex-1 max-w-md">
         <div>
           <div class="pr-2">
             <label for="search" class="sr-only">Search</label>

@@ -65,7 +65,7 @@ import NdowMobileNavbar from '../../components/ndow-mobile-navbar.vue'
         </div>
 
         <div
-          class="space-y-2.5 bg-gray-50 rounded-lg p-4 p-4 border-2 border-gray-300/60"
+          class="space-y-2.5 bg-gray-50 rounded-lg p-4 border-2 border-gray-300/60"
         >
           <h2 class="text-xl font-semibold leading-relaxed">About the Data</h2>
           <p>
