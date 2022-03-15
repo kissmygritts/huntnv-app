@@ -15,6 +15,10 @@
               check out our FAQ page.
             </router-link>
           </p>
+          <p class="mt-2">
+            This app works on mobile devices but you'll get better performance
+            on a computer.
+          </p>
           <h4 class="mt-3 text-lg leading-6 font-medium text-gray-900">
             Usage
           </h4>
@@ -44,7 +48,7 @@
               guidelines:
               <ul class="list-disc ml-4">
                 <li>
-                  <span class="text-gray-900 font-medium">Antelope:</span> 16"
+                  <span class="text-gray-900 font-medium">Antelope:</span> 15"
                   or greater horn length.
                 </li>
                 <li>

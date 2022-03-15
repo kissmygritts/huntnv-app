@@ -149,7 +149,7 @@ export const harvestTableData = (data) => {
 
   const fields = [
     { field: 'hunt_year', label: 'Hunt Year' },
-    { field: 'hunters_afield', label: 'Hunters Affield' },
+    { field: 'hunters_afield', label: 'Hunters Afield' },
     { field: 'effort_days', label: 'Effort Days' },
     { field: 'hunt_days', label: 'Hunt Days' },
     { field: 'harvest_rate', label: 'Harvest Rate' },
