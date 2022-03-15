@@ -92,17 +92,17 @@
         id="map"
         class="block min-w-0 flex-1 lg:order-last bg-hero-topo"
       >
-        <!-- <maplibre-map
+        <maplibre-map
           ref="maplibre"
           :portal-slider="true"
           @click:faq="toggleModal"
-        /> -->
+        />
       </section>
 
       <!-- side bar -->
       <aside
         v-show="layout === 'both' || layout === 'list'"
-        class="relative z-10 w-full lg:w-120 lg:order-first overflow-clip overflow-y-scroll shadow px-2"
+        class="relative z-10 w-full lg:w-120 lg:order-first shadow px-2 overflow-clip overflow-y-auto"
       >
         <div v-if="!loading">
           <h2 class="mt-1 p-2 text-2xl text-oxford-600">
