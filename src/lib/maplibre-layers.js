@@ -39,23 +39,15 @@ export const huntUnits = {
   source: {
     'hunt-units': {
       type: 'vector',
-      tiles: [
-        'https://huntnv.apis.wildlifenv.com/features/hunt_units_open_full/{z}/{x}/{y}.pbf'
-      ]
-    },
-    'hunt-unit-labels': {
-      type: 'vector',
-      tiles: [
-        'https://huntnv.apis.wildlifenv.com/features/hunt_unit_labels/{z}/{x}/{y}.pbf'
-      ]
+      tiles: ['https://tiles.wildlifenv.com/hunt-units/{z}/{x}/{y}.pbf']
     }
   },
   layers: [
     {
       id: 'unit-labels',
       type: 'symbol',
-      source: 'hunt-unit-labels',
-      'source-layer': 'hunt_unit_labels',
+      source: 'hunt-units',
+      'source-layer': 'label_huntunits',
       layout: {
         visibility: 'visible',
         'text-font': ['Open Sans Regular'],
@@ -67,13 +59,14 @@ export const huntUnits = {
         'text-halo-color': 'white',
         'text-halo-width': 1,
         'text-halo-blur': 1
-      }
+      },
+      filter: ['==', 'is_open', 'true']
     },
     {
       id: 'hunt-units-outline',
       type: 'line',
       source: 'hunt-units',
-      'source-layer': 'hunt_units_open_full',
+      'source-layer': 'ndow_huntunits',
       layout: {
         visibility: 'visible',
         'line-cap': 'round',
@@ -133,7 +126,7 @@ export const publicLandownership = {
   source: {
     'public-landownership': {
       type: 'vector',
-      tiles: [`${TILE_URL}/features/public_landownership/{z}/{x}/{y}.pbf`],
+      tiles: [`https://tiles.wildlifenv.com/public-lands/{z}/{x}/{y}.pbf`],
       minzoom: 6,
       maxzoom: 16
     }
@@ -143,7 +136,7 @@ export const publicLandownership = {
       id: 'landownership-fill',
       type: 'fill',
       source: 'public-landownership',
-      'source-layer': 'public_landownership',
+      'source-layer': 'public_lands',
       layout: {
         visibility: 'none'
       },
@@ -176,14 +169,14 @@ export const publicLandownership = {
       id: 'landownership-outline',
       type: 'line',
       source: 'public-landownership',
-      'source-layer': 'public_landownership',
+      'source-layer': 'public_lands',
       layout: {
         'line-cap': 'round',
         'line-join': 'round',
         visibility: 'none'
       },
       paint: {
-        'line-opacity': 1,
+        'line-opacity': 0.2,
         'line-width': 1,
         'line-color': [
           'match',
