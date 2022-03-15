@@ -14,11 +14,14 @@
 </template>
 
 <script>
-import { GlobeIcon } from '@heroicons/vue/outline'
+import { GlobeIcon, QuestionMarkCircleIcon } from '@heroicons/vue/outline'
 import NdowSidebarNav from './components/ndow-sidebar-nav.vue'
 import NdowMobileMenu from './components/ndow-mobile-menu.vue'
 
-const navigation = [{ name: 'Map', href: '/map', icon: GlobeIcon }]
+const navigation = [
+  { name: 'Map', href: '/map', icon: GlobeIcon },
+  { name: 'FAQ', href: '/faq', icon: QuestionMarkCircleIcon }
+]
 
 export default {
   name: 'App',
