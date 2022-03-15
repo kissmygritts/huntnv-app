@@ -165,7 +165,7 @@ onMounted(() => {
     const now = new Date()
     const prev = new Date(modalLastSeen.value)
 
-    if (now - prev > 60000) {
+    if (now - prev > 86400000) {
       modalVisible.value = true
     }
   }
