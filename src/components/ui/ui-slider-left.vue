@@ -27,7 +27,7 @@ const close = () => emit('close')
       v-show="open"
       :class="[
         portal ? 'lg:top-16 lg:bottom-0 lg:left-16' : 'lg:inset-y-0',
-        'absolute flex max-w-full z-40 lg:z-30 inset-0 lg:inset-auto'
+        'absolute flex max-w-full z-40 lg:z-20 inset-0 lg:inset-auto'
       ]"
     >
       <div class="w-screen lg:max-w-md">

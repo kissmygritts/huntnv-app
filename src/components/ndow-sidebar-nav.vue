@@ -1,5 +1,5 @@
 <template>
-  <div class="relative z-20 hidden lg:flex lg:flex-shrink-0">
+  <div class="relative z-50 hidden lg:flex lg:flex-shrink-0">
     <div class="flex flex-col w-16">
       <div class="flex flex-col h-0 flex-1 overflow-y-auto bg-oxford-700">
         <div class="flex-1 flex flex-col">
