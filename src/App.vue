@@ -27,7 +27,7 @@
 
 <script>
 import { ref } from 'vue'
-import { GlobeIcon, HomeIcon } from '@heroicons/vue/outline'
+// import { GlobeIcon, HomeIcon } from '@heroicons/vue/outline'
 import HnvSidebarNav from '@/components/hnv-sidebar-nav.vue'
 import HnvMobileNavbar from '@/components/hnv-mobile-navbar.vue'
 import HnvMobileMenu from '@/components/hnv-mobile-menu.vue'
@@ -39,8 +39,8 @@ const user = {
 }
 
 const navigation = [
-  { name: 'Home', href: '/', icon: HomeIcon },
-  { name: 'Map', href: '/map', icon: GlobeIcon }
+  // { name: 'Home', href: '/', icon: HomeIcon },
+  // { name: 'Map', href: '/map', icon: GlobeIcon }
   // { name: 'Hunts', href: '/hunts', icon: BookmarkAltIcon },
   // { name: 'Odds', href: '#', icon: ChartBarIcon },
   // { name: 'Harvest', href: '#', icon: PresentationChartLineIcon }

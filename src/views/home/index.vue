@@ -4,11 +4,14 @@
       <h3 class="text-shadow mb-2 ml-2 font-mono text-3xl font-light tracking-widest text-gray-300">HuntNV</h3>
       <h2 class="text-shadow text-8xl font-extrabold tracking-wider text-olive-400">Get Online</h2>
       <h2 class="text-shadow text-8xl font-extrabold tracking-wider text-olive-400">Get Outside</h2>
-      <p class="text-shadow mt-5 lg:mt-3 ml-2 text-2xl font-light text-gray-200">
+      <!-- <p class="text-shadow mt-5 lg:mt-3 ml-2 text-2xl font-light text-gray-200">
         Find your next hunting opportunity with our new HuntNV hunt planner.
-      </p>
+      </p> -->
       <div class="flex items-center space-x-4 mt-10 ml-2">
-        <router-link
+        <div class="w-full border border-olive-600 p-4 text-xl font-medium text-olive-900 bg-olive-300 bg-opacity-75 rounded-lg">
+          HuntNV is undergoing maintenance and updates. Please check back soon for a new experience.
+        </div>
+        <!-- <router-link
           to="/map"
           class="inline-block px-4 py-2 rounded-md text-xl text-gray-100 bg-olive-500 border border-olive-500 shadow-md hover:bg-olive-600"
         >
@@ -19,7 +22,7 @@
           class="inline-block px-4 py-2 rounded-md text-xl text-olive-200 bg-transparent border border-olive-200 shadow-md hover:border-olive-400 hover:text-olive-400"
         >
           Buy a License
-        </a>
+        </a> -->
       </div>
     </header>
 
