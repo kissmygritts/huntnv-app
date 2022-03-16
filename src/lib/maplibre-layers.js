@@ -1,5 +1,4 @@
 const MAPTILER_KEY = import.meta.env.VITE_MAPTILER_KEY
-const TILE_URL = import.meta.env.VITE_TILE_URL
 
 // basemaps layers
 export const basemaps = [
@@ -76,41 +75,6 @@ export const huntUnits = {
         'line-opacity': 1,
         'line-color': '#f29645',
         'line-width': 2
-      }
-    }
-  ]
-}
-
-export const contours = {
-  name: 'contour lines',
-  id: 'contour-lines',
-  description: 'Contour lines in meters',
-  active: false,
-  thumbnail:
-    'https://ndow-cdn.s3.us-west-2.amazonaws.com/maptile-previews/contours.png',
-  source: {
-    'contour-lines': {
-      type: 'vector',
-      tiles: [
-        'https://api.maptiler.com/tiles/contours/{z}/{x}/{y}.pbf?key=BJ5Us337tUIPtCCZeKV8'
-      ]
-    }
-  },
-  layers: [
-    {
-      id: 'contour-lines',
-      type: 'line',
-      source: 'contour-lines',
-      'source-layer': 'contour',
-      layout: {
-        visibility: 'none',
-        'line-cap': 'round',
-        'line-join': 'round'
-      },
-      paint: {
-        'line-opacity': 0.6,
-        'line-color': '#7a9e7f',
-        'line-width': 1
       }
     }
   ]
@@ -214,7 +178,10 @@ export const huntGeometries = {
   source: {
     'hunt-geometries': {
       type: 'vector',
-      tiles: [`${TILE_URL}/features/hunt_geometries/{z}/{x}/{y}.pbf`]
+      tiles: [
+        'https://tiles.wildlifenv.com/hunt-geometries/{z}/{x}/{y}.pbf'
+        // `${TILE_URL}/features/hunt_geometries/{z}/{x}/{y}.pbf`
+      ]
     }
   },
   layers: [
@@ -222,7 +189,7 @@ export const huntGeometries = {
       id: 'hunt-geometry-fill',
       type: 'fill',
       source: 'hunt-geometries',
-      'source-layer': 'hunt_geometries',
+      'source-layer': 'huntgeometries',
       layout: {
         visibility: 'visible'
       },
@@ -236,7 +203,7 @@ export const huntGeometries = {
       id: 'hunt-geometry-outline',
       type: 'line',
       source: 'hunt-geometries',
-      'source-layer': 'hunt_geometries',
+      'source-layer': 'huntgeometries',
       layout: {
         visibility: 'visible',
         'line-cap': 'round',
@@ -253,7 +220,7 @@ export const huntGeometries = {
       id: 'hovered-hunt-geometry',
       type: 'fill',
       source: 'hunt-geometries',
-      'source-layer': 'hunt_geometries',
+      'source-layer': 'huntgeometries',
       layout: {
         visibility: 'visible'
       },
@@ -266,9 +233,4 @@ export const huntGeometries = {
   ]
 }
 
-export const layers = [
-  // contours,
-  huntUnits,
-  publicLandownership,
-  huntGeometries
-]
+export const layers = [huntUnits, publicLandownership, huntGeometries]
