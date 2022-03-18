@@ -11,13 +11,19 @@
           <p>
             Before you start planning your next hunt allow us to explain a few
             things about HuntNV. For even more information
-            <router-link to="/faq" class="text-blue-600 underline">
-              check out our FAQ page.
-            </router-link>
+            <router-link to="/faq" class="text-blue-700 underline"
+              >check out our FAQ page.</router-link
+            >
           </p>
-          <p class="mt-2">
+          <p class="mt-2 italic">
             This app works on mobile devices but you'll get better performance
             on a computer.
+          </p>
+          <p class="mt-2">
+            If you have question, or problems with the application please email
+            <a href="mailto:ndowinfo@ndow.org" class="text-blue-700 underline"
+              >ndowinfo@ndow.org</a
+            >
           </p>
           <h4 class="mt-3 text-lg leading-6 font-medium text-gray-900">
             Usage
@@ -25,6 +31,7 @@
           <ul class="mt-2 list-disc">
             <li>
               Use the map and hunt cards to gather information about hunts.
+              Click on a hunt card for more information about a hunt.
             </li>
             <li>
               Filter the list of hunts with the inputs along the top of the
@@ -81,7 +88,8 @@
             <li>
               <strong class="text-gray-900 font-medium">Draw Rank:</strong>
               The ranking of how difficult a hunt is to draw. 1 is the most
-              difficult. The higher the number the easier to draw.
+              difficult. The higher the number the easier to draw. The second
+              number is the total number of hunts considered in the ranking.
             </li>
           </ul>
         </div>
