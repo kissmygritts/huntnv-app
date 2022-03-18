@@ -1,6 +1,8 @@
 import { omit } from './objects.js'
 
 export const drawDifficultyToStr = (v, abbr = true) => {
+  if (!v) return null
+
   const mapper = {
     1: ['VH', 'Very Hard'],
     2: ['H', 'Hard'],
