@@ -2,17 +2,14 @@ const defaultTheme = require('tailwindcss/defaultTheme')
 const colors = require('tailwindcss/colors')
 
 module.exports = {
-  purge: [
-    './src/**/*.{vue,js}'
-  ],
-  darkMode: false,
+  content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
   theme: {
     colors: {
       transparent: 'transparent',
       current: 'currentColor',
       black: colors.black,
       white: colors.white,
-      gray: colors.blueGray,
+      gray: colors.slate,
       red: colors.rose,
       yellow: colors.yellow,
       green: colors.green,
@@ -23,12 +20,21 @@ module.exports = {
     },
     extend: {
       spacing: {
+        18: '4.5rem',
+        88: '22rem',
         120: '28rem',
         144: '36rem',
         156: '44rem'
       },
+      maxWidth: {
+        '8xl': '88rem',
+        '9xl': '96rem'
+      },
       fontFamily: {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans]
+      },
+      fontSize: {
+        xxs: '.625rem'
       },
       colors: {
         carolina: '#589fd6',
@@ -70,11 +76,27 @@ module.exports = {
           800: '#ba5e0d',
           900: '#8a460a'
         }
+      },
+      animation: {
+        loading: 'loading 1s infinite'
+      },
+      keyframes: {
+        loading: {
+          '0%': {
+            transform: 'translateY(-66%)',
+            'animation-timing-function': 'cubic-bezier(0.8, 0, 1, 1)'
+          },
+          '50%': {
+            transform: 'translateY(0%)',
+            'animation-timing-function': 'cubic-bezier(0, 0, 0.2, 1)'
+          },
+          '100%': {
+            transform: 'translateY(-66%)',
+            'animation-timing-function': 'cubic-bezier(0.8, 0, 1, 1)'
+          }
+        }
       }
     }
   },
-  variants: {},
-  plugins: [
-    require('@tailwindcss/forms')
-  ]
+  plugins: []
 }

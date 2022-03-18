@@ -1,52 +1,36 @@
 import { createRouter, createWebHistory } from 'vue-router'
-
-// import views
 import Home from '../views/home/index.vue'
-import HuntDetails from '../views/hunt-details/index.vue'
-import MapPage from '@/views/map/index.vue'
-import HuntsPage from '@/views/hunts/index.vue'
-import HuntUnits from '@/views/hunt-units/index.vue'
 
 const routes = [
   {
     path: '/',
-    name: 'Home',
-    component: Home
-  },
-  {
-    path: '/hunts',
-    name: 'Hunts',
-    component: HuntsPage
-  },
-  {
-    path: '/hunts/:id',
-    name: 'HuntDetails',
-    props: true,
-    component: HuntDetails
+    name: 'home',
+    component: Home,
+    meta: { title: 'HuntNV Home' }
   },
   {
     path: '/map',
-    name: 'Map',
-    component: MapPage
+    name: 'map',
+    component: () => import('../views/map/index.vue'),
+    meta: { title: 'HuntNV Map' }
   },
   {
-    path: '/hunt-units/:id',
-    name: 'HuntUnits',
+    path: '/hunts/:id',
+    name: 'hunts-id',
+    component: () => import('../views/hunts/_id.vue'),
     props: true,
-    component: HuntUnits
+    meta: { title: 'HuntNV Hunt' }
+  },
+  {
+    path: '/faq',
+    name: 'faq',
+    component: () => import('../views/faq/index.vue'),
+    meta: { title: 'FAQ' }
   }
-  // {
-  //   path: '/about',
-  //   name: 'About',
-  //   route level code-splitting
-  //   this generates a separate chunk (about.[hash].js) for this route
-  //   which is lazy-loaded when the route is visited.
-  //   component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  // }
 ]
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes
 })
 

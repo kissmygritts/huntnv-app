@@ -1,47 +1,34 @@
 {
   "name": "huntnv-app",
-  "version": "0.1.0",
-  "private": true,
+  "version": "2.0.0",
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build --modern",
-    "lint": "vue-cli-service lint"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview --port 5050",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
   },
   "dependencies": {
-    "@headlessui/vue": "^1.2.0-105068",
-    "@heroicons/vue": "^1.0.1",
-    "@tailwindcss/forms": "^0.3.3",
-    "axios": "^0.21.1",
-    "chart.js": "^3.3.2",
-    "core-js": "^3.8.3",
-    "geobuf": "^3.0.2",
-    "maplibre-gl": "^1.14.0",
-    "pbf": "^3.2.1",
-    "vue": "^3.0.4",
-    "vue-chartkick": "^1.1.0",
-    "vue-router": "^4.0.3"
+    "@vueuse/core": "^7.6.2",
+    "axios": "^0.25.0",
+    "d3": "^7.3.0",
+    "maplibre-gl": "^2.1.6",
+    "pinia": "^2.0.11",
+    "postcss-viewport-height-correction": "^1.1.1",
+    "vue": "^3.2.29",
+    "vue-router": "^4.0.12"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.16",
-    "@babel/eslint-parser": "^7.12.16",
-    "@vue/cli-plugin-babel": "~5.0.0-beta.2",
-    "@vue/cli-plugin-eslint": "~5.0.0-beta.2",
-    "@vue/cli-plugin-router": "~5.0.0-beta.2",
-    "@vue/cli-service": "~5.0.0-beta.2",
-    "@vue/compiler-sfc": "^3.0.4",
-    "@vue/eslint-config-standard": "^6.0.0",
-    "autoprefixer": "^10.2.6",
-    "eslint": "^7.20.0",
-    "eslint-plugin-import": "^2.20.2",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^4.3.1",
-    "eslint-plugin-vue": "^7.2.0",
-    "lint-staged": "^10.5.4",
-    "postcss": "^8.3.2",
-    "tailwindcss": "^2.1.4",
-    "typescript": "~3.9.3"
-  },
-  "gitHooks": {
-    "pre-commit": "lint-staged"
+    "@headlessui/vue": "^1.4.3",
+    "@heroicons/vue": "^1.0.5",
+    "@rushstack/eslint-patch": "^1.1.0",
+    "@vitejs/plugin-vue": "^2.1.0",
+    "@vue/eslint-config-prettier": "^7.0.0",
+    "autoprefixer": "^10.4.2",
+    "eslint": "^8.5.0",
+    "eslint-plugin-vue": "^8.2.0",
+    "postcss": "^8.4.6",
+    "prettier": "^2.5.1",
+    "tailwindcss": "^3.0.18",
+    "vite": "^2.7.13"
   }
 }

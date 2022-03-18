@@ -1,66 +1,36 @@
-<!-- This example requires Tailwind CSS v2.0+ -->
 <template>
-  <div class="h-screen flex bg-gray-200 overflow-hidden">
-    <hnv-mobile-menu
-      as="template"
-      :navigation="navigation"
-      :user="user"
-      :mobile-menu-open="mobileMenuOpen"
-      @toggle-menu="mobileMenuOpen = false"
-    />
+  <div class="h-screen flex bg-gray-200">
+    <ndow-mobile-menu as="template" :navigation="navigation" />
 
-    <!-- Static sidebar for desktop -->
-    <hnv-sidebar-nav as="template" :navigation="navigation" :user="user" />
+    <!-- static sidebar for desktop -->
+    <ndow-sidebar-nav as="template" :navigation="navigation" />
 
-    <div class="flex-1 min-w-0 flex flex-col overflow-hidden">
-      <!-- Mobile top navigation -->
-      <hnv-mobile-navbar class="lg:hidden" @toggle-menu="mobileMenuOpen = true" />
-
+    <div class="flex-1 min-w-0 flex flex-col">
       <main class="flex-1 flex overflow-hidden">
-        <!-- <div class="flex-1 flex xl:overflow-hidden"> -->
-          <router-view :key="$route.fullPath" />
-        <!-- </div> -->
+        <router-view :key="$route.path" />
       </main>
     </div>
   </div>
 </template>
 
 <script>
-import { ref } from 'vue'
-// import { GlobeIcon, HomeIcon } from '@heroicons/vue/outline'
-import HnvSidebarNav from '@/components/hnv-sidebar-nav.vue'
-import HnvMobileNavbar from '@/components/hnv-mobile-navbar.vue'
-import HnvMobileMenu from '@/components/hnv-mobile-menu.vue'
-
-const user = {
-  name: 'Emily Selman',
-  imageUrl:
-    'https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80'
-}
+import { GlobeIcon, QuestionMarkCircleIcon } from '@heroicons/vue/outline'
+import NdowSidebarNav from './components/ndow-sidebar-nav.vue'
+import NdowMobileMenu from './components/ndow-mobile-menu.vue'
 
 const navigation = [
-  // { name: 'Home', href: '/', icon: HomeIcon },
-  // { name: 'Map', href: '/map', icon: GlobeIcon }
-  // { name: 'Hunts', href: '/hunts', icon: BookmarkAltIcon },
-  // { name: 'Odds', href: '#', icon: ChartBarIcon },
-  // { name: 'Harvest', href: '#', icon: PresentationChartLineIcon }
+  { name: 'Map', href: '/map', icon: GlobeIcon },
+  { name: 'FAQ', href: '/faq', icon: QuestionMarkCircleIcon }
 ]
 
 export default {
-  name: 'MapPage',
+  name: 'App',
   components: {
-    HnvSidebarNav,
-    HnvMobileNavbar,
-    HnvMobileMenu
+    NdowSidebarNav,
+    NdowMobileMenu
   },
-  setup () {
-    const mobileMenuOpen = ref(false)
-
-    return {
-      user,
-      navigation,
-      mobileMenuOpen
-    }
+  setup() {
+    return { navigation }
   }
 }
 </script>

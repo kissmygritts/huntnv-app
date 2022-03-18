@@ -1,553 +1,217 @@
 <template>
-  <div class="flex-1 flex xl:overflow-hidden bg-gray-200">
-    <!-- map area -->
-    <section
-      id="map"
-      aria-labelledby="primary-heading"
-      class="min-w-0 flex-1 flex flex-col overflow-hidden lg:order-last"
-    >
-      <h1 id="primary-heading" class="sr-only">Map</h1>
-      <div v-if="isDev" class="absolute z-50 top-0 right-0 w-96 h-1/2 bg-white opacity-75 overflow-auto">
-        <pre><code>{{ mapDetails }}</code></pre>
-      </div>
-    </section>
+  <div class="flex-1 flex flex-col">
+    <map-header />
+    <filter-panel-mobile />
 
-    <!-- hunt cards and filters (hidden on smaller screens) -->
-    <aside class="hidden lg:block lg:flex-shrink-0 lg:order-first">
-      <div
-        class="
-          h-full
-          relative
-          flex flex-col
-          w-120
-          border-r border-gray-200
-          bg-gray-200
-          overflow-y-scroll overflow-x-hidden
-        "
+    <!-- intro modal -->
+    <ui-modal :open="modalVisible" @modal:close="toggleModal">
+      <template #modal-title>HuntNV FAQ</template>
+      <template #modal-content>
+        <div class="text-gray-600">
+          <p>
+            Before you start planning your next hunt allow us to explain a few
+            things about HuntNV. For even more information
+            <router-link to="/faq" class="text-blue-600 underline">
+              check out our FAQ page.
+            </router-link>
+          </p>
+          <p class="mt-2">
+            This app works on mobile devices but you'll get better performance
+            on a computer.
+          </p>
+          <h4 class="mt-3 text-lg leading-6 font-medium text-gray-900">
+            Usage
+          </h4>
+          <ul class="mt-2 list-disc">
+            <li>
+              Use the map and hunt cards to gather information about hunts.
+            </li>
+            <li>
+              Filter the list of hunts with the inputs along the top of the
+              page.
+            </li>
+            <li>
+              Change map layers with the circle button in the bottom left.
+            </li>
+          </ul>
+          <h4 class="mt-3 text-lg leading-6 font-medium text-gray-900">
+            Definitions
+          </h4>
+          <ul class="mt-2 list-disc">
+            <li>
+              <strong class="text-gray-900 font-medium">Harvest:</strong> The
+              harvest success rate reported from hunter feedback surveys.
+            </li>
+            <li>
+              <strong class="text-gray-900 font-medium">Maturity:</strong> The
+              percentage of males taken that meet the following maturity
+              guidelines:
+              <ul class="list-disc ml-4">
+                <li>
+                  <span class="text-gray-900 font-medium">Antelope:</span> 15"
+                  or greater horn length.
+                </li>
+                <li>
+                  <span class="text-gray-900 font-medium">Bighorn Sheep:</span>
+                  7 years or older.
+                </li>
+                <li>
+                  <span class="text-gray-900 font-medium">Elk:</span> 50" or
+                  greater main beam length.
+                </li>
+                <li>
+                  <span class="text-gray-900 font-medium">Mule Deer:</span> 4
+                  points or greater.
+                </li>
+              </ul>
+            </li>
+            <li>
+              <strong class="text-gray-900 font-medium">Median BP:</strong>
+              The median number of bonus points of successful applicants. Median
+              is the middle number in a sorted list of numbers.
+            </li>
+            <li>
+              <strong class="text-gray-900 font-medium"
+                >Draw Difficulty:</strong
+              >
+              This groups hunts into 5 categories based on the draw rate. VH:
+              very hard, H: harder, M: moderately difficult, E: easier, VE:
+              easiest.
+            </li>
+            <li>
+              <strong class="text-gray-900 font-medium">Draw Rank:</strong>
+              The ranking of how difficult a hunt is to draw. 1 is the most
+              difficult. The higher the number the easier to draw.
+            </li>
+          </ul>
+        </div>
+      </template>
+    </ui-modal>
+
+    <!-- page content -->
+    <div class="flex-1 flex overflow-hidden">
+      <!-- map -->
+      <section
+        v-show="layout === 'both' || layout === 'map'"
+        id="map"
+        class="block min-w-0 flex-1 lg:order-last bg-hero-topo"
       >
-        <p v-if="loading">LOADING...</p>
-        <div v-else>
-          <div class="w-full px-2 py-4">
+        <maplibre-map
+          ref="maplibre"
+          :portal-slider="true"
+          @click:faq="toggleModal"
+        />
+      </section>
 
-            <div class="inline-flex items-center">
-              <h2 class="inline-block ml-1 text-2xl text-gray-700">
-                {{ hunts.total_hunts }} Hunts
-              </h2>
-              <adjustments-icon
-                class="w-6 h-6 ml-2 cursor-pointer text-olive-700"
-                @click="isFiltersVisible = !isFiltersVisible"
-              />
-            </div>
+      <!-- side bar -->
+      <aside
+        v-show="layout === 'both' || layout === 'list'"
+        class="relative z-10 w-full lg:w-120 lg:order-first shadow px-2 overflow-clip overflow-y-auto"
+      >
+        <div v-if="!loading">
+          <h2 class="mt-1 p-2 text-2xl text-oxford-600">
+            {{ data.total_hunts ?? 0 }} Hunts
+          </h2>
 
-            <div
-              v-show="isFiltersVisible"
-              class="space-y-6 mt-2 px-2 py-4 bg-white rounded-md shadow-lg"
-            >
-              <hnv-select-species v-model="species" @update:model-value="setHuntFilters" />
-              <hnv-select-weapon v-model="weapon" @update:model-value="setHuntFilters" />
-              <hnv-select-residency v-model="residency" @update:model-value="setHuntFilters" />
-              <hnv-range-slider-draw-rate v-model="draw_rate" @update:model-value="setHuntFilters" ref="drawRateSlider"/>
-              <hnv-range-slider-success-rate v-model="success_rate" @update:model-value="setHuntFilters" ref="successRateSlider"/>
-              <div class="w-full">
-                <button
-                  type="button"
-                  class="w-full mt-8 py-2 text-center border border-red-600 text-red-700 rounded-md hover:bg-red-700 hover:text-white"
-                  @click="resetHuntFilters">
-                    Reset Filters
-                </button>
-              </div>
-            </div>
-
-            <div>
-              <mv-hunts-container class="mt-1" :hunts="hunts.hunts" @hunt-card:hover="handleHuntCardHover" />
-            </div>
+          <div class="mt-2">
+            <hf-list-container
+              :hunt-feed="data.hunt_feed"
+              @hunt-card:hover="hoverHunt"
+            />
           </div>
         </div>
-      </div>
-    </aside>
+      </aside>
+    </div>
   </div>
 </template>
 
-<script>
-import maplibregl from 'maplibre-gl'
-import { AdjustmentsIcon } from '@heroicons/vue/outline'
-import { getHuntsFeed } from '@/services/hunt-services.js'
-import mvHuntsContainer from './mv-hunts-container.vue'
-import hnvSelectSpecies from '@/components/form-inputs/hnv-select-species.vue'
-import hnvSelectWeapon from '@/components/form-inputs/hnv-select-weapon.vue'
-import hnvSelectResidency from '@/components/form-inputs/hnv-select-residency.vue'
-import hnvRangeSliderDrawRate from '@/components/form-inputs/hnv-range-slider-draw-rate.vue'
-import hnvRangeSliderSuccessRate from '@/components/form-inputs/hnv-range-slider-success-rate.vue'
+<script setup>
+import { ref, watchEffect, watch, nextTick, onMounted } from 'vue'
+import { storeToRefs } from 'pinia'
 
-const TILE_URL = process.env.VUE_APP_API_URL
-const MAPTILER_KEY = process.env.VUE_APP_MAPTILER_KEY
+import { useHuntFeedStore } from '../../stores/hunt-feed.js'
+import useMobileMenu from '../../composables/use-mobile-menu.js'
 
-export default {
-  name: 'map-view',
+import MaplibreMap from '../../components/maplibre/maplibre-map.vue'
+import UiModal from '../../components/ui/ui-modal.vue'
+import MapHeader from './map-header.vue'
+import HfListContainer from './hf-list-container.vue'
+import FilterPanelMobile from './filter-panel-mobile.vue'
 
-  components: {
-    AdjustmentsIcon,
-    mvHuntsContainer,
-    hnvSelectSpecies,
-    hnvSelectWeapon,
-    hnvSelectResidency,
-    hnvRangeSliderDrawRate,
-    hnvRangeSliderSuccessRate
-  },
+const { layout } = useMobileMenu()
 
-  data () {
-    return {
-      isFiltersVisible: false,
-      hunts: null,
-      loading: true,
-      huntGeojson: null,
-      species: {},
-      residency: '',
-      weapon: '',
-      draw_rate: 0,
-      success_rate: 0,
-      map: null,
-      mapDetails: {
-        zoom: null,
-        center: null,
-        bounds: null,
-        mousePosition: null,
-        features: null
-      }
+const modalVisible = ref(false)
+const modalLastSeen = ref(null)
+
+const setLastSeen = () => {
+  const now = new Date()
+  modalLastSeen.value = now
+  localStorage.setItem('modalLastSeen', JSON.stringify(now))
+}
+const getLastSeen = () => {
+  const data = localStorage.getItem('modalLastSeen')
+  const lastSeen = JSON.parse(data) ?? ''
+  modalLastSeen.value = lastSeen
+}
+const toggleModal = () => {
+  modalVisible.value = !modalVisible.value
+  setLastSeen()
+}
+
+onMounted(() => {
+  getLastSeen()
+
+  if (modalLastSeen.value) {
+    const now = new Date()
+    const prev = new Date(modalLastSeen.value)
+
+    if (now - prev > 86400000) {
+      modalVisible.value = true
     }
+  } else {
+    modalVisible.value = true
+  }
+})
+
+// hunt feed data and composable
+const huntFeed = useHuntFeedStore()
+const { data, loading, getFeedFilters, activeHuntGeomIds } =
+  storeToRefs(huntFeed)
+
+watchEffect(() => huntFeed.getHuntFeed(getFeedFilters.value), { flush: 'pre' })
+
+// map interactions
+const maplibre = ref(null)
+
+// show hunt geoms on filter
+watch(
+  activeHuntGeomIds,
+  (ids) => {
+    const layerFilter = ['in', '$id', ...ids]
+    nextTick(() => {
+      maplibre.value.layers[2].layers[0].filter = layerFilter
+      maplibre.value.layers[2].layers[1].filter = layerFilter
+      maplibre.value.map.setFilter('hunt-geometry-fill', layerFilter)
+      maplibre.value.map.setFilter('hunt-geometry-outline', layerFilter)
+    })
   },
+  { flush: 'post' }
+)
 
-  computed: {
-    activeFilters () {
-      const filters = {}
-
-      if (this.species?.id) Object.assign(filters, { species_class_id: this.species.id })
-      if (this.residency) Object.assign(filters, { draw_type: this.residency })
-      if (this.weapon) Object.assign(filters, { weapon: this.weapon })
-      if (this.draw_rate) Object.assign(filters, { draw_rate: this.draw_rate })
-      if (this.success_rate) Object.assign(filters, { success_rate: this.success_rate })
-
-      return filters
-    },
-
-    activeHuntGeomIds () {
-      if (!Object.keys(this.hunts).length) return []
-      return [...new Set(this.hunts.hunts.map(item => item.hunt_geometry_id))]
-    },
-
-    huntMvtFilter () {
-      if (!Object.keys(this.activeFilters).length) {
-        return ['==', '$id', 0]
-      }
-      return ['in', '$id', ...this.activeHuntGeomIds]
-    },
-
-    isDev () {
-      return process.env.NODE_ENV === 'development'
-    }
-  },
-
-  async created () {
-    await this.getHuntFeed()
-  },
-
-  mounted () {
-    this.renderMap()
-  },
-
-  methods: {
-    setTab ({ tab }) {
-      this.currentTab = tab
-    },
-
-    renderMap () {
-      const map = new maplibregl.Map({
-        container: 'map',
-        style: `https://api.maptiler.com/maps/voyager/style.json?key=${MAPTILER_KEY}`,
-        center: [-116.6554, 38.55],
-        zoom: 6
-      })
-
-      map.on('load', () => {
-        // public landownership
-        map.addSource('landownership', {
-          type: 'vector',
-          tiles: [`${TILE_URL}/features/public_landownership/{z}/{x}/{y}.pbf`],
-          minzoom: 8,
-          maxzoom: 14
-        })
-
-        // usfs
-        map.addLayer({
-          id: 'landownership-usfs-fill',
-          type: 'fill',
-          source: 'landownership',
-          'source-layer': 'public_landownership',
-          paint: {
-            'fill-opacity': 0.25,
-            'fill-color': '#60C99E'
-          },
-          filter: ['==', 'surface_mgmt_agency', 'US Forest Service']
-        })
-        map.addLayer({
-          id: 'landownership-usfs-outline',
-          type: 'line',
-          source: 'landownership',
-          'source-layer': 'public_landownership',
-          layout: {
-            'line-cap': 'round',
-            'line-join': 'round'
-          },
-          paint: {
-            'line-opacity': 1,
-            'line-color': '#60C99E',
-            'line-width': 1
-          },
-          filter: ['==', 'surface_mgmt_agency', 'US Forest Service']
-        })
-
-        // blm
-        map.addLayer({
-          id: 'landownership-blm-fill',
-          type: 'fill',
-          source: 'landownership',
-          'source-layer': 'public_landownership',
-          paint: {
-            'fill-opacity': 0.25,
-            'fill-color': '#FED17E'
-          },
-          filter: ['==', 'surface_mgmt_agency', 'Bureau of Land Management']
-        })
-        map.addLayer({
-          id: 'landownership-blm-outline',
-          type: 'line',
-          source: 'landownership',
-          'source-layer': 'public_landownership',
-          layout: {
-            'line-cap': 'round',
-            'line-join': 'round'
-          },
-          paint: {
-            'line-opacity': 1,
-            'line-color': '#FED17E',
-            'line-width': 1
-          },
-          filter: ['==', 'surface_mgmt_agency', 'Bureau of Land Management']
-        })
-
-        // usfws
-        map.addLayer({
-          id: 'landownership-usfws-fill',
-          type: 'fill',
-          source: 'landownership',
-          'source-layer': 'public_landownership',
-          paint: {
-            'fill-opacity': 0.25,
-            'fill-color': '#AE9BCE'
-          },
-          filter: ['==', 'surface_mgmt_agency', 'US Fish and Wildlife Service']
-        })
-        map.addLayer({
-          id: 'landownership-usfws-outline',
-          type: 'line',
-          source: 'landownership',
-          'source-layer': 'public_landownership',
-          layout: {
-            'line-cap': 'round',
-            'line-join': 'round'
-          },
-          paint: {
-            'line-opacity': 1,
-            'line-color': '#AE9BCE',
-            'line-width': 1
-          },
-          filter: ['==', 'surface_mgmt_agency', 'US Fish and Wildlife Service']
-        })
-
-        // bia
-        map.addLayer({
-          id: 'landownership-bia-fill',
-          type: 'fill',
-          source: 'landownership',
-          'source-layer': 'public_landownership',
-          paint: {
-            'fill-opacity': 0.25,
-            'fill-color': '#FEA955'
-          },
-          filter: ['==', 'surface_mgmt_agency', 'Bureau of Indian Affairs']
-        })
-        map.addLayer({
-          id: 'landownership-bia-outline',
-          type: 'line',
-          source: 'landownership',
-          'source-layer': 'public_landownership',
-          layout: {
-            'line-cap': 'round',
-            'line-join': 'round'
-          },
-          paint: {
-            'line-opacity': 1,
-            'line-color': '#EDC4A5',
-            'line-width': 1
-          },
-          filter: ['==', 'surface_mgmt_agency', 'Bureau of Indian Affairs']
-        })
-
-        // other federal
-        map.addLayer({
-          id: 'landownership-other-fill',
-          type: 'fill',
-          source: 'landownership',
-          'source-layer': 'public_landownership',
-          paint: {
-            'fill-opacity': 0.25,
-            'fill-color': '#EDC4A5'
-          },
-          filter: ['==', 'surface_mgmt_agency', 'Federal (other)']
-        })
-        map.addLayer({
-          id: 'landownership-other-outline',
-          type: 'line',
-          source: 'landownership',
-          'source-layer': 'public_landownership',
-          layout: {
-            'line-cap': 'round',
-            'line-join': 'round'
-          },
-          paint: {
-            'line-opacity': 1,
-            'line-color': '#FEA955',
-            'line-width': 1
-          },
-          filter: ['==', 'surface_mgmt_agency', 'Federal (other)']
-        })
-
-        // state & local
-        map.addLayer({
-          id: 'landownership-local-fill',
-          type: 'fill',
-          source: 'landownership',
-          'source-layer': 'public_landownership',
-          paint: {
-            'fill-opacity': 0.25,
-            'fill-color': '#96CDDF'
-          },
-          filter: [
-            'any',
-            ['==', 'surface_mgmt_agency', 'Local'],
-            ['==', 'surface_mgmt_agency', 'State']
-          ]
-        })
-        map.addLayer({
-          id: 'landownership-local-outline',
-          type: 'line',
-          source: 'landownership',
-          'source-layer': 'public_landownership',
-          layout: {
-            'line-cap': 'round',
-            'line-join': 'round'
-          },
-          paint: {
-            'line-opacity': 1,
-            'line-color': '#96CDDF',
-            'line-width': 1
-          },
-          filter: [
-            'any',
-            ['==', 'surface_mgmt_agency', 'Local'],
-            ['==', 'surface_mgmt_agency', 'State']
-          ]
-        })
-
-        // hunt units
-        map.addSource('units', {
-          type: 'vector',
-          tiles: [`${TILE_URL}/features/hunt_units_open_full/{z}/{x}/{y}.pbf`]
-        })
-        map.addLayer({
-          id: 'units',
-          type: 'line',
-          source: 'units',
-          'source-layer': 'hunt_units_open_full',
-          layout: {
-            'line-cap': 'round',
-            'line-join': 'round'
-          },
-          paint: {
-            'line-opacity': 1,
-            'line-color': '#f29645',
-            'line-width': 2
-          }
-        })
-
-        // hunt geometries
-        map.addSource('huntgeoms', {
-          type: 'vector',
-          tiles: [`${TILE_URL}/features/hunt_geometries/{z}/{x}/{y}.pbf`]
-        })
-        map.addLayer({
-          id: 'hunts-fill',
-          type: 'fill',
-          source: 'huntgeoms',
-          'source-layer': 'hunt_geometries',
-          layout: {
-            visibility: 'visible'
-          },
-          paint: {
-            'fill-color': '#2e598a',
-            'fill-opacity': 0.25
-          },
-          filter: ['==', '$id', 0]
-        })
-        map.addLayer({
-          id: 'hunts-outline',
-          type: 'line',
-          source: 'huntgeoms',
-          'source-layer': 'hunt_geometries',
-          layout: {
-            'line-cap': 'round',
-            'line-join': 'round'
-          },
-          paint: {
-            'line-opacity': 1,
-            'line-color': '#1f355b',
-            'line-width': 1
-          },
-          filter: ['==', '$id', 0]
-        })
-
-        // hovered geometries
-        map.addLayer({
-          id: 'hovered-hunt-fill',
-          type: 'fill',
-          source: 'huntgeoms',
-          'source-layer': 'hunt_geometries',
-          layout: {
-            visibility: 'visible'
-          },
-          paint: {
-            'fill-color': '#2de2e6',
-            'fill-opacity': 0.75
-          },
-          filter: ['==', '$id', 0]
-        })
-        map.addLayer({
-          id: 'hovered-hunt-outline',
-          type: 'line',
-          source: 'huntgeoms',
-          'source-layer': 'hunt_geometries',
-          layout: {
-            'line-cap': 'round',
-            'line-join': 'round'
-          },
-          paint: {
-            'line-opacity': 1,
-            'line-color': '#2de2e6',
-            'line-width': 2
-          },
-          filter: ['==', '$id', 0]
-        })
-
-        map.addSource('unit-labels', {
-          type: 'vector',
-          tiles: [`${TILE_URL}/features/hunt_unit_labels/{z}/{x}/{y}.pbf`]
-        })
-        map.addLayer({
-          id: 'unit-labels',
-          type: 'symbol',
-          source: 'unit-labels',
-          'source-layer': 'hunt_unit_labels',
-          layout: {
-            'text-font': ['Open Sans Regular'],
-            'text-field': ['get', 'display_name'],
-            'text-size': 16
-          },
-          paint: {
-            'text-color': '#db6f0f',
-            'text-halo-color': 'white',
-            'text-halo-width': 1,
-            'text-halo-blur': 1
-          }
-        })
-
-        map.addControl(new maplibregl.NavigationControl())
-        map.addControl(new maplibregl.ScaleControl())
-
-        const nvBounds = new maplibregl.LngLatBounds([-114.03965394617312, 42.0021960036951], [-120.00574882950774, 35.00208042610391])
-        map.fitBounds(nvBounds, { padding: 20 })
-      })
-
-      // map details, dev only
-      if (this.isDev) {
-        map.on('load', () => {
-          this.mapDetails.zoom = this.map.getZoom()
-          this.mapDetails.center = this.map.getCenter()
-          this.mapDetails.bounds = this.map.getBounds()
-        })
-
-        map.on('click', (e) => {
-          const features = map.queryRenderedFeatures(e.point)
-          this.mapDetails.features = features.map(feature => {
-            const { geometry, _geometry, _vectorTileFeature, ...rest } = feature
-            return rest
-          })
-        })
-
-        map.on('zoom', () => {
-          this.mapDetails.zoom = this.map.getZoom()
-          this.mapDetails.center = this.map.getCenter()
-          this.mapDetails.bounds = this.map.getBounds()
-        })
-
-        map.on('drag', () => {
-          this.mapDetails.center = this.map.getCenter()
-          this.mapDetails.bounds = this.map.getBounds()
-        })
-
-        map.on('mousemove', (e) => {
-          this.mapDetails.mousePosition = e.lngLat.wrap()
-        })
-      }
-
-      this.map = map
-    },
-
-    async getHuntFeed () {
-      this.loading = true
-      const { data } = await getHuntsFeed()
-      this.hunts = data
-      this.loading = false
-    },
-
-    async setHuntFilters () {
-      const hunts = await getHuntsFeed(this.activeFilters)
-      this.hunts = hunts.data
-
-      this.map.setFilter('hunts-fill', this.huntMvtFilter)
-      this.map.setFilter('hunts-outline', this.huntMvtFilter)
-    },
-
-    resetHuntFilters () {
-      this.species = {}
-      this.residency = ''
-      this.weapon = ''
-      this.draw_rate = 0
-      this.success_rate = 0
-      this.$refs.drawRateSlider.resetRange(0)
-      this.$refs.successRateSlider.resetRange(0)
-      this.setHuntFilters()
-    },
-
-    handleHuntCardHover ({ hunt, hover }) {
-      if (hover) {
-        const huntGeomId = hunt
-        this.map.setFilter('hovered-hunt-fill', ['==', '$id', huntGeomId])
-        this.map.setFilter('hovered-hunt-outline', ['==', '$id', huntGeomId])
-      } else {
-        this.map.setFilter('hovered-hunt-fill', ['==', '$id', 0])
-        this.map.setFilter('hovered-hunt-outline', ['==', '$id', 0])
-      }
-    }
+// show hovered hunt geom
+const hoverHunt = ({ hunt, hover }) => {
+  if (hover) {
+    maplibre.value.map.setFilter('hovered-hunt-geometry', ['==', '$id', hunt])
+  } else {
+    maplibre.value.map.setFilter('hovered-hunt-geometry', ['==', '$id', 0])
   }
 }
+
+// resize map when switching between map and card display
+watch(layout, async (newLayout) => {
+  await nextTick
+  if (newLayout === 'map') {
+    maplibre.value.map.resize()
+  }
+})
 </script>
