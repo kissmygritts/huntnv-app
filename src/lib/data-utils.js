@@ -14,6 +14,13 @@ export const drawDifficultyToStr = (v, abbr = true) => {
   return mapper[v][abbr ? 0 : 1] || 'N/A'
 }
 
+export const toPercent = (v) => {
+  if (!v) return null
+
+  const p = v * 100
+  return `${p.toFixed(0)}%`
+}
+
 export const sortHuntYear = (direction) => (f, s) => {
   if (direction === 'desc') {
     return s.hunt_year - f.hunt_year
@@ -162,7 +169,17 @@ export const harvestTableData = (data) => {
     { field: 'bc_or_greater', label: '>= BC Score' },
     { field: 'hunter_satisfaction', label: 'Satisfaction' }
   ]
-  const rows = data.map((d) => omit(d, ['id'])).sort(sortHuntYear('desc'))
+  const rows = data
+    .map((d) => omit(d, ['id']))
+    .map((d) => ({
+      ...d,
+      harvest_rate: toPercent(d.harvest_rate),
+      points_or_greater: toPercent(d.points_or_greater),
+      length_or_greater: toPercent(d.length_or_greater),
+      age_or_greater: toPercent(d.age_or_greater),
+      bc_or_greater: toPercent(d.bc_or_greater)
+    }))
+    .sort(sortHuntYear('desc'))
 
   return { fields, rows }
 }
@@ -195,6 +212,7 @@ export const bpTableData = (data) => {
 export const relatedHuntsData = (data) => {
   data = data.map((d) => ({
     ...d,
+    harvest_rate: toPercent(d.harvest_rate),
     draw_difficulty_qtile: drawDifficultyToStr(d.draw_difficulty_qtile, false)
   }))
   const grouped = groupBy(data, (d) => d.species)

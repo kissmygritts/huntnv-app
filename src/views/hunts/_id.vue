@@ -133,7 +133,7 @@
               </div>
               <div class="flex flex-col text-center">
                 <dt class="order-2 text-lg leading-7 text-gray-500">
-                  2020 Harvest
+                  2021 Harvest
                 </dt>
                 <dd class="order-1 text-6xl font-extrabold text-saffron-600/90">
                   {{ lastHarvest }}<small class="text-3xl">%</small>
