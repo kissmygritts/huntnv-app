@@ -179,8 +179,7 @@ export const huntGeometries = {
     'hunt-geometries': {
       type: 'vector',
       tiles: [
-        'https://tiles.wildlifenv.com/hunt-geometries/{z}/{x}/{y}.pbf'
-        // `${TILE_URL}/features/hunt_geometries/{z}/{x}/{y}.pbf`
+        'https://tiles.wildlifenv.com/hunt-geometries-v2023/{z}/{x}/{y}.pbf'
       ]
     }
   },
